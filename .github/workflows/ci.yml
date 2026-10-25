@@ -70,7 +70,7 @@ jobs:
         working-directory: app
         run: node tests/run-all.mjs --label ci-docker --web-only --base-url http://127.0.0.1:8095
       - name: Scan de vulnérabilités de l'image (Trivy, informatif)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0   # tag « 0.28.0 » introuvable au 1er run : convention de tags passée en vX.Y.Z
         with:
           image-ref: abassurance-fusion-dashboard:${{ github.sha }}
           severity: CRITICAL,HIGH

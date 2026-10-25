@@ -173,6 +173,7 @@ Protection des données (zone gold)
       <tr><td><b>F8</b></td><td>Baisse du débit en local après correctif</td><td>Débit passé de 1 151 à 773 req/s : le routeur de développement sert maintenant les fichiers statiques en PHP.</td><td>Sans effet en production (Apache sert les statiques) ; la mesure de référence est faite sur l’image Docker dans la CI.</td></tr>
       <tr><td><b>F9</b></td><td>Outillage du poste Windows</td><td>Extension <code>pdo_sqlite</code> non chargée par défaut ; Docker Desktop indisponible sur le poste.</td><td>L’orchestrateur ajoute l’extension sous Windows ; la recette Docker est assurée par la CI Linux.</td></tr>
       <tr><td><b>F10</b></td><td>Faux positif de l’outil de sécurité</td><td>La recherche de secrets détectait son propre motif dans le fichier de workflow et aurait bloqué toute la CI.</td><td>Dossier <code>.github</code> exclu de la recherche.</td></tr>
+      <tr><td><b>F11</b></td><td>Première exécution de la CI en échec</td><td>Sur GitHub, l’analyse statique et les 59 tests sont passés du premier coup sous Linux. En revanche, la recette Docker n’a pas démarré : la version référencée de l’action Trivy n’existait plus, car l’éditeur avait changé sa convention de tags.</td><td>Version corrigée (<code>v0.35.0</code>). Leçon : épingler des versions vérifiées et relire le premier run de chaque nouveau workflow.</td></tr>
     </tbody>
   </table>
 
