@@ -1,0 +1,620 @@
+{
+  "label": "run-2-correctifs",
+  "date": "2026-10-25T15:59:06.057Z",
+  "cible": "http://127.0.0.1:8813",
+  "plateforme": "win32 / node v24.15.0",
+  "total": 59,
+  "reussis": 59,
+  "echecs": 0,
+  "etapes": [
+    {
+      "suite": "preparation",
+      "code": 0,
+      "duree_ms": 2082,
+      "total": null,
+      "echecs": null
+    },
+    {
+      "suite": "pipeline",
+      "code": 0,
+      "duree_ms": 11047,
+      "total": null,
+      "echecs": null
+    },
+    {
+      "suite": "unitaires",
+      "code": 0,
+      "duree_ms": 340,
+      "total": 21,
+      "echecs": 0
+    },
+    {
+      "suite": "unitaires-js",
+      "code": 0,
+      "duree_ms": 142,
+      "total": 6,
+      "echecs": 0
+    },
+    {
+      "suite": "integration",
+      "code": 0,
+      "duree_ms": 929,
+      "total": 13,
+      "echecs": 0
+    },
+    {
+      "suite": "api-securite",
+      "code": 0,
+      "duree_ms": 150,
+      "total": 8,
+      "echecs": 0
+    },
+    {
+      "suite": "e2e",
+      "code": 0,
+      "duree_ms": 4871,
+      "total": 8,
+      "echecs": 0
+    },
+    {
+      "suite": "performance",
+      "code": 0,
+      "duree_ms": 20305,
+      "total": 3,
+      "echecs": 0
+    }
+  ],
+  "mesures": {
+    "e2e": {
+      "chargement_complet_ms": 164,
+      "affichage_ms_median": 78,
+      "affichage_ms_max": 78
+    },
+    "performance": {
+      "utilisateurs": 20,
+      "duree_s": 20,
+      "requetes": 15462,
+      "erreurs": 0,
+      "debit_req_s": 773,
+      "api_p50_ms": 113,
+      "api_p95_ms": 192,
+      "api_p99_ms": 199,
+      "parcours_p50_ms": 235,
+      "parcours_p95_ms": 238,
+      "parcours": 1718
+    }
+  },
+  "tests": [
+    {
+      "suite": "unitaires",
+      "groupe": "Normalisation",
+      "nom": "dates texte hétérogènes AP_BIRTH_DATE",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Normalisation",
+      "nom": "téléphone vers E.164",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Normalisation",
+      "nom": "e-mail en minuscules, invalide rejeté",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Normalisation",
+      "nom": "pays et région déduits du code postal",
+      "exigence": "BF-12",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Normalisation",
+      "nom": "clé nom indépendante de l’ordre et des accents",
+      "exigence": "BF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Harmonisation",
+      "nom": "découpage AP_FULL_NAME",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Harmonisation",
+      "nom": "abréviations d’adresse développées",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Harmonisation",
+      "nom": "référentiels de statuts couvrant les deux sources",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Dédoublonnage",
+      "nom": "identité complète = certain",
+      "exigence": "BF-09",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Dédoublonnage",
+      "nom": "e-mail différent, reste identique = certain",
+      "exigence": "BF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Dédoublonnage",
+      "nom": "déménagement + nouvel e-mail = probable (validation humaine)",
+      "exigence": "BF-11",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Dédoublonnage",
+      "nom": "homonyme dans la même ville = écarté",
+      "exigence": "BF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Dédoublonnage",
+      "nom": "évaluation précision / rappel par clusters",
+      "exigence": "CA-03",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Bus de messages",
+      "nom": "partitionnement par clé et offsets par groupe",
+      "exigence": "BF-02",
+      "statut": "reussi",
+      "duree_ms": 11,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Valeurs limites (campagne de recette)",
+      "nom": "date impossible (31/02) rejetée, pas convertie",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Valeurs limites (campagne de recette)",
+      "nom": "date au format américain (mois > 12) rejetée",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Valeurs limites (campagne de recette)",
+      "nom": "téléphone local belge converti avec l’indicatif +32",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Valeurs limites (campagne de recette)",
+      "nom": "nom AP en un seul mot = nom de famille, prénom vide",
+      "exigence": "BF-07",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Valeurs limites (campagne de recette)",
+      "nom": "e-mail absent des deux côtés : jamais concordant",
+      "exigence": "BF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Valeurs limites (campagne de recette)",
+      "nom": "masquage des e-mails dans les exemples de doublons",
+      "exigence": "BNF-07",
+      "statut": "reussi",
+      "duree_ms": 2,
+      "message": ""
+    },
+    {
+      "suite": "unitaires",
+      "groupe": "Configuration",
+      "nom": "date de référence pilotée par l’environnement (APP_REF_DATE)",
+      "exigence": "BNF-10",
+      "statut": "reussi",
+      "duree_ms": 227,
+      "message": ""
+    },
+    {
+      "suite": "unitaires-js",
+      "groupe": "Formatage (navigateur)",
+      "nom": "séparateur de milliers par espace",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "unitaires-js",
+      "groupe": "Formatage (navigateur)",
+      "nom": "montants et pourcentages au format français",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires-js",
+      "groupe": "Formatage (navigateur)",
+      "nom": "valeur selon le périmètre",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "unitaires-js",
+      "groupe": "Formatage (navigateur)",
+      "nom": "ratio recalculé depuis numérateur et dénominateur, pas moyenne de ratios",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires-js",
+      "groupe": "Formatage (navigateur)",
+      "nom": "libellés unifiés",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "unitaires-js",
+      "groupe": "Formatage (navigateur)",
+      "nom": "vue consolidée fournie par la zone gold prioritaire sur la somme AB + AP (R1-05)",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Réconciliation des volumes",
+      "nom": "source = topic = bronze = silver pour les 8 tables",
+      "exigence": "CA-01",
+      "statut": "reussi",
+      "duree_ms": 70,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Réconciliation des volumes",
+      "nom": "aucun retard de consommation (lag Kafka = 0)",
+      "exigence": "CA-01",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Réconciliation des volumes",
+      "nom": "identifiants unifiés uniques et préfixés par la source",
+      "exigence": "BF-06",
+      "statut": "reussi",
+      "duree_ms": 69,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Réconciliation des volumes",
+      "nom": "lignage : chaque ligne silver retrouve sa ligne source",
+      "exigence": "BNF-08",
+      "statut": "reussi",
+      "duree_ms": 17,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Qualité des données",
+      "nom": "chaque anomalie est tracée avec sa règle",
+      "exigence": "CA-04",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Qualité des données",
+      "nom": "dates invalides côté AbAssurance tracées comme côté AssurePlus",
+      "exigence": "BF-08",
+      "statut": "reussi",
+      "duree_ms": 31,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Qualité des données",
+      "nom": "paiement encaissé au-delà de la tolérance après fin de contrat : toujours tracé (DQ15)",
+      "exigence": "BF-08",
+      "statut": "reussi",
+      "duree_ms": 147,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Qualité des données",
+      "nom": "jeu d’essai : un paiement 90 jours après résiliation déclenche DQ15",
+      "exigence": "BF-08",
+      "statut": "reussi",
+      "duree_ms": 26,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Contre-calcul des indicateurs",
+      "nom": "KPI contrats : orphelins exclus, ventilation par source exacte",
+      "exigence": "BF-13",
+      "statut": "reussi",
+      "duree_ms": 5,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Contre-calcul des indicateurs",
+      "nom": "S/P par branche recalculable depuis numérateur et dénominateur",
+      "exigence": "CA-05",
+      "statut": "reussi",
+      "duree_ms": 449,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Contre-calcul des indicateurs",
+      "nom": "multi-équipement consolidé compté par client unique (golden record)",
+      "exigence": "BF-12",
+      "statut": "reussi",
+      "duree_ms": 10,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Contre-calcul des indicateurs",
+      "nom": "précision des fusions automatiques ≥ 98 %",
+      "exigence": "CA-03",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "integration",
+      "groupe": "Protection des données (zone gold)",
+      "nom": "exemples de doublons pseudonymisés (ni nom complet ni date de naissance)",
+      "exigence": "BNF-07",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "Contrat de l’API",
+      "nom": "les 4 jeux de la zone gold répondent en JSON valide",
+      "exigence": "BF-19",
+      "statut": "reussi",
+      "duree_ms": 9,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "Contrat de l’API",
+      "nom": "jeu inconnu ou chemin forgé : 404 sans fuite de chemin",
+      "exigence": "BNF-06",
+      "statut": "reussi",
+      "duree_ms": 6,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "Contrat de l’API",
+      "nom": "API en lecture seule : méthodes d’écriture refusées (405)",
+      "exigence": "BNF-06",
+      "statut": "reussi",
+      "duree_ms": 4,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "En-têtes de sécurité",
+      "nom": "en-têtes de durcissement sur la page et sur l’API",
+      "exigence": "BNF-05",
+      "statut": "reussi",
+      "duree_ms": 3,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "En-têtes de sécurité",
+      "nom": "politique de sécurité du contenu (CSP) sur le tableau de bord",
+      "exigence": "BNF-05",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "En-têtes de sécurité",
+      "nom": "données personnelles non mises en cache partagé",
+      "exigence": "BNF-07",
+      "statut": "reussi",
+      "duree_ms": 2,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "Exposition des fichiers",
+      "nom": "bases, code et configuration inaccessibles depuis le web",
+      "exigence": "BNF-06",
+      "statut": "reussi",
+      "duree_ms": 23,
+      "message": ""
+    },
+    {
+      "suite": "api-securite",
+      "groupe": "Exposition des fichiers",
+      "nom": "ressources statiques servies avec le bon type MIME",
+      "exigence": "BNF-10",
+      "statut": "reussi",
+      "duree_ms": 4,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "chargement du tableau de bord sans erreur JavaScript ni ressource manquante",
+      "exigence": "BF-12",
+      "statut": "reussi",
+      "duree_ms": 164,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "les 7 rubriques s’affichent et portent des graphiques ou tableaux",
+      "exigence": "CA-02",
+      "statut": "reussi",
+      "duree_ms": 2879,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "filtre de périmètre : KPI identiques à l’API pour AB, AP et consolidé",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 31,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "chaque graphique dispose d’une alternative tabulaire",
+      "exigence": "CA-06",
+      "statut": "reussi",
+      "duree_ms": 82,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "accessibilité : langue, lien d’évitement, noms accessibles, contrastes AA",
+      "exigence": "BNF-12",
+      "statut": "reussi",
+      "duree_ms": 89,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "affichage mobile (375 px) sans défilement horizontal",
+      "exigence": "BNF-12",
+      "statut": "reussi",
+      "duree_ms": 146,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "thème sombre : bascule et persistance",
+      "exigence": "BNF-12",
+      "statut": "reussi",
+      "duree_ms": 242,
+      "message": ""
+    },
+    {
+      "suite": "e2e",
+      "groupe": "",
+      "nom": "temps d’affichage du tableau de bord < 3 s (5 chargements)",
+      "exigence": "BNF-09",
+      "statut": "reussi",
+      "duree_ms": 376,
+      "message": ""
+    },
+    {
+      "suite": "performance",
+      "groupe": "",
+      "nom": "taux d’erreur nul sous 20 utilisateurs simultanés",
+      "exigence": "BNF-04",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "performance",
+      "groupe": "",
+      "nom": "ouverture complète du tableau de bord p95 < 3 s",
+      "exigence": "BNF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "suite": "performance",
+      "groupe": "",
+      "nom": "API gold p95 < 500 ms",
+      "exigence": "BNF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    }
+  ]
+}

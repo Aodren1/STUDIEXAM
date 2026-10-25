@@ -1,0 +1,111 @@
+{
+    "suite": "integration",
+    "total": 13,
+    "echecs": 0,
+    "tests": [
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "source = topic = bronze = silver pour les 8 tables",
+            "exigence": "CA-01",
+            "statut": "reussi",
+            "duree_ms": 70,
+            "message": ""
+        },
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "aucun retard de consommation (lag Kafka = 0)",
+            "exigence": "CA-01",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "identifiants unifiés uniques et préfixés par la source",
+            "exigence": "BF-06",
+            "statut": "reussi",
+            "duree_ms": 69,
+            "message": ""
+        },
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "lignage : chaque ligne silver retrouve sa ligne source",
+            "exigence": "BNF-08",
+            "statut": "reussi",
+            "duree_ms": 17,
+            "message": ""
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "chaque anomalie est tracée avec sa règle",
+            "exigence": "CA-04",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "dates invalides côté AbAssurance tracées comme côté AssurePlus",
+            "exigence": "BF-08",
+            "statut": "reussi",
+            "duree_ms": 31,
+            "message": ""
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "paiement encaissé au-delà de la tolérance après fin de contrat : toujours tracé (DQ15)",
+            "exigence": "BF-08",
+            "statut": "reussi",
+            "duree_ms": 147,
+            "message": ""
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "jeu d’essai : un paiement 90 jours après résiliation déclenche DQ15",
+            "exigence": "BF-08",
+            "statut": "reussi",
+            "duree_ms": 26,
+            "message": ""
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "KPI contrats : orphelins exclus, ventilation par source exacte",
+            "exigence": "BF-13",
+            "statut": "reussi",
+            "duree_ms": 5,
+            "message": ""
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "S\/P par branche recalculable depuis numérateur et dénominateur",
+            "exigence": "CA-05",
+            "statut": "reussi",
+            "duree_ms": 449,
+            "message": ""
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "multi-équipement consolidé compté par client unique (golden record)",
+            "exigence": "BF-12",
+            "statut": "reussi",
+            "duree_ms": 10,
+            "message": ""
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "précision des fusions automatiques ≥ 98 %",
+            "exigence": "CA-03",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Protection des données (zone gold)",
+            "nom": "exemples de doublons pseudonymisés (ni nom complet ni date de naissance)",
+            "exigence": "BNF-07",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        }
+    ]
+}

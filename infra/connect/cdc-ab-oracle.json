@@ -1,0 +1,29 @@
+{
+  "name": "cdc-ab-oracle",
+  "config": {
+    "connector.class": "io.debezium.connector.oracle.OracleConnector",
+    "database.hostname": "abf-source-oracle",
+    "database.port": "1521",
+    "database.user": "${file:/kafka/secrets/ab.properties:user}",
+    "database.password": "${file:/kafka/secrets/ab.properties:password}",
+    "database.dbname": "FREEPDB1",
+    "log.mining.strategy": "online_catalog",
+    "topic.prefix": "cdc.ab",
+    "table.include.list": "ABASSURANCE.AB_CLIENT,ABASSURANCE.AB_CONTRAT,ABASSURANCE.AB_SINISTRE,ABASSURANCE.AB_PAIEMENT",
+    "transforms": "vers_client,vers_contrat,vers_sinistre,vers_paiement",
+    "transforms.vers_client.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_client.regex": "cdc.ab.ABASSURANCE.AB_CLIENT",
+    "transforms.vers_client.replacement": "src.ab.client",
+    "transforms.vers_contrat.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_contrat.regex": "cdc.ab.ABASSURANCE.AB_CONTRAT",
+    "transforms.vers_contrat.replacement": "src.ab.contrat",
+    "transforms.vers_sinistre.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_sinistre.regex": "cdc.ab.ABASSURANCE.AB_SINISTRE",
+    "transforms.vers_sinistre.replacement": "src.ab.sinistre",
+    "transforms.vers_paiement.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_paiement.regex": "cdc.ab.ABASSURANCE.AB_PAIEMENT",
+    "transforms.vers_paiement.replacement": "src.ab.paiement",
+    "schema.history.internal.kafka.bootstrap.servers": "abf-flux-kafka:9092",
+    "schema.history.internal.kafka.topic": "_abf_schema_history_ab"
+  }
+}

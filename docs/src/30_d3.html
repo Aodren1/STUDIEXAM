@@ -1,0 +1,215 @@
+<section class="dossier" id="d3">
+  <h1>Dossier 3 — Gestion des risques</h1>
+
+  <div class="question" id="d3q1">
+    <p><b>Question 1.</b> Proposez trois approches de gestion de risques. Listez pour chaque approche les avantages. Choisissez une approche avec justification.</p>
+    <p class="crit">Critères : identifier la ou les sources réelles du problème, mesurer l’impact du problème sur l’avenir du projet, identifier et définir les actions à mener à court terme et à moyen terme ; points justifiés, étayés et défendables.</p>
+  </div>
+
+  <p class="lead">Un risque est un événement incertain qui, s’il survient, a un effet sur les objectifs du projet. Le gérer, c’est l’<b>identifier</b>, l’<b>évaluer</b> (probabilité × impact), choisir une <b>réponse</b> (éviter, réduire, transférer, accepter) et le <b>surveiller</b>. Les approches se distinguent par leur manière d’outiller ce cycle.</p>
+
+  <h2>1.1 Trois approches</h2>
+  <div class="grid3">
+    <div class="box">
+      <h4>A. Approche prédictive normalisée<br><span class="small muted">ISO 31000, PMBOK</span></h4>
+      <p class="small">Processus formel en début de projet puis à chaque jalon : <b>registre des risques</b>, matrice probabilité × impact, plan de réponse et propriétaire par risque, revue en comité de pilotage.</p>
+      <p><b>Avantages</b></p>
+      <ul class="small">
+        <li>Exhaustive et structurée : vue globale du projet.</li>
+        <li>Standard reconnu, <b>auditable</b> : attendu par l’ACPR et le règlement DORA.</li>
+        <li>Langage commun avec la direction et les autres projets.</li>
+        <li>Adaptée aux risques stratégiques, contractuels et financiers.</li>
+      </ul>
+      <p class="small"><b>Limites</b> : lourde, révisée à intervalles espacés, le registre devient vite un document « mort ».</p>
+    </div>
+    <div class="box">
+      <h4>B. AMDEC<br><span class="small muted">Analyse des modes de défaillance, de leurs effets et de leur criticité (FMEA)</span></h4>
+      <p class="small">Pour chaque composant ou étape, on liste les manières de défaillir, leurs effets, et l’on calcule une <b>criticité C = Gravité × Occurrence × Détection</b> (chacune notée de 1 à 5).</p>
+      <p><b>Avantages</b></p>
+      <ul class="small">
+        <li>Très rigoureuse sur les risques <b>techniques</b>.</li>
+        <li>Intègre la <b>détectabilité</b> : relie directement le risque aux tests et à la supervision.</li>
+        <li>Priorise objectivement les actions par la criticité.</li>
+        <li>Particulièrement adaptée à une chaîne de traitement (pipeline) étape par étape.</li>
+      </ul>
+      <p class="small"><b>Limites</b> : chronophage, peu adaptée aux risques humains ou organisationnels.</p>
+    </div>
+    <div class="box">
+      <h4>C. Approche agile intégrée<br><span class="small muted">backlog ajusté au risque, tableau ROAM</span></h4>
+      <p class="small">Les risques sont traités <b>dans le flux du sprint</b> : identifiés aux cérémonies, classés <b>ROAM</b> (Résolu, Pris en charge, Accepté, Atténué), réduits par des US ou des <i>spikes</i> placés tôt dans le backlog, suivis par un <i>risk burndown</i>.</p>
+      <p><b>Avantages</b></p>
+      <ul class="small">
+        <li>Continue : revue toutes les deux semaines, pas une fois par trimestre.</li>
+        <li>Actionnable : chaque réponse devient une US estimée et priorisée.</li>
+        <li>Cohérente avec Scrum : aucune instance supplémentaire.</li>
+        <li>Les tests automatisés <b>matérialisent</b> les risques (un risque détecté devient un test).</li>
+      </ul>
+      <p class="small"><b>Limites</b> : moins exhaustive et moins formelle ; vue courte si elle est utilisée seule.</p>
+    </div>
+  </div>
+
+  <h2>1.2 Choix et justification</h2>
+  <table class="compact">
+    <thead><tr><th>Critère (pondération)</th><th class="num">A. ISO 31000</th><th class="num">B. AMDEC</th><th class="num">C. Agile ROAM</th></tr></thead>
+    <tbody>
+      <tr><td>Cohérence avec Scrum, choisi au Dossier 1 (25 %)</td><td class="num">2</td><td class="num">3</td><td class="num">5</td></tr>
+      <tr><td>Réactivité : délai entre l’apparition d’un risque et l’action (25 %)</td><td class="num">2</td><td class="num">3</td><td class="num">5</td></tr>
+      <tr><td>Conformité et traçabilité attendues par l’ACPR et DORA (20 %)</td><td class="num">5</td><td class="num">4</td><td class="num">3</td></tr>
+      <tr><td>Couverture des risques techniques de la chaîne de données (15 %)</td><td class="num">3</td><td class="num">5</td><td class="num">3</td></tr>
+      <tr><td>Coût de mise en œuvre (15 %)</td><td class="num">2</td><td class="num">2</td><td class="num">5</td></tr>
+      <tr><td><b>Score pondéré (sur 5)</b></td><td class="num"><b>2,75</b></td><td class="num"><b>3,35</b></td><td class="num"><b>4,30</b></td></tr>
+    </tbody>
+  </table>
+  <div class="box key">
+    <h4>Approche retenue : C, l’approche agile intégrée (ROAM), complétée par une AMDEC sur la chaîne de données</h4>
+    <p><b>Pourquoi C.</b> Elle obtient le meilleur score parce qu’elle est la seule à suivre le rythme du projet. Un risque identifié au Daily est classé ROAM à la revue suivante et réduit par une US dès le sprint suivant. C’est exactement ce qui s’est passé au sprint 6 : le risque « fuite de données personnelles » (R5 du Bloc 1) s’est matérialisé dans la campagne de tests (R1-06), et il a été traité dans le sprint au lieu d’attendre un comité trimestriel.</p>
+    <p><b>Pourquoi la compléter.</b> Le point faible de C, la formalisation, compte dans un secteur régulé. Nous ajoutons donc (1) une <b>AMDEC</b> sur les 5 étapes du pipeline, revue à chaque changement d’architecture : c’est là que se concentrent les risques techniques, et la note de détection oriente directement l’effort de test ; (2) un <b>registre au format ISO 31000</b>, généré à partir du tableau ROAM pour le comité de pilotage mensuel et pour les auditeurs. On garde ainsi l’agilité au quotidien et la preuve exigée par le régulateur, sans double saisie.</p>
+  </div>
+
+  <h2>1.3 Mise en œuvre sur le projet</h2>
+  <h3>Le rituel</h3>
+  <ul>
+    <li><b>Daily</b> : tout membre peut signaler un risque, noté sur une carte « Risque » dans Trello.</li>
+    <li><b>Sprint Review</b> (15 min réservées) : chaque nouveau risque est évalué (probabilité × impact, de 1 à 5) et classé ROAM ; son propriétaire est nommé.</li>
+    <li><b>Affinage</b> : les réponses « Atténué » deviennent des US ou des <i>spikes</i> placés en tête du backlog selon leur criticité.</li>
+    <li><b>Comité de pilotage mensuel</b> : registre consolidé et <i>risk burndown</i> (somme des criticités ouvertes).</li>
+  </ul>
+
+  <h3>Registre des principaux risques au sprint 6</h3>
+  <div class="grid2">
+    <table class="compact">
+      <thead><tr><th style="width:9%">Réf.</th><th>Risque</th><th class="num">P</th><th class="num">I</th><th class="num">C</th><th>ROAM</th></tr></thead>
+      <tbody>
+        <tr><td>R1</td><td>Qualité des sources plus mauvaise que prévu</td><td class="num">4</td><td class="num">4</td><td class="num mid">16</td><td>Atténué : 15 règles DQ, bronze rejouable</td></tr>
+        <tr><td>R2</td><td>Dégradation des performances des bases de production</td><td class="num">3</td><td class="num">5</td><td class="num mid">15</td><td>Pris en charge : DBA, nuit, CDC (V2)</td></tr>
+        <tr><td>R3</td><td>Fusion abusive de deux clients</td><td class="num">2</td><td class="num">5</td><td class="num">10</td><td>Atténué : seuil 0,70, précision 100 %, réversible</td></tr>
+        <tr><td>R4</td><td>Compétences Hadoop / Kafka insuffisantes</td><td class="num">4</td><td class="num">3</td><td class="num">12</td><td>Atténué : vélocité en hausse (21 → 25)</td></tr>
+        <tr><td>R5</td><td>Non-conformité RGPD (données de santé)</td><td class="num">2</td><td class="num">5</td><td class="num">10</td><td>Résolu pour R1-06 ; reste « Pris en charge » (AIPD finale, Ranger)</td></tr>
+        <tr><td>R6</td><td>Évolution de la licence Talend</td><td class="num">3</td><td class="num">3</td><td class="num">9</td><td>Accepté : formats ouverts, Talend limité à l’ETL</td></tr>
+        <tr><td>R7</td><td>Indicateurs faux diffusés à la direction</td><td class="num">3</td><td class="num">5</td><td class="num mid">15</td><td>Atténué : contre-calcul automatique (R1-05)</td></tr>
+        <tr><td>R8</td><td>Indisponibilité du Product Owner</td><td class="num">3</td><td class="num">4</td><td class="num">12</td><td>Pris en charge : suppléant désigné</td></tr>
+        <tr><td>R9</td><td>Écart entre environnements de test et de production</td><td class="num">3</td><td class="num">4</td><td class="num">12</td><td>Résolu : recette sur l’image Docker (F4)</td></tr>
+      </tbody>
+    </table>
+    <figure style="margin-top:0">
+      <svg viewBox="0 0 330 300" width="100%" role="img" aria-label="Matrice probabilité impact">
+        <g font-family="system-ui" font-size="11">
+          <g transform="translate(40,10)">
+            <!-- 5x5, ligne 0 = impact 5 -->
+            <g>
+              <rect x="0" y="0" width="54" height="50" fill="#f5c08c"/><rect x="54" y="0" width="54" height="50" fill="#f09a6f"/><rect x="108" y="0" width="54" height="50" fill="#e56b5a"/><rect x="162" y="0" width="54" height="50" fill="#d64545"/><rect x="216" y="0" width="54" height="50" fill="#c62828"/>
+              <rect x="0" y="50" width="54" height="50" fill="#f7dfa6"/><rect x="54" y="50" width="54" height="50" fill="#f5c08c"/><rect x="108" y="50" width="54" height="50" fill="#f09a6f"/><rect x="162" y="50" width="54" height="50" fill="#e56b5a"/><rect x="216" y="50" width="54" height="50" fill="#d64545"/>
+              <rect x="0" y="100" width="54" height="50" fill="#d9ecc8"/><rect x="54" y="100" width="54" height="50" fill="#f7dfa6"/><rect x="108" y="100" width="54" height="50" fill="#f5c08c"/><rect x="162" y="100" width="54" height="50" fill="#f09a6f"/><rect x="216" y="100" width="54" height="50" fill="#e56b5a"/>
+              <rect x="0" y="150" width="54" height="50" fill="#c5e3b0"/><rect x="54" y="150" width="54" height="50" fill="#d9ecc8"/><rect x="108" y="150" width="54" height="50" fill="#f7dfa6"/><rect x="162" y="150" width="54" height="50" fill="#f5c08c"/><rect x="216" y="150" width="54" height="50" fill="#f09a6f"/>
+              <rect x="0" y="200" width="54" height="50" fill="#b3d99a"/><rect x="54" y="200" width="54" height="50" fill="#c5e3b0"/><rect x="108" y="200" width="54" height="50" fill="#d9ecc8"/><rect x="162" y="200" width="54" height="50" fill="#f7dfa6"/><rect x="216" y="200" width="54" height="50" fill="#f5c08c"/>
+            </g>
+            <g font-weight="700" fill="#0b0b0b" text-anchor="middle">
+              <!-- x = (P-1)*54+27, y = (5-I)*50+25 -->
+              <text x="189" y="58">R1</text>
+              <text x="135" y="20">R2</text>
+              <text x="81" y="20">R3</text>
+              <text x="189" y="108">R4</text>
+              <text x="81" y="40">R5</text>
+              <text x="135" y="125">R6</text>
+              <text x="135" y="40">R7</text>
+              <text x="135" y="75">R8</text>
+              <text x="135" y="95">R9</text>
+            </g>
+          </g>
+          <text x="175" y="285" text-anchor="middle" fill="#3d3c39">Probabilité (1 → 5)</text>
+          <text x="14" y="135" text-anchor="middle" fill="#3d3c39" transform="rotate(-90 14 135)">Impact (1 → 5)</text>
+        </g>
+      </svg>
+      <figcaption>Figure 11 — Matrice probabilité × impact des risques ouverts.</figcaption>
+    </figure>
+  </div>
+
+  <h3>Extrait de l’AMDEC de la chaîne de données</h3>
+  <table class="compact">
+    <thead><tr><th style="width:12%">Étape</th><th style="width:22%">Mode de défaillance</th><th style="width:20%">Effet</th><th class="num">G</th><th class="num">O</th><th class="num">D</th><th class="num">C</th><th>Action → criticité après</th></tr></thead>
+    <tbody>
+      <tr><td>Extraction</td><td>Lignes perdues lors de l’extraction</td><td>Indicateurs sous-évalués</td><td class="num">5</td><td class="num">2</td><td class="num">2</td><td class="num">20</td><td>Réconciliation automatique source = silver (D 2 → 1) → 10</td></tr>
+      <tr><td>Harmonisation</td><td>Règle appliquée à une seule source (R1-03)</td><td>Anomalies invisibles</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">36</td><td>Jeux d’essai symétriques (D 4 → 1) → 9</td></tr>
+      <tr><td>Rapprochement</td><td>Fusion de deux personnes différentes</td><td>Dossiers mélangés, RGPD</td><td class="num">5</td><td class="num">2</td><td class="num">3</td><td class="num">30</td><td>Vérité terrain, seuil conservateur, fusion réversible → 10</td></tr>
+      <tr><td>Agrégation</td><td>Double comptage par source (R1-05)</td><td>Décision commerciale faussée</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">48</td><td>Contre-calcul indépendant par golden record → 12</td></tr>
+      <tr><td>Restitution</td><td>Donnée identifiante exposée (R1-06)</td><td>Sanction CNIL</td><td class="num">5</td><td class="num">3</td><td class="num">4</td><td class="num">60</td><td>Pseudonymisation + test automatique + no-store → 10</td></tr>
+      <tr><td>Exploitation</td><td>Job en échec non détecté</td><td>Chiffres périmés</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">36</td><td>Alertes de lag et d’échec (US-7.3, S7) → 9</td></tr>
+    </tbody>
+  </table>
+  <p class="small">G = gravité, O = occurrence, D = difficulté de détection (1 = détecté à coup sûr), C = G × O × D. Seuil d’action : C ≥ 20. Les trois criticités les plus fortes avant action (60, 48, 36) correspondent exactement à des anomalies réellement trouvées par la campagne de tests : l’AMDEC et les tests se renforcent mutuellement.</p>
+</section>
+
+<section id="d3-crise" style="break-before: page">
+  <h2>1.4 Application : résoudre une situation critique pour le projet</h2>
+  <div class="box warn">
+    <h4>La situation</h4>
+    <p>Sprint 9. Lors de la première recette sur l’extrait réel pseudonymisé, la direction financière compare le tableau de bord à son reporting officiel : les <b>primes consolidées sont inférieures de 7 %</b>. Elle déclare l’outil « non fiable » et demande l’arrêt des démonstrations. Le sponsor convoque le Scrum Master et le PO sous 48 heures. La crédibilité du projet, et donc sa survie, est en jeu.</p>
+  </div>
+
+  <h3>Étape 1 — Identifier les sources réelles du problème</h3>
+  <p>On ne corrige pas avant d’avoir compris. La méthode d’investigation combine un <b>diagramme d’Ishikawa</b>, qui explore les causes possibles par famille (5M), et les <b>5 pourquoi</b>, qui permettent de remonter à la cause racine. L’enquête repose sur l’existant : le lignage (<code>source</code>, <code>source_id</code>) et la zone bronze permettent de rapprocher les chiffres <b>ligne à ligne</b> sur un échantillon de 500 contrats, sans réinterroger les bases de production.</p>
+  <div class="grid2">
+    <table class="compact">
+      <thead><tr><th>Famille (5M)</th><th>Hypothèse vérifiée</th><th class="num">Part de l’écart</th></tr></thead>
+      <tbody>
+        <tr><td>Méthode</td><td>Le reporting financier compte la <b>prime émise TTC</b> (taxes et frais inclus) ; le tableau de bord, la <b>prime annualisée HT</b></td><td class="num">≈ 4,6 pts</td></tr>
+        <tr><td>Méthode</td><td>Prime AP mensuelle × 12 pour des contrats démarrés en cours d’année, au lieu de la prime acquise au prorata</td><td class="num">≈ 1,1 pt</td></tr>
+        <tr><td>Matière (données)</td><td>Contrats à prime nulle ou négative exclus (DQ07) mais présents dans le reporting</td><td class="num">≈ 0,3 pt</td></tr>
+        <tr><td>Matière (données)</td><td>Contrats « suspendus » exclus du portefeuille actif</td><td class="num">≈ 1,0 pt</td></tr>
+        <tr><td>Machine</td><td>Perte de lignes dans la chaîne</td><td class="num">0 (réconciliation verte)</td></tr>
+        <tr><td>Main-d’œuvre / Milieu</td><td>Indicateur jamais validé par la direction financière (absente des revues des sprints 4 et 5)</td><td class="num">cause de fond</td></tr>
+      </tbody>
+    </table>
+    <div>
+      <p><b>Les 5 pourquoi</b></p>
+      <ol class="small">
+        <li>Pourquoi les primes diffèrent-elles ? Parce que les deux chiffres ne mesurent pas la même chose.</li>
+        <li>Pourquoi ? Parce que « prime » n’a jamais été définie précisément (émise, acquise, annualisée ; HT ou TTC).</li>
+        <li>Pourquoi ? Parce que l’US-4.4 a été acceptée sans définition signée par le propriétaire de la donnée.</li>
+        <li>Pourquoi ? Parce que la DoR n’exige pas de définition métier pour les indicateurs, et que la direction financière n’assistait pas aux revues.</li>
+        <li>Pourquoi ? Parce qu’aucun propriétaire de données (<i>data owner</i>) n’a été nommé pour les indicateurs financiers.</li>
+      </ol>
+      <p class="small"><b>Conclusion</b> : la chaîne technique est saine (0 ligne perdue). La source réelle est <b>organisationnelle et méthodologique</b> : absence de définition partagée des indicateurs et de propriétaire de la donnée. Corriger seulement le code aurait laissé la cause en place.</p>
+    </div>
+  </div>
+
+  <h3>Étape 2 — Mesurer l’impact sur l’avenir du projet</h3>
+  <table class="compact">
+    <thead><tr><th style="width:20%">Dimension</th><th>Impact si rien n’est fait</th><th style="width:34%">Impact avec le plan d’action</th></tr></thead>
+    <tbody>
+      <tr><td><b>Confiance / sponsor</b></td><td>Perte du soutien de la direction financière, principale utilisatrice des indicateurs ; arrêt possible du projet.</td><td>Confiance rétablie par la transparence et une définition co-signée.</td></tr>
+      <tr><td><b>Délai</b></td><td>Blocage du go / no-go (critère n°3) : MVP repoussé de 2 à 3 mois.</td><td>≈ 1 sprint de correctifs ; jalon du sprint 12 maintenu grâce à la marge de vélocité (2.5 du Dossier 1).</td></tr>
+      <tr><td><b>Coût</b></td><td>2 à 3 mois d’équipe supplémentaires : 8 ETP × 600 € × 44 à 66 jours ≈ 211 000 à 317 000 €.</td><td>≈ 23 points, soit un sprint déjà budgété (≈ 48 000 €), absorbé par la marge.</td></tr>
+      <tr><td><b>Valeur</b></td><td>Objectif OE4 (réduction des coûts de reporting, 1,2 à 2 M€ / an) compromis : la finance garde ses deux chaînes.</td><td>Préservée, et renforcée par la réconciliation automatique avec le reporting officiel.</td></tr>
+      <tr><td><b>Travail déjà réalisé</b></td><td>Remis en cause aux yeux des métiers.</td><td>Préservé à plus de 90 % : ingestion, bronze, silver, rapprochement et toutes les autres statistiques sont inchangés ; seules les règles d’agrégation de la zone gold évoluent, et elles sont <b>rejouées depuis le bronze</b> sans réextraction.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Étape 3 — Actions à court terme (2 semaines)</h3>
+  <table class="compact">
+    <thead><tr><th style="width:5%">#</th><th>Action</th><th style="width:16%">Responsable</th><th style="width:10%">Délai</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>Communiquer sans attendre</b> : note au sponsor et à la direction financière expliquant l’écart (le diagnostic, pas des excuses) et le plan.</td><td>PO + SM</td><td>J+2</td></tr>
+      <tr><td>2</td><td><b>Contenir</b> : l’indicateur « primes » est masqué par drapeau de fonctionnalité, avec la mention « définition en cours de validation ». Les autres statistiques restent en recette.</td><td>Équipe</td><td>J+1</td></tr>
+      <tr><td>3</td><td><b>Atelier de définition</b> (2 h) avec la direction financière et l’actuariat : prime émise, acquise, annualisée ; HT / TTC ; traitement des suspendus. Définitions co-signées.</td><td>PO</td><td>J+5</td></tr>
+      <tr><td>4</td><td><b>Corriger</b> : US « Indicateurs de primes conformes au référentiel financier » (8 points) en tête du sprint 10 ; affichage des deux notions (émise TTC pour la finance, annualisée HT pour le pilotage commercial).</td><td>Équipe</td><td>Sprint 10</td></tr>
+      <tr><td>5</td><td><b>Prouver</b> : nouveau test de réconciliation automatique avec le reporting officiel (écart &lt; 0,5 %), ajouté à la campagne et à la grille go / no-go.</td><td>Référent qualité</td><td>Sprint 10</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Étape 4 — Actions à moyen terme (1 à 3 mois)</h3>
+  <table class="compact">
+    <thead><tr><th style="width:5%">#</th><th>Action</th><th style="width:30%">Cause traitée</th></tr></thead>
+    <tbody>
+      <tr><td>6</td><td>Nommer un <b>data owner</b> par domaine (finance, sinistres, clients) qui signe la définition de ses indicateurs.</td><td>Absence de propriétaire de la donnée</td></tr>
+      <tr><td>7</td><td>Ajouter à la <b>DoR</b> : « tout indicateur a une définition signée par son data owner, avec un exemple chiffré ».</td><td>US acceptée sans définition</td></tr>
+      <tr><td>8</td><td>Publier un <b>glossaire métier</b> dans le catalogue de données (US-5.2), relié au lignage de chaque indicateur.</td><td>Vocabulaire non partagé</td></tr>
+      <tr><td>9</td><td>Rendre la présence des data owners <b>obligatoire aux revues de sprint</b> qui concernent leur domaine ; le Scrum Master suit la participation.</td><td>Direction financière absente des revues</td></tr>
+      <tr><td>10</td><td>Réconciliation <b>mensuelle automatique</b> avec les reportings officiels, publiée dans l’onglet Qualité.</td><td>Écart découvert tardivement</td></tr>
+      <tr><td>11</td><td>Ajouter le risque « définition des indicateurs » au registre (R10) et à l’AMDEC de l’étape Agrégation ; en faire le sujet de la rétrospective du sprint 9.</td><td>Apprentissage de l’organisation</td></tr>
+    </tbody>
+  </table>
+  <div class="box key">
+    <p><b>Ce que montre ce cas</b> : la méthode agile n’a pas empêché le problème, mais elle l’a fait apparaître au <b>sprint 9 sur un échantillon</b>, et non en production devant le comité exécutif. La traçabilité (lignage, bronze rejouable) a permis un diagnostic en quelques jours. La correction préserve l’essentiel du travail réalisé. Enfin, les actions à moyen terme traitent la cause organisationnelle, pas seulement le symptôme technique.</p>
+  </div>
+</section>

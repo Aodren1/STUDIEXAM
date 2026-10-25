@@ -1,0 +1,64 @@
+<section class="dossier" id="d1">
+  <h1>Dossier 1 — Les outils</h1>
+
+  <div class="question" id="d1q1">
+    <p><b>Question 1.</b> Listez les avantages d’utilisation de l’approche agile contre les anciennes approches de gestion de projet. Quel problème l’approche agile essaie de résoudre ?</p>
+    <p class="crit">Critère : les règles et les contraintes explicitées sont issues des standards et des bonnes pratiques de la qualité logicielle.</p>
+  </div>
+
+  <h2>1.1 Le problème que l’agilité cherche à résoudre</h2>
+  <p>Les approches dites « traditionnelles » (cascade, puis cycle en V) organisent le projet en <b>phases successives</b> : expression du besoin, spécification, conception, réalisation, tests, recette, mise en production. Chaque phase produit un livrable validé qui sert d’entrée à la suivante. Ce modèle fonctionne quand le besoin est stable, connu dès le départ et que la technologie est maîtrisée, comme dans un projet de construction.</p>
+  <p>Un projet logiciel, et a fortiori un projet de données, ne remplit presque jamais ces conditions. L’agilité cherche à résoudre <b>quatre problèmes</b> :</p>
+  <table class="compact">
+    <thead><tr><th style="width:22%">Problème</th><th>Manifestation dans un cycle en V</th><th style="width:34%">Illustration sur notre projet</th></tr></thead>
+    <tbody>
+      <tr><td><b>L’effet tunnel</b></td><td>Entre la signature du cahier des charges et la recette, le client ne voit rien pendant des mois. Il découvre le produit quand il est presque trop tard pour le changer.</td><td>Sans démonstration intermédiaire, la direction ne verrait les statistiques consolidées qu’au mois 6.</td></tr>
+      <tr><td><b>Le besoin qui change</b></td><td>Une spécification figée au départ devient fausse en cours de route ; chaque changement passe par une procédure lourde (avenant, nouvelle spécification).</td><td>Le rachat d’AssurePlus est récent : le périmètre des données et les priorités métier vont évoluer pendant l’intégration.</td></tr>
+      <tr><td><b>La découverte tardive des défauts</b></td><td>Les tests arrivent en fin de cycle. Plus un défaut est découvert tard, plus il coûte cher à corriger (règle classique du génie logiciel : un défaut trouvé en production coûte jusqu’à 10 à 100 fois plus qu’en conception).</td><td>Notre campagne de tests a trouvé au sprint 6 une fuite de données personnelles (R1-06) : corrigée en une demi-journée, au lieu d’une non-conformité RGPD découverte après la mise en production.</td></tr>
+      <tr><td><b>L’incertitude technique</b></td><td>Les estimations initiales reposent sur des hypothèses non vérifiées ; les écarts de délai et de coût apparaissent tard.</td><td>Qualité réelle des données sources, montée en compétence Kafka / Hadoop : risques R1 et R4 du Bloc 1.</td></tr>
+    </tbody>
+  </table>
+  <p>La réponse agile tient en une idée : <b>réduire la boucle de rétroaction</b>. On livre par petits incréments utilisables (toutes les deux semaines), on les montre au client, on mesure, et l’on ajuste le plan. Le Manifeste agile (2001) l’exprime en quatre préférences : <i>les individus et leurs interactions</i> plutôt que les processus et les outils, <i>un logiciel qui fonctionne</i> plutôt qu’une documentation exhaustive, <i>la collaboration avec le client</i> plutôt que la négociation contractuelle, <i>l’adaptation au changement</i> plutôt que le suivi d’un plan. Le manifeste précise que les éléments de droite gardent de la valeur : l’agilité n’abandonne ni la documentation ni le plan, elle les subordonne au résultat.</p>
+
+  <h2>1.2 Avantages de l’approche agile par rapport aux approches traditionnelles</h2>
+  <table class="compact">
+    <thead><tr><th style="width:18%">Dimension</th><th style="width:30%">Cascade / cycle en V</th><th style="width:30%">Agile (Scrum)</th><th>Avantage concret</th></tr></thead>
+    <tbody>
+      <tr><td><b>Livraison de valeur</b></td><td>Une seule livraison en fin de projet (« big bang »).</td><td>Un incrément utilisable à chaque sprint ; les fonctions à plus forte valeur sont livrées en premier (MoSCoW).</td><td>La valeur arrive tôt : le tableau de bord consolidé est démontré dès le sprint 5.</td></tr>
+      <tr><td><b>Gestion du changement</b></td><td>Changement = avenant, impact sur tout le cycle.</td><td>Le backlog est réordonné à chaque sprint par le Product Owner ; le sprint en cours est protégé.</td><td>On absorbe le changement sans désorganiser l’équipe.</td></tr>
+      <tr><td><b>Qualité</b></td><td>Tests et recette concentrés en fin de cycle, souvent compressés quand le projet dérape.</td><td>Tests continus, automatisés, intégrés à la « Definition of Done » ; intégration continue.</td><td>Les défauts sont trouvés quand ils coûtent peu (12 anomalies corrigées au sprint 6).</td></tr>
+      <tr><td><b>Visibilité et pilotage</b></td><td>Avancement déclaratif (« 80 % fait ») jusqu’à la recette.</td><td>Avancement mesuré en fonctionnalités terminées (DoD), burndown, vélocité.</td><td>Un sponsor sait chaque quinzaine ce qui est réellement fini.</td></tr>
+      <tr><td><b>Implication du client</b></td><td>Forte au début (spécification) et à la fin (recette).</td><td>Continue : Product Owner métier dans l’équipe, revue de sprint avec les parties prenantes.</td><td>Le produit correspond au besoin réel, pas au besoin supposé six mois plus tôt.</td></tr>
+      <tr><td><b>Gestion des risques</b></td><td>Les risques techniques se révèlent en intégration, tard.</td><td>Les éléments risqués sont traités tôt (backlog ajusté au risque) ; chaque sprint est une expérience courte.</td><td>Un échec coûte au plus deux semaines, pas six mois.</td></tr>
+      <tr><td><b>Engagement de l’équipe</b></td><td>Rôles cloisonnés par phase (analystes, développeurs, testeurs).</td><td>Équipe pluridisciplinaire auto-organisée, responsable de bout en bout.</td><td>Moins de pertes de connaissance aux passages de relais.</td></tr>
+      <tr><td><b>Coût et délai</b></td><td>Périmètre fixe, coût et délai variables (dérives).</td><td>Coût et délai fixes (équipe stable × sprints), <b>périmètre variable</b> priorisé.</td><td>Le budget du Bloc 1 (≈ 900 k€ pour le MVP) est tenu : on arbitre le contenu, pas l’enveloppe.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.3 Limites de l’agilité et choix d’une démarche hybride</h2>
+  <p>L’agilité n’est pas exempte de limites, et les bonnes pratiques recommandent de les connaître pour les encadrer :</p>
+  <ul>
+    <li><b>Disponibilité du métier</b> : sans Product Owner disponible (au moins 50 %), l’équipe décide seule et le bénéfice disparaît. Nous demandons donc un PO à temps plein, issu des opérations.</li>
+    <li><b>Contraintes réglementaires</b> : une assurance doit produire des preuves (AIPD au titre du RGPD, exigences DORA, Solvabilité II) à des dates fixées. Ces jalons ne se négocient pas sprint par sprint.</li>
+    <li><b>Contrat et budget</b> : un engagement de résultat sur un périmètre fixe se marie mal avec un périmètre variable ; il faut contractualiser des capacités (équipe × sprints) et un objectif de MVP.</li>
+    <li><b>Architecture</b> : l’agilité ne dispense pas d’une architecture cible. Celle-ci a été posée au Bloc 1 et évolue par incréments.</li>
+  </ul>
+  <div class="box key">
+    <h4>Notre choix : Scrum, avec des jalons de conformité (démarche hybride)</h4>
+    <p>Le Bloc 1 retenait Scrum avec des sprints de 2 semaines. Nous le confirmons et l’encadrons par deux <b>jalons non négociables</b> issus du cycle en V : une <b>AIPD initiale</b> validée par le DPO avant toute utilisation de données réelles en préproduction (sprint 4), puis l’<b>AIPD finale</b>, une <b>recette sécurité</b> et un comité <b>go / no-go</b> avant la mise en production du MVP (sprint 12). C’est l’approche recommandée pour les secteurs régulés : on garde l’adaptabilité de Scrum, et l’on y ajoute des points de contrôle formels qui apportent les preuves attendues par les autorités (ACPR, CNIL).</p>
+  </div>
+
+  <h2>1.4 Règles de qualité logicielle qui encadrent l’approche</h2>
+  <p>Les règles appliquées au projet sont issues de référentiels reconnus, ce qui les rend opposables et vérifiables :</p>
+  <table class="compact">
+    <thead><tr><th style="width:24%">Référentiel</th><th>Ce que nous en retenons</th><th style="width:30%">Où c’est appliqué</th></tr></thead>
+    <tbody>
+      <tr><td><b>Scrum Guide</b> (Schwaber &amp; Sutherland, 2020)</td><td>3 responsabilités (PO, Scrum Master, développeurs), 5 événements à durée bornée, 3 artefacts avec leur engagement (objectif de produit, objectif de sprint, Definition of Done).</td><td>Dossier 1 Q2, cartes « Rôles » et « Déroulé d’un sprint » du Trello</td></tr>
+      <tr><td><b>ISO/IEC 25010</b> (qualité des produits logiciels)</td><td>8 caractéristiques : adéquation fonctionnelle, performance, compatibilité, utilisabilité, fiabilité, sécurité, maintenabilité, portabilité.</td><td>Chaque caractéristique est couverte par une suite de tests (Dossier 2 Q1)</td></tr>
+      <tr><td><b>ISTQB</b> (bonnes pratiques de test)</td><td>Pyramide des tests, tests fondés sur les risques, tests de non-régression, traçabilité exigence → test.</td><td>Stratégie de tests, matrice de traçabilité (annexe)</td></tr>
+      <tr><td><b>INVEST</b> (Bill Wake)</td><td>Une User Story doit être Indépendante, Négociable, porteuse de Valeur, Estimable, Petite, Testable.</td><td>Definition of Ready</td></tr>
+      <tr><td><b>OWASP</b> (ASVS, Top 10)</td><td>En-têtes de sécurité, contrôle d’accès, protection des données, absence de divulgation d’erreurs.</td><td>Suite de tests « API et sécurité », DoD</td></tr>
+      <tr><td><b>RGAA 4.1</b></td><td>Contrastes, alternatives textuelles, navigation au clavier.</td><td>Tests E2E d’accessibilité, DoD</td></tr>
+    </tbody>
+  </table>
+</section>

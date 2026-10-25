@@ -1,0 +1,103 @@
+{
+    "suite": "integration",
+    "total": 12,
+    "echecs": 4,
+    "tests": [
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "source = topic = bronze = silver pour les 8 tables",
+            "exigence": "CA-01",
+            "statut": "reussi",
+            "duree_ms": 73,
+            "message": ""
+        },
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "aucun retard de consommation (lag Kafka = 0)",
+            "exigence": "CA-01",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "identifiants unifiés uniques et préfixés par la source",
+            "exigence": "BF-06",
+            "statut": "reussi",
+            "duree_ms": 68,
+            "message": ""
+        },
+        {
+            "groupe": "Réconciliation des volumes",
+            "nom": "lignage : chaque ligne silver retrouve sa ligne source",
+            "exigence": "BNF-08",
+            "statut": "reussi",
+            "duree_ms": 17,
+            "message": ""
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "chaque anomalie est tracée avec sa règle",
+            "exigence": "CA-04",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "dates invalides côté AbAssurance tracées comme côté AssurePlus",
+            "exigence": "BF-08",
+            "statut": "echec",
+            "duree_ms": 46,
+            "message": "anomalies AB tracées : attendu array (\n  0 => 'DQ02',\n  1 => 'DQ09',\n), obtenu array (\n)"
+        },
+        {
+            "groupe": "Qualité des données",
+            "nom": "aucun paiement postérieur à la fin du contrat sans anomalie tracée",
+            "exigence": "BF-08",
+            "statut": "echec",
+            "duree_ms": 132,
+            "message": "paiements hors période de couverture non tracés : attendu 0, obtenu 85"
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "KPI contrats : orphelins exclus, ventilation par source exacte",
+            "exigence": "BF-13",
+            "statut": "reussi",
+            "duree_ms": 4,
+            "message": ""
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "S\/P par branche recalculable depuis numérateur et dénominateur",
+            "exigence": "CA-05",
+            "statut": "reussi",
+            "duree_ms": 449,
+            "message": ""
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "multi-équipement consolidé compté par client unique (golden record)",
+            "exigence": "BF-12",
+            "statut": "echec",
+            "duree_ms": 10,
+            "message": "clients équipés en vue consolidée : attendu 4950, obtenu 5153"
+        },
+        {
+            "groupe": "Contre-calcul des indicateurs",
+            "nom": "précision des fusions automatiques ≥ 98 %",
+            "exigence": "CA-03",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Protection des données (zone gold)",
+            "nom": "exemples de doublons pseudonymisés (ni nom complet ni date de naissance)",
+            "exigence": "BNF-07",
+            "statut": "echec",
+            "duree_ms": 0,
+            "message": "nom de famille en clair pour AB-100127"
+        }
+    ]
+}

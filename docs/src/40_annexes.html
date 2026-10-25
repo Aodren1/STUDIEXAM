@@ -1,0 +1,43 @@
+<section class="dossier" id="annexes">
+  <h1>Annexes</h1>
+
+  <h2>A.1 Critères d’acceptation des 35 User Stories</h2>
+  <p class="small">Reproduits depuis les checklists des cartes Trello (source : <code>docs/trello/backlog.json</code>, qui sert aussi à alimenter le tableau).</p>
+  <div class="two-col small">
+    <!--GEN:criteres-->
+  </div>
+</section>
+
+<section style="break-before: page">
+  <h2>A.2 Matrice de traçabilité exigences → tests (campagne 2)</h2>
+  <p class="small">Générée à partir de <code>reports/run-2-correctifs/rapport.json</code> : chaque test automatisé porte la référence de l’exigence du Bloc 1 qu’il vérifie.</p>
+  <!--GEN:tracabilite-->
+
+  <h2>A.3 Le logiciel de validation après correctifs</h2>
+  <p class="small">Captures produites automatiquement par la suite E2E (Chrome headless) pendant la campagne 2.</p>
+  <div class="grid2">
+    <figure><div class="shot crop"><img src="captures/app/onglet-synthese.png" alt="Rubrique Synthèse"></div><figcaption>Synthèse, vue consolidée.</figcaption></figure>
+    <figure><div class="shot crop"><img src="captures/app/onglet-doublons.png" alt="Rubrique Doublons"></div><figcaption>Doublons : exemples pseudonymisés après R1-06.</figcaption></figure>
+    <figure><div class="shot crop"><img src="captures/app/onglet-clients.png" alt="Rubrique Clients"></div><figcaption>Clients : multi-équipement par client unique après R1-05.</figcaption></figure>
+    <figure><div class="shot crop"><img src="captures/app/onglet-qualite.png" alt="Rubrique Qualité et pipeline"></div><figcaption>Qualité et pipeline : 15 règles DQ (dont DQ15).</figcaption></figure>
+  </div>
+
+  <h2>A.4 Glossaire</h2>
+  <table class="compact">
+    <tbody>
+      <tr><td style="width:20%"><b>AIPD</b></td><td>Analyse d’impact relative à la protection des données (RGPD, art. 35).</td></tr>
+      <tr><td><b>AMDEC</b></td><td>Analyse des modes de défaillance, de leurs effets et de leur criticité.</td></tr>
+      <tr><td><b>Bronze / silver / gold</b></td><td>Zones du lac de données : brute et rejouable / unifiée et qualifiée / agrégats métier.</td></tr>
+      <tr><td><b>CI</b></td><td>Intégration continue : exécution automatique des contrôles à chaque modification du code.</td></tr>
+      <tr><td><b>DoR / DoD</b></td><td>Definition of Ready / Definition of Done : conditions d’entrée et de sortie d’une User Story dans un sprint.</td></tr>
+      <tr><td><b>E2E</b></td><td>Test de bout en bout, exécuté dans un vrai navigateur.</td></tr>
+      <tr><td><b>Golden record</b></td><td>Identifiant maître regroupant les fiches d’une même personne dans les deux bases.</td></tr>
+      <tr><td><b>MoSCoW</b></td><td>Priorisation : Must, Should, Could, Won’t.</td></tr>
+      <tr><td><b>p95</b></td><td>95<sup>e</sup> percentile : 95 % des mesures sont inférieures à cette valeur.</td></tr>
+      <tr><td><b>ROAM</b></td><td>Classement d’un risque : Resolved, Owned, Accepted, Mitigated.</td></tr>
+      <tr><td><b>US</b></td><td>User Story : besoin exprimé du point de vue d’un utilisateur, livrable en un sprint.</td></tr>
+    </tbody>
+  </table>
+</section>
+</body>
+</html>

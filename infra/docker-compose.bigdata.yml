@@ -1,0 +1,121 @@
+# ----------------------------------------------------------------------------------------------
+# Architecture cible — maquette de référence (poste de développement, ≥ 16 Go RAM).
+# Reproduit à petite échelle la chaîne retenue :
+#   Oracle (AB) + SQL Server (AP) → Talend / Kafka Connect → Kafka → Spark → HDFS → Superset
+#
+# Nomenclature :  conteneurs  abf-<couche>-<composant>   (abf = AbAssurance Fusion)
+#                 topics      src.<ab|ap>.<entité>      puis  silver.<entité>, gold.<indicateur>
+#                 HDFS        /lake/{bronze,silver,gold}/<source>/<entité>/date_ingestion=YYYY-MM-DD
+#
+# Démarrage :  docker compose -f infra/docker-compose.bigdata.yml up -d
+# ----------------------------------------------------------------------------------------------
+name: abf-bigdata
+
+x-hadoop-env: &hadoop-env
+  CORE_CONF_fs_defaultFS: hdfs://abf-stockage-namenode:9000
+  HDFS_CONF_dfs_replication: "1"          # 3 en production (cf. dimensionnement du dossier)
+
+services:
+  # ---------------------------------------------------------------- couche sources (existant)
+  abf-source-oracle:
+    image: gvenzl/oracle-free:23-slim
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:?définir dans .env}
+      APP_USER: abassurance
+      APP_USER_PASSWORD: ${ORACLE_APP_PASSWORD:?définir dans .env}
+    volumes:
+      - ./sql/oracle_abassurance.sql:/container-entrypoint-initdb.d/01_schema.sql:ro
+    ports: ["1521:1521"]
+
+  abf-source-sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?définir dans .env}
+      MSSQL_AGENT_ENABLED: "true"         # requis par le CDC SQL Server
+    ports: ["1433:1433"]
+
+  # ---------------------------------------------------------------- couche ingestion / flux
+  abf-flux-kafka:
+    image: apache/kafka:3.8.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller        # mode KRaft, sans ZooKeeper
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://abf-flux-kafka:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@abf-flux-kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_LOG_RETENTION_HOURS: 168                # 7 jours de rejouabilité
+    ports: ["9092:9092"]
+
+  # Kafka Connect + Debezium : capture des changements (CDC) Oracle LogMiner / SQL Server CDC.
+  # Talend (Qlik Talend Data Integration) orchestre les reprises historiques et les jobs ETL
+  # complexes ; son Remote Engine est soumis à licence et n'est donc pas inclus dans la maquette.
+  abf-flux-connect:
+    image: quay.io/debezium/connect:2.7
+    depends_on: [abf-flux-kafka]
+    environment:
+      BOOTSTRAP_SERVERS: abf-flux-kafka:9092
+      GROUP_ID: abf-connect
+      CONFIG_STORAGE_TOPIC: _abf_connect_configs
+      OFFSET_STORAGE_TOPIC: _abf_connect_offsets
+      STATUS_STORAGE_TOPIC: _abf_connect_status
+    volumes:
+      - ./connect:/kafka/connectors-config:ro
+    ports: ["8083:8083"]
+
+  abf-flux-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    depends_on: [abf-flux-kafka]
+    environment:
+      KAFKA_CLUSTERS_0_NAME: abf
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: abf-flux-kafka:9092
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: connect
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://abf-flux-connect:8083
+    ports: ["8081:8080"]
+
+  # ---------------------------------------------------------------- couche stockage (HDFS)
+  abf-stockage-namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    environment:
+      <<: *hadoop-env
+      CLUSTER_NAME: abf-lake
+    volumes: [namenode:/hadoop/dfs/name]
+    ports: ["9870:9870"]
+
+  abf-stockage-datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    depends_on: [abf-stockage-namenode]
+    environment:
+      <<: *hadoop-env
+      SERVICE_PRECONDITION: abf-stockage-namenode:9870
+    volumes: [datanode:/hadoop/dfs/data]
+
+  # ---------------------------------------------------------------- couche traitement (Spark)
+  abf-traitement-spark-master:
+    image: apache/spark:3.5.1
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    ports: ["8080:8080", "7077:7077"]
+
+  abf-traitement-spark-worker:
+    image: apache/spark:3.5.1
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://abf-traitement-spark-master:7077
+    depends_on: [abf-traitement-spark-master]
+    environment:
+      SPARK_WORKER_MEMORY: 4g
+      SPARK_WORKER_CORES: "2"
+    volumes:
+      - ./spark:/opt/abf/jobs:ro
+
+  # ---------------------------------------------------------------- couche restitution
+  abf-restitution-superset:
+    image: apache/superset:4.0.2
+    environment:
+      SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY:?définir dans .env}
+    ports: ["8088:8088"]
+
+volumes:
+  namenode:
+  datanode:

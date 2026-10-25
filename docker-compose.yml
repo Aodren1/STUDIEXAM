@@ -1,0 +1,11 @@
+# Déploiement du logiciel de validation (serveur de démonstration).
+# docker compose up -d --build   ->   http://<serveur>:8095
+services:
+  dashboard:
+    build: ./app
+    image: abassurance-fusion-dashboard:1.0
+    container_name: abassurance-fusion-dashboard
+    restart: unless-stopped
+    ports:
+      - "8095:80"
+    mem_limit: 512m

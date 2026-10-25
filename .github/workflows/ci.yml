@@ -1,0 +1,82 @@
+# Intégration continue du logiciel de validation (Bloc 2 — stratégie de tests).
+# Chaque push / pull request : analyse statique -> tests unitaires et d'intégration -> recette sur l'image Docker.
+# Un échec bloque la fusion (règle de protection de la branche main, cf. Definition of Done).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  APP_REF_DATE: "2026-10-25"   # données de démonstration générées pour cette date
+
+jobs:
+  analyse-statique:
+    name: Analyse statique
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", tools: none }
+      - name: Syntaxe PHP
+        run: find app -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Syntaxe JavaScript
+        run: for f in app/public/assets/js/*.js app/tests/*.mjs app/tests/lib/*.mjs; do node --check "$f"; done
+      # le motif se détectait lui-même dans ce fichier : .github exclu (friction relevée en sprint 6)
+      - name: Recherche de secrets dans le dépôt
+        run: |
+          if grep -rInE "(sk_live_|AKIA[0-9A-Z]{16}|-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY|password\s*=\s*['\"][^'\"]{4,})" --exclude-dir=.git --exclude-dir=.github --exclude-dir=data . ; then
+            echo "::error::Secret potentiel détecté"; exit 1; fi
+
+  tests:
+    name: Tests unitaires, intégration, API, E2E, charge
+    needs: analyse-statique
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", extensions: pdo_sqlite, tools: none }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: Campagne complète (php -S + Chrome headless)
+        working-directory: app
+        run: node tests/run-all.mjs --label ci-local
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: rapport-tests-local, path: reports/ci-local }
+
+  recette-docker:
+    name: Recette sur l'image de production
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", tools: none }
+      - name: Construction de l'image (les tests unitaires et d'intégration s'exécutent dans le build)
+        run: docker build -t abassurance-fusion-dashboard:${{ github.sha }} app
+      - name: Démarrage du conteneur
+        run: |
+          docker run -d --name dashboard -p 8095:80 abassurance-fusion-dashboard:${{ github.sha }}
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:8095/api.php?f=pipeline >/dev/null && break; sleep 1; done
+      - name: Tests API, sécurité, E2E et charge contre le conteneur
+        working-directory: app
+        run: node tests/run-all.mjs --label ci-docker --web-only --base-url http://127.0.0.1:8095
+      - name: Scan de vulnérabilités de l'image (Trivy, informatif)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: abassurance-fusion-dashboard:${{ github.sha }}
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          format: table
+          exit-code: "0"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: rapport-tests-docker, path: reports/ci-docker }

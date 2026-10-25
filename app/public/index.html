@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fusion Data AbAssurance</title>
+  <meta name="description" content="Logiciel de validation de la plateforme Big Data : statistiques comparées des bases AbAssurance (Oracle) et AssurePlus (SQL Server).">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+        <rect x="2" y="2" width="28" height="28" rx="7" fill="var(--series-1)"/>
+        <path d="M9 21 L14 11 L19 21 M11 17.5 H17" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="23" cy="20" r="3.2" fill="var(--series-2)" stroke="#fff" stroke-width="1.6"/>
+      </svg>
+      <div>
+        <p class="brand-title">Plateforme Data — AbAssurance × AssurePlus</p>
+        <p class="brand-sub">Logiciel de validation · statistiques des deux bases sources</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="segmented" role="radiogroup" aria-label="Périmètre analysé" id="scope">
+        <button role="radio" aria-checked="true" data-scope="ALL">Consolidé</button>
+        <button role="radio" aria-checked="false" data-scope="AB"><span class="dot ab" aria-hidden="true"></span>AbAssurance</button>
+        <button role="radio" aria-checked="false" data-scope="AP"><span class="dot ap" aria-hidden="true"></span>AssurePlus</button>
+      </div>
+      <button class="icon-btn" id="theme" aria-label="Basculer le thème clair / sombre" title="Thème">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Rubriques">
+    <button class="tab" aria-current="page" data-tab="synthese">Synthèse</button>
+    <button class="tab" data-tab="clients">Clients</button>
+    <button class="tab" data-tab="contrats">Contrats</button>
+    <button class="tab" data-tab="sinistres">Sinistres</button>
+    <button class="tab" data-tab="finances">Finances</button>
+    <button class="tab" data-tab="doublons">Doublons</button>
+    <button class="tab" data-tab="qualite">Qualité &amp; pipeline</button>
+  </nav>
+
+  <main id="contenu" tabindex="-1">
+    <div class="context" id="context"></div>
+    <section data-panel="synthese"></section>
+    <section data-panel="clients" hidden></section>
+    <section data-panel="contrats" hidden></section>
+    <section data-panel="sinistres" hidden></section>
+    <section data-panel="finances" hidden></section>
+    <section data-panel="doublons" hidden></section>
+    <section data-panel="qualite" hidden></section>
+    <p class="loading" id="loading">Chargement de la zone gold…</p>
+  </main>
+
+  <footer class="footer">
+    <p>Données de démonstration générées selon les schémas fournis (Oracle <code>AB_*</code>, SQL Server <code>AP_*</code>), volumétrie au 1/2 400<sup>e</sup>.
+      Chaîne : Talend → Kafka → Spark → HDFS (bronze / silver / gold) → Dataviz. Projet d’examen Bachelor CDA Big Data — A. Floride.</p>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+  <script src="assets/vendor/chart.umd.min.js"></script>
+  <script src="assets/js/format.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

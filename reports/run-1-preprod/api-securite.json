@@ -1,0 +1,71 @@
+{
+    "suite": "api-securite",
+    "total": 8,
+    "echecs": 4,
+    "tests": [
+        {
+            "groupe": "Contrat de l’API",
+            "nom": "les 4 jeux de la zone gold répondent en JSON valide",
+            "exigence": "BF-19",
+            "statut": "reussi",
+            "duree_ms": 8,
+            "message": ""
+        },
+        {
+            "groupe": "Contrat de l’API",
+            "nom": "jeu inconnu ou chemin forgé : 404 sans fuite de chemin",
+            "exigence": "BNF-06",
+            "statut": "reussi",
+            "duree_ms": 4,
+            "message": ""
+        },
+        {
+            "groupe": "Contrat de l’API",
+            "nom": "API en lecture seule : méthodes d’écriture refusées (405)",
+            "exigence": "BNF-06",
+            "statut": "echec",
+            "duree_ms": 1,
+            "message": "POST : attendu 405, obtenu 200"
+        },
+        {
+            "groupe": "En-têtes de sécurité",
+            "nom": "en-têtes de durcissement sur la page et sur l’API",
+            "exigence": "BNF-05",
+            "statut": "echec",
+            "duree_ms": 1,
+            "message": "\/ X-Content-Type-Options : attendu 'nosniff', obtenu NULL"
+        },
+        {
+            "groupe": "En-têtes de sécurité",
+            "nom": "politique de sécurité du contenu (CSP) sur le tableau de bord",
+            "exigence": "BNF-05",
+            "statut": "echec",
+            "duree_ms": 1,
+            "message": "Content-Security-Policy absente"
+        },
+        {
+            "groupe": "En-têtes de sécurité",
+            "nom": "données personnelles non mises en cache partagé",
+            "exigence": "BNF-07",
+            "statut": "echec",
+            "duree_ms": 1,
+            "message": "Cache-Control : public, max-age=300"
+        },
+        {
+            "groupe": "Exposition des fichiers",
+            "nom": "bases, code et configuration inaccessibles depuis le web",
+            "exigence": "BNF-06",
+            "statut": "reussi",
+            "duree_ms": 4,
+            "message": ""
+        },
+        {
+            "groupe": "Exposition des fichiers",
+            "nom": "ressources statiques servies avec le bon type MIME",
+            "exigence": "BNF-10",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        }
+    ]
+}

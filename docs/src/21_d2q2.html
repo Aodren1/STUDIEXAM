@@ -1,0 +1,46 @@
+<section class="dossier" id="d2q2-s">
+  <div class="question" id="d2q2">
+    <p><b>Question 2.</b> Listez les critères essentiels qui permettent de déployer l’application en production.</p>
+    <p class="crit">Critère : les points énoncés doivent pouvoir être justifiés, étayés et défendus dans les échanges avec les évaluateurs.</p>
+  </div>
+
+  <p class="lead">La mise en production du MVP est décidée par un <b>comité go / no-go</b> au sprint 12 : sponsor, DSI, PO, RSSI, DPO, responsable d’exploitation et Scrum Master. Le comité s’appuie sur une grille de 14 critères, chacun <b>mesurable</b>, assorti d’une <b>preuve</b> et d’un <b>responsable</b>. Trois critères sont <b>non négociables</b> (★) : on ne peut pas y déroger, même temporairement, car leur non-respect exposerait l’entreprise à une sanction ou à une décision prise sur des chiffres faux.</p>
+
+  <table class="compact">
+    <thead><tr><th style="width:4%">#</th><th style="width:22%">Critère</th><th style="width:24%">Seuil / preuve</th><th>Justification</th><th style="width:11%">Responsable</th></tr></thead>
+    <tbody>
+      <tr><td colspan="5" style="background:#e8f1fc"><b>Fonctionnel et qualité des données</b></td></tr>
+      <tr><td>1 ★</td><td><b>Réconciliation des volumes</b></td><td>Source = topic = bronze = silver pour les 8 tables sur données réelles ; lag Kafka = 0 (CA-01)</td><td>Si des lignes se perdent, tous les indicateurs sont faux et le projet échoue sur sa raison d’être : unifier les données.</td><td>Référent qualité</td></tr>
+      <tr><td>2</td><td>Critères d’acceptation des US « Must » vérifiés</td><td>100 % des US Must du MVP « Done » ; matrice de traçabilité complète</td><td>Le MVP est défini par ses Must (Bloc 1) : sans eux il n’est pas viable.</td><td>PO</td></tr>
+      <tr><td>3</td><td>Exactitude des indicateurs</td><td>Contre-calcul indépendant identique ; écart avec les reportings historiques &lt; 0,5 % ou expliqué</td><td>Les chiffres serviront à des décisions financières (S/P, primes) : ils doivent être prouvés, pas seulement affichés.</td><td>Direction financière + PO</td></tr>
+      <tr><td>4</td><td>Recette métier (UAT) signée</td><td>PV de recette signé par les utilisateurs clés ; aucune anomalie bloquante ou majeure ouverte</td><td>Seul le métier peut attester que le produit répond à son besoin.</td><td>Utilisateurs clés</td></tr>
+      <tr><td>5</td><td>Fiabilité du rapprochement</td><td>Précision des fusions ≥ 98 % (CA-03) mesurée sur un échantillon réel validé à la main</td><td>Une fusion abusive mélange les dossiers de deux assurés : risque RGPD et commercial.</td><td>Relation client</td></tr>
+      <tr><td colspan="5" style="background:#e8f1fc"><b>Sécurité et conformité</b></td></tr>
+      <tr><td>6 ★</td><td><b>AIPD finale signée</b></td><td>Analyse d’impact validée par le DPO, durées de conservation et procédure d’exercice des droits en place</td><td>Obligation légale (RGPD art. 35) pour un traitement à grande échelle de données de santé : sans elle, le traitement est illicite.</td><td>DPO</td></tr>
+      <tr><td>7 ★</td><td><b>Aucune donnée personnelle exposée</b></td><td>Tests de pseudonymisation verts ; politiques Ranger testées par rôle ; journal d’audit actif</td><td>Données de santé : une fuite entraîne sanction CNIL, notification et perte de confiance. C’est l’anomalie R1-06 trouvée en recette.</td><td>RSSI + DPO</td></tr>
+      <tr><td>8</td><td>Sécurité technique</td><td>Test d’intrusion sans vulnérabilité critique ou haute ouverte ; scan d’image sans CVE critique corrigeable ; TLS / Kerberos actifs</td><td>OWASP / ANSSI ; exigence BNF-05 ; règlement DORA (résilience numérique).</td><td>RSSI</td></tr>
+      <tr><td colspan="5" style="background:#e8f1fc"><b>Performance et exploitabilité</b></td></tr>
+      <tr><td>9</td><td>Performance au volume réel</td><td>Tableau de bord &lt; 3 s au p95 ; agrégats &lt; 1 h ; test d’endurance 8 h sans dégradation</td><td>BNF-09 : un tableau de bord lent n’est pas utilisé.</td><td>Architecte</td></tr>
+      <tr><td>10</td><td>Non-intrusion sur les bases sources</td><td>Charge Oracle / SQL Server &lt; 5 % CPU aux heures ouvrées (mesure DBA en préproduction)</td><td>BNF-01, enjeu EM1 : la continuité d’activité des applications de gestion passe avant la plateforme.</td><td>DBA + DevOps</td></tr>
+      <tr><td>11</td><td>Supervision et exploitation</td><td>Alertes (lag Kafka, échec de job) opérationnelles ; runbooks ; astreinte organisée ; équipe d’exploitation formée</td><td>BNF-11 : un incident non détecté rend les chiffres périmés sans que personne ne le sache.</td><td>Exploitation</td></tr>
+      <tr><td>12</td><td>Plan de reprise testé</td><td>Bascule réalisée en préproduction : RPO ≤ 15 min, RTO ≤ 4 h (BNF-04)</td><td>Exigence DORA pour une fonction importante ; un PRA non testé ne protège de rien.</td><td>DevOps</td></tr>
+      <tr><td>13</td><td>Retour arrière possible</td><td>Procédure de rollback testée ; version précédente de l’image conservée ; bronze rejouable</td><td>Toute mise en production peut échouer : le retour arrière doit être prêt avant d’aller de l’avant.</td><td>DevOps</td></tr>
+      <tr><td>14</td><td>Documentation et accompagnement</td><td>Dictionnaire de données, règles DQ, guide utilisateur ; utilisateurs clés formés ; communication faite</td><td>Un outil non compris produit des erreurs d’interprétation (ex. multi-équipement par client unique).</td><td>PO + SM</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2">
+    <div class="box key">
+      <h4>Comment la décision est prise</h4>
+      <ul>
+        <li><b>Go</b> : les 14 critères sont respectés.</li>
+        <li><b>Go sous conditions</b> : un ou plusieurs critères non ★ ne sont pas atteints, mais une mesure compensatoire documentée existe, avec un responsable et une échéance (question 3).</li>
+        <li><b>No-go</b> : un critère ★ n’est pas atteint, ou un écart n’a pas de mesure compensatoire acceptable.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>Où en est-on au sprint 6 ?</h4>
+      <p>Critères déjà démontrés sur le logiciel de validation (données synthétiques) : n°1, 3 (contre-calcul), 5, 7 (partiellement : pseudonymisation et en-têtes ; Ranger au sprint 7), 9 (sur le prototype), 13 (image versionnée, bronze rejouable). À démontrer en préproduction et sur données réelles : n°2, 4, 6, 8, 10, 11, 12, 14. Ils sont planifiés aux sprints 7 à 12.</p>
+    </div>
+  </div>
+</section>

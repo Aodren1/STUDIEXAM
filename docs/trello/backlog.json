@@ -1,0 +1,706 @@
+{
+    "projet": "Plateforme Data AbAssurance × AssurePlus — logiciel de validation",
+    "sprint_courant": 6,
+    "epics": [
+        {
+            "code": "EP1",
+            "couleur": "green",
+            "titre": "Ingestion des sources (Oracle + SQL Server → Kafka)",
+            "module": "M1",
+            "exigences": "BF-01, BF-02, BF-03, BF-04, BNF-01",
+            "enjeux": "EM1 continuité d’activité, OBJ1 unifier, OBJ3 temps réel",
+            "valeur": "Sans données des deux assureurs dans le bus, aucune statistique n’est possible. Passer par Kafka dès le MVP évite de réécrire l’ingestion lors du passage au temps réel (V2).",
+            "us": [
+                {
+                    "code": "US-1.1",
+                    "titre": "Extraction complète de la base Oracle AbAssurance",
+                    "role": "data engineer",
+                    "veux": "extraire intégralement AB_CLIENT, AB_CONTRAT, AB_SINISTRE et AB_PAIEMENT avec un job Talend planifié la nuit",
+                    "afin": "disposer d’une copie de référence sans ralentir les applications de gestion",
+                    "exig": "BF-01, BNF-01",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Étant donné les 4 tables AB_*, quand le job d’extraction initiale s’exécute (fenêtre 22 h – 5 h), alors chaque ligne est publiée une et une seule fois dans src.ab.<entité>",
+                        "Le nombre de messages par topic est égal au nombre de lignes de la table source (écart = 0, contrôle automatique CA-01)",
+                        "La charge CPU induite sur Oracle reste < 5 % aux heures ouvrées (mesure DBA)",
+                        "Le job est rejouable : une seconde exécution ne crée aucun doublon (clé = identifiant source)",
+                        "Aucune écriture dans la base source (compte en lecture seule vérifié)"
+                    ],
+                    "sprint": 1
+                },
+                {
+                    "code": "US-1.2",
+                    "titre": "Extraction complète de la base SQL Server AssurePlus",
+                    "role": "data engineer",
+                    "veux": "extraire AP_USERS, AP_CONTRACTS, AP_CLAIMS et AP_PAYMENTS dans les topics src.ap.*",
+                    "afin": "disposer des données AssurePlus au même endroit et au même format de transport que celles d’AbAssurance",
+                    "exig": "BF-01, BNF-01",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Étant donné les 4 tables AP_*, quand le job s’exécute, alors chaque ligne est publiée dans src.ap.<entité> avec son identifiant d’origine (UNIQUEIDENTIFIER conservé en texte)",
+                        "Les colonnes sont transportées sans transformation (les règles s’appliquent en zone silver)",
+                        "Volumétrie source = topic (écart = 0)",
+                        "Les types SQL Server (DATETIME, NVARCHAR) sont sérialisés sans perte (UTF-8, accents conservés)"
+                    ],
+                    "sprint": 1
+                },
+                {
+                    "code": "US-1.3",
+                    "titre": "Topics Kafka normalisés et partitionnés par clé",
+                    "role": "architecte data",
+                    "veux": "un topic par source et par entité (src.ab.client …), partitionné par identifiant, horodaté et dont le schéma est enregistré",
+                    "afin": "garantir l’ordre des événements d’un même objet et permettre d’ajouter des consommateurs sans modifier les producteurs",
+                    "exig": "BF-02, BNF-08",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Les 8 topics respectent la nomenclature <couche>.<source>.<entité>",
+                        "Tous les messages d’une même clé arrivent dans la même partition (test unitaire du partitionnement)",
+                        "Chaque message porte source, table, opération (c\/u\/d) et horodatage d’extraction",
+                        "Rétention ≥ 7 jours : un consommateur peut rejouer une semaine",
+                        "Le retard (lag) des consommateurs est mesuré et vaut 0 en fin de traitement"
+                    ],
+                    "sprint": 1
+                },
+                {
+                    "code": "US-1.4",
+                    "titre": "Charge incrémentale quotidienne",
+                    "role": "responsable du pilotage de l’intégration",
+                    "veux": "que les créations et modifications de la veille soient chargées chaque nuit",
+                    "afin": "piloter la fusion sur des chiffres à J+1",
+                    "exig": "BF-03",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Étant donné une ligne modifiée dans une source à J, quand la charge de la nuit s’exécute, alors la zone silver reflète la modification à J+1 avant 7 h",
+                        "Une ligne non modifiée n’est pas republiée",
+                        "Un échec de charge déclenche une alerte et n’altère pas la charge précédente"
+                    ],
+                    "sprint": 2
+                },
+                {
+                    "code": "US-1.5",
+                    "titre": "Capture des changements en continu (CDC) sur contrats et sinistres",
+                    "role": "gestionnaire sinistres",
+                    "veux": "qu’une modification de contrat ou de sinistre soit visible en moins de 5 minutes",
+                    "afin": "travailler sur une vision à jour pendant la transition",
+                    "exig": "BF-04, OBJ3",
+                    "moscow": "Should",
+                    "pts": 13,
+                    "etat": "backlog",
+                    "version": "V2",
+                    "ca": [
+                        "Les journaux de transactions Oracle et SQL Server sont lus par Debezium (aucune requête sur les tables)",
+                        "Latence de bout en bout < 5 min au p95",
+                        "Les suppressions sont propagées (op = d)",
+                        "Les topics existants sont réutilisés : aucun changement dans les consommateurs",
+                        "À découper en stories ≤ 8 points avant d’entrer en sprint (DoR)"
+                    ]
+                }
+            ]
+        },
+        {
+            "code": "EP2",
+            "couleur": "yellow",
+            "titre": "Stockage et harmonisation (lac bronze \/ silver)",
+            "module": "M2",
+            "exigences": "BF-05, BF-06, BF-07, BF-08, BNF-08",
+            "enjeux": "OBJ1 unifier, OBJ6 qualité, EM2 conformité",
+            "valeur": "C’est le cœur de l’unification : un modèle commun, des règles de qualité tracées et une zone brute rejouable qui permet de corriger une règle sans réinterroger les sources.",
+            "us": [
+                {
+                    "code": "US-2.1",
+                    "titre": "Zone bronze brute, immuable et rejouable",
+                    "role": "data engineer",
+                    "veux": "conserver une copie brute horodatée de chaque extraction dans HDFS, partitionnée par date d’ingestion",
+                    "afin": "pouvoir rejouer toute la chaîne après correction d’une règle et prouver l’origine de chaque donnée",
+                    "exig": "BF-05, BNF-08",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Chaque topic est recopié dans bronze\/<topic>\/date_ingestion=AAAA-MM-JJ",
+                        "Nombre de lignes bronze = nombre de messages du topic",
+                        "Les fichiers bronze ne sont jamais réécrits (droits en écriture limités au job d’atterrissage)",
+                        "Un rejeu à partir du bronze produit une zone silver identique"
+                    ],
+                    "sprint": 2
+                },
+                {
+                    "code": "US-2.2",
+                    "titre": "Modèle unifié en zone silver",
+                    "role": "analyste métier",
+                    "veux": "retrouver clients, contrats, sinistres et paiements des deux assureurs dans quatre tables communes",
+                    "afin": "comparer et consolider les portefeuilles avec les mêmes définitions",
+                    "exig": "BF-06",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Les 4 tables silver existent avec les colonnes du modèle validé (dictionnaire de données)",
+                        "Chaque identifiant est préfixé par la source (AB-…, AP-…) et unique",
+                        "Chaque ligne conserve source et source_id (lignage vers la ligne d’origine)",
+                        "Volumétrie source = silver pour les 8 tables"
+                    ],
+                    "sprint": 2
+                },
+                {
+                    "code": "US-2.3",
+                    "titre": "Règles de normalisation communes",
+                    "role": "analyste métier",
+                    "veux": "que dates, noms, primes, statuts, moyens de paiement et téléphones soient exprimés de la même façon pour les deux sources",
+                    "afin": "que les statistiques consolidées soient justes",
+                    "exig": "BF-07",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Dates texte (JJ\/MM\/AAAA, AAAA\/MM\/JJ…) converties en ISO ; dates impossibles (31\/02) rejetées",
+                        "AP_FULL_NAME découpé en nom \/ prénom, y compris « NOM Prénom » et nom en un seul mot",
+                        "Prime mensuelle AssurePlus × 12 = prime annuelle",
+                        "Statuts et produits mappés sur les référentiels communs (aucun statut INCONNU)",
+                        "Téléphones au format E.164 avec l’indicatif du pays du client (+33, +32, +31, +352)",
+                        "Chaque règle est couverte par un test unitaire"
+                    ],
+                    "sprint": 3
+                },
+                {
+                    "code": "US-2.4",
+                    "titre": "Traçabilité des anomalies de qualité",
+                    "role": "responsable qualité des données",
+                    "veux": "que chaque anomalie détectée soit enregistrée avec son code de règle, sa source, sa ligne et la valeur d’origine",
+                    "afin": "corriger les données à la source et justifier chaque écart auprès des métiers et de l’audit",
+                    "exig": "BF-08, OBJ6",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Les 15 règles DQ01 à DQ15 sont documentées (libellé, gravité, action)",
+                        "Les règles s’appliquent de façon symétrique aux deux sources (ex. date invalide AB comme AP)",
+                        "Total des anomalies du tableau qualité = nombre de lignes de dq_anomalie",
+                        "La donnée d’origine n’est jamais perdue (ligne conservée, valeur tracée)"
+                    ],
+                    "sprint": 3
+                }
+            ]
+        },
+        {
+            "code": "EP3",
+            "couleur": "orange",
+            "titre": "Rapprochement des clients et golden record",
+            "module": "M3",
+            "exigences": "BF-09, BF-10, BF-11, CA-03",
+            "enjeux": "EM3 vision client unique, OE2 multi-équipement",
+            "valeur": "Un même assuré peut exister dans les deux bases : sans rapprochement, les clients sont comptés deux fois et le potentiel de multi-équipement croisé est invisible.",
+            "us": [
+                {
+                    "code": "US-3.1",
+                    "titre": "Détection des doublons par score pondéré",
+                    "role": "responsable relation client",
+                    "veux": "détecter les doublons intra-base et inter-bases à partir de l’e-mail, du téléphone, du nom, de la date de naissance et de l’adresse",
+                    "afin": "connaître le nombre réel de clients",
+                    "exig": "BF-09",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Seules les paires partageant une clé de blocage sont comparées (pas de produit cartésien)",
+                        "Score ≥ 0,70 = certain ; 0,45 – 0,70 = probable ; en dessous = écarté",
+                        "Deux valeurs absentes ne sont jamais considérées comme concordantes",
+                        "Cas de test métier : homonyme dans la même ville écarté, déménagement + nouvel e-mail = probable"
+                    ],
+                    "sprint": 4
+                },
+                {
+                    "code": "US-3.2",
+                    "titre": "Fusion automatique en golden record",
+                    "role": "directeur commercial",
+                    "veux": "que les paires certaines soient regroupées sous un identifiant maître",
+                    "afin": "compter les clients uniques et identifier les clients communs aux deux assureurs",
+                    "exig": "BF-10",
+                    "moscow": "Should",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Chaque fiche porte un master_uid ; l’identifiant AbAssurance est prioritaire",
+                        "La fusion est réversible : aucune fiche source n’est modifiée ni supprimée",
+                        "Les indicateurs par client (multi-équipement) utilisent le golden record en vue consolidée"
+                    ],
+                    "sprint": 4
+                },
+                {
+                    "code": "US-3.3",
+                    "titre": "File de validation des paires probables",
+                    "role": "gestionnaire de la relation client",
+                    "veux": "valider ou rejeter une paire probable depuis une file de travail",
+                    "afin": "fiabiliser le rapprochement sans fusion abusive",
+                    "exig": "BF-11",
+                    "moscow": "Could",
+                    "pts": 8,
+                    "etat": "backlog",
+                    "version": "V2",
+                    "ca": [
+                        "La file affiche les deux fiches côte à côte, données pseudonymisées hors besoin d’en connaître",
+                        "Chaque décision est horodatée, attribuée et réversible",
+                        "Une paire rejetée n’est plus proposée"
+                    ]
+                },
+                {
+                    "code": "US-3.4",
+                    "titre": "Mesure de la fiabilité du rapprochement",
+                    "role": "Product Owner",
+                    "veux": "connaître la précision et le rappel des fusions sur un jeu de référence",
+                    "afin": "décider en connaissance de cause d’activer la fusion automatique",
+                    "exig": "CA-03",
+                    "moscow": "Must",
+                    "pts": 3,
+                    "etat": "fait",
+                    "ca": [
+                        "Précision des fusions automatiques ≥ 98 % sur le jeu de vérité terrain",
+                        "Le rappel est affiché avec et sans la file « probable »",
+                        "Le calcul est couvert par un test unitaire (évaluation par clusters)"
+                    ],
+                    "sprint": 4
+                }
+            ]
+        },
+        {
+            "code": "EP4",
+            "couleur": "red",
+            "titre": "Logiciel de validation : statistiques et tableau de bord",
+            "module": "M4",
+            "exigences": "BF-12 à BF-20, CA-02, CA-05, CA-06",
+            "enjeux": "EM4 pilotage consolidé, OBJ2 performance",
+            "valeur": "C’est la partie visible demandée par la direction pour valider le projet : répartition des clients, contrats, sinistres, finances et matrice de doublons, par source et consolidées.",
+            "us": [
+                {
+                    "code": "US-4.1",
+                    "titre": "Répartition des clients",
+                    "role": "directeur commercial",
+                    "veux": "voir les clients par statut, tranche d’âge, pays, région, ancienneté et multi-équipement",
+                    "afin": "comparer les deux portefeuilles et cibler le multi-équipement",
+                    "exig": "BF-12",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Chaque répartition est disponible pour AB, AP et en consolidé",
+                        "Le multi-équipement consolidé est calculé par client unique (golden record)",
+                        "Les valeurs affichées sont identiques à un recalcul indépendant depuis la zone silver"
+                    ],
+                    "sprint": 5
+                },
+                {
+                    "code": "US-4.2",
+                    "titre": "Statistiques contrats",
+                    "role": "responsable souscription",
+                    "veux": "suivre le volume de contrats par branche, statut et canal, les primes annualisées, souscriptions et résiliations",
+                    "afin": "piloter le portefeuille consolidé",
+                    "exig": "BF-13",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Les contrats orphelins (DQ06) sont exclus et comptés à part",
+                        "Les primes AP sont annualisées (× 12) avant toute somme",
+                        "Souscriptions et résiliations par année"
+                    ],
+                    "sprint": 5
+                },
+                {
+                    "code": "US-4.3",
+                    "titre": "Statistiques sinistres",
+                    "role": "responsable indemnisation",
+                    "veux": "voir le volume mensuel, les statuts, la charge estimée, le coût moyen, le taux de refus et le score de fraude",
+                    "afin": "comparer la sinistralité et repérer les dossiers à risque",
+                    "exig": "BF-14",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Série mensuelle sur 36 mois",
+                        "Charge hors sinistres refusés",
+                        "Alertes fraude : score ≥ 70 et dossier non clos, 10 premiers affichés"
+                    ],
+                    "sprint": 5
+                },
+                {
+                    "code": "US-4.4",
+                    "titre": "Statistiques financières",
+                    "role": "directeur financier",
+                    "veux": "suivre primes, encaissements mensuels, moyens de paiement, ratio sinistres \/ primes et échecs de paiement",
+                    "afin": "consolider les indicateurs financiers des deux entités",
+                    "exig": "BF-15, CA-05",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Le ratio S\/P est recalculé depuis numérateur et dénominateur (jamais une moyenne de ratios)",
+                        "Les paiements orphelins (DQ14) sont exclus",
+                        "Taux d’échec affiché pour AP uniquement (AB ne porte pas de statut, règle DQ13)"
+                    ],
+                    "sprint": 5
+                },
+                {
+                    "code": "US-4.5",
+                    "titre": "Matrice de doublons",
+                    "role": "responsable relation client",
+                    "veux": "voir les doublons par couple de sources et par critère concordant, avec des exemples",
+                    "afin": "comprendre la qualité du rapprochement",
+                    "exig": "BF-16",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait",
+                    "ca": [
+                        "Matrice AB-AB \/ AB-AP \/ AP-AP × certain \/ probable",
+                        "Matrice de co-occurrence des 5 critères",
+                        "Exemples pseudonymisés : initiales, année de naissance, e-mail et téléphone masqués"
+                    ],
+                    "sprint": 5
+                },
+                {
+                    "code": "US-4.6",
+                    "titre": "Filtre de périmètre consolidé \/ AbAssurance \/ AssurePlus",
+                    "role": "membre du comité de direction",
+                    "veux": "basculer chaque vue entre consolidé, AbAssurance et AssurePlus",
+                    "afin": "comparer les entités sans changer d’outil",
+                    "exig": "BF-17",
+                    "moscow": "Must",
+                    "pts": 3,
+                    "etat": "fait",
+                    "ca": [
+                        "Le filtre s’applique à toutes les rubriques sans rechargement",
+                        "Les KPI affichés sont égaux aux valeurs de l’API pour chaque périmètre (test E2E)",
+                        "Le choix est conservé à la visite suivante"
+                    ],
+                    "sprint": 4
+                },
+                {
+                    "code": "US-4.7",
+                    "titre": "Qualité des données et état du pipeline",
+                    "role": "responsable qualité des données",
+                    "veux": "voir les anomalies par règle, la complétude et la dernière exécution de la chaîne",
+                    "afin": "savoir si les chiffres du jour sont fiables",
+                    "exig": "BF-18",
+                    "moscow": "Should",
+                    "pts": 3,
+                    "etat": "fait_s6",
+                    "ca": [
+                        "Tableau des 15 règles avec gravité, action et volumes AB \/ AP",
+                        "Durée de chaque étape et retard Kafka affichés",
+                        "Complétude des champs clés par source"
+                    ],
+                    "sprint": 6
+                },
+                {
+                    "code": "US-4.8",
+                    "titre": "Alternative tabulaire et export des données",
+                    "role": "analyste",
+                    "veux": "afficher chaque graphique sous forme de tableau et récupérer les données en JSON",
+                    "afin": "réutiliser les chiffres et accéder à l’information sans voir le graphique",
+                    "exig": "BF-19, BNF-12, CA-06",
+                    "moscow": "Should",
+                    "pts": 3,
+                    "etat": "backlog",
+                    "ca": [
+                        "Chaque graphique dispose d’un bouton Tableau (test E2E sur 4 rubriques)",
+                        "Export CSV de chaque tableau",
+                        "API en lecture seule : GET uniquement, 405 sinon",
+                        "Jeux contenant des données personnelles jamais mis en cache partagé"
+                    ],
+                    "sprint": 7
+                },
+                {
+                    "code": "US-4.9",
+                    "titre": "Tableaux de bord en libre-service (Superset)",
+                    "role": "analyste métier",
+                    "veux": "créer mes propres graphiques sur la zone gold sans développement",
+                    "afin": "répondre aux questions ponctuelles sans solliciter l’équipe",
+                    "exig": "BF-20",
+                    "moscow": "Could",
+                    "pts": 8,
+                    "etat": "backlog",
+                    "version": "V2",
+                    "ca": [
+                        "Superset connecté à la zone gold via Trino, droits par rôle",
+                        "Données personnelles masquées pour les rôles non habilités",
+                        "Un tableau de bord de démonstration créé avec un analyste"
+                    ]
+                }
+            ]
+        },
+        {
+            "code": "EP5",
+            "couleur": "purple",
+            "titre": "Préparation de l’intelligence artificielle",
+            "module": "M5",
+            "exigences": "BF-21, BF-22, OBJ4",
+            "enjeux": "EM5 diffusion des savoir-faire, EM6 préparation de l’IA, OE1 réduire la fraude",
+            "valeur": "Des données historisées, propres et documentées sont le prérequis de tout modèle (fraude, attrition, tarification). Le MVP prépare le terrain, les modèles arrivent en V3.",
+            "us": [
+                {
+                    "code": "US-5.1",
+                    "titre": "Accès des data scientists à la zone silver",
+                    "role": "data scientist",
+                    "veux": "interroger la zone silver depuis un notebook Spark avec des données pseudonymisées",
+                    "afin": "explorer les données pour les futurs modèles",
+                    "exig": "BF-21",
+                    "moscow": "Should",
+                    "pts": 5,
+                    "etat": "backlog",
+                    "sprint": 8,
+                    "ca": [
+                        "Espace notebook connecté à Spark, authentification Kerberos",
+                        "Colonnes identifiantes masquées par Ranger pour le rôle data scientist",
+                        "Aucun export hors plateforme possible"
+                    ]
+                },
+                {
+                    "code": "US-5.2",
+                    "titre": "Catalogue et lignage des jeux de données",
+                    "role": "data scientist",
+                    "veux": "trouver la définition, la source et la fraîcheur de chaque table",
+                    "afin": "utiliser les bonnes données sans interroger l’équipe",
+                    "exig": "BF-21, BNF-08",
+                    "moscow": "Should",
+                    "pts": 5,
+                    "etat": "backlog",
+                    "sprint": 9,
+                    "ca": [
+                        "Les tables bronze, silver et gold sont décrites dans le catalogue (Apache Atlas)",
+                        "Le lignage remonte de chaque indicateur à la table source",
+                        "100 % des jeux silver catalogués (indicateur OBJ4)"
+                    ]
+                },
+                {
+                    "code": "US-5.3",
+                    "titre": "Scoring de fraude en temps réel sur les sinistres",
+                    "role": "responsable antifraude",
+                    "veux": "qu’un score de fraude soit calculé à la déclaration de chaque sinistre AbAssurance",
+                    "afin": "étendre l’expertise AssurePlus à tout le portefeuille",
+                    "exig": "BF-22",
+                    "moscow": "Won’t (V3)",
+                    "pts": 13,
+                    "etat": "backlog",
+                    "version": "V3",
+                    "ca": [
+                        "Modèle entraîné sur l’historique silver, validé par l’actuariat",
+                        "Score publié sur un topic dédié en moins de 10 s",
+                        "Explicabilité du score pour le gestionnaire",
+                        "À découper en stories ≤ 8 points avant d’entrer en sprint (DoR)"
+                    ]
+                }
+            ]
+        },
+        {
+            "code": "EP6",
+            "couleur": "blue",
+            "titre": "Sécurité et conformité (RGPD, données de santé, DORA)",
+            "module": "transverse",
+            "exigences": "BNF-05, BNF-06, BNF-07, BNF-08",
+            "enjeux": "EM2 conformité réglementaire",
+            "valeur": "Les données traitées sont des données de santé et d’identité : un produit « viable » doit être sécurisé dès le MVP, la sécurité ne se rajoute pas après coup.",
+            "us": [
+                {
+                    "code": "US-6.1",
+                    "titre": "Chiffrement des flux et des données au repos",
+                    "role": "RSSI",
+                    "veux": "que tous les flux soient chiffrés (TLS 1.2+) et que HDFS soit chiffré au repos",
+                    "afin": "protéger les données sensibles en transit et sur disque",
+                    "exig": "BNF-05",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "fait",
+                    "ca": [
+                        "Kafka en SASL_SSL, Hadoop avec Kerberos",
+                        "Zones de chiffrement HDFS sur bronze et silver",
+                        "Scan de configuration TLS sans protocole obsolète"
+                    ],
+                    "sprint": 3
+                },
+                {
+                    "code": "US-6.2",
+                    "titre": "Contrôle d’accès par rôle et par colonne",
+                    "role": "DPO",
+                    "veux": "que chaque rôle n’accède qu’aux colonnes nécessaires, avec un journal d’audit",
+                    "afin": "respecter le besoin d’en connaître",
+                    "exig": "BNF-06",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "backlog",
+                    "ca": [
+                        "Politiques Ranger par rôle (direction, analyste, data scientist, exploitation)",
+                        "Masquage des colonnes identifiantes hors rôles habilités",
+                        "Journal d’audit conservé 1 an et consultable par le RSSI"
+                    ],
+                    "sprint": 7
+                },
+                {
+                    "code": "US-6.3",
+                    "titre": "Pseudonymisation de la zone gold et de l’API",
+                    "role": "DPO",
+                    "veux": "qu’aucune donnée directement identifiante ne sorte de la zone gold",
+                    "afin": "limiter l’exposition des assurés en cas de fuite ou de capture d’écran",
+                    "exig": "BNF-07",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait_s6",
+                    "ca": [
+                        "Exemples de doublons : initiales, année de naissance, département, e-mail et téléphone masqués",
+                        "Test automatique : aucun nom de famille ni date de naissance complète dans la zone gold",
+                        "Réponses de l’API contenant des données personnelles en Cache-Control private, no-store"
+                    ],
+                    "sprint": 6
+                },
+                {
+                    "code": "US-6.4",
+                    "titre": "Durcissement HTTP du tableau de bord",
+                    "role": "RSSI",
+                    "veux": "que le tableau de bord et l’API envoient les en-têtes de sécurité dans tous les environnements",
+                    "afin": "prévenir l’injection de contenu, le clickjacking et la divulgation d’informations",
+                    "exig": "BNF-05",
+                    "moscow": "Must",
+                    "pts": 3,
+                    "etat": "fait_s6",
+                    "ca": [
+                        "CSP default-src 'self', X-Frame-Options DENY, nosniff, Referrer-Policy",
+                        "Mêmes en-têtes en local (routeur de développement) et en production (Apache)",
+                        "Aucune erreur PHP affichée au client (display_errors=Off)",
+                        "Tests de sécurité automatisés verts dans la CI"
+                    ],
+                    "sprint": 6
+                },
+                {
+                    "code": "US-6.5",
+                    "titre": "Analyse d’impact (AIPD) avant mise en production",
+                    "role": "DPO",
+                    "veux": "valider l’analyse d’impact sur la protection des données",
+                    "afin": "autoriser le traitement des données de santé en production",
+                    "exig": "BNF-07",
+                    "moscow": "Must",
+                    "pts": 3,
+                    "etat": "en_cours",
+                    "ca": [
+                        "AIPD rédigée et signée par le DPO",
+                        "Durées de conservation définies par table",
+                        "Procédure d’exercice des droits (accès, effacement) testée"
+                    ],
+                    "sprint": 6
+                }
+            ]
+        },
+        {
+            "code": "EP7",
+            "couleur": "sky",
+            "titre": "Industrialisation, qualité et exploitation",
+            "module": "transverse",
+            "exigences": "BNF-01 à BNF-04, BNF-09 à BNF-12",
+            "enjeux": "OBJ2 performance, OBJ5 scalabilité, EM1 continuité",
+            "valeur": "Rendre la plateforme testable, déployable et exploitable : intégration continue, tests de charge, supervision, plan de reprise et accessibilité.",
+            "us": [
+                {
+                    "code": "US-7.1",
+                    "titre": "Intégration continue et tests automatisés",
+                    "role": "équipe de développement",
+                    "veux": "que chaque modification déclenche analyse statique, tests unitaires, d’intégration, API, E2E et de charge",
+                    "afin": "détecter une régression avant la recette",
+                    "exig": "BNF-10",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "fait_s6",
+                    "ca": [
+                        "Pipeline GitHub Actions : analyse statique → tests → recette sur l’image Docker",
+                        "Une fusion vers main est impossible si un test échoue",
+                        "Rapport de tests publié en artefact à chaque exécution",
+                        "Chaque test est rattaché à une exigence (matrice de traçabilité)"
+                    ],
+                    "sprint": 6
+                },
+                {
+                    "code": "US-7.2",
+                    "titre": "Tests de performance et de montée en charge",
+                    "role": "architecte data",
+                    "veux": "mesurer le temps de réponse du tableau de bord et la durée du pipeline à volume croissant",
+                    "afin": "vérifier BNF-09 et anticiper le passage au volume réel",
+                    "exig": "BNF-02, BNF-03, BNF-09",
+                    "moscow": "Must",
+                    "pts": 5,
+                    "etat": "revue",
+                    "ca": [
+                        "20 utilisateurs simultanés : ouverture complète p95 < 3 s, API p95 < 500 ms, 0 erreur",
+                        "Pipeline à × 1 et × 5 : durée quasi linéaire (pas d’explosion combinatoire)",
+                        "Résultats archivés et comparés d’un sprint à l’autre"
+                    ],
+                    "sprint": 6
+                },
+                {
+                    "code": "US-7.3",
+                    "titre": "Supervision et alertes d’exploitation",
+                    "role": "exploitant",
+                    "veux": "être alerté en cas de retard Kafka, d’échec de job ou de saturation",
+                    "afin": "réagir avant que les métiers ne voient des chiffres périmés",
+                    "exig": "BNF-11",
+                    "moscow": "Should",
+                    "pts": 5,
+                    "etat": "backlog",
+                    "ca": [
+                        "Métriques Kafka, Spark et HDFS dans Prometheus \/ Grafana",
+                        "Alerte si lag > 10 000 messages ou job en échec",
+                        "Runbook d’exploitation pour chaque alerte"
+                    ],
+                    "sprint": 7
+                },
+                {
+                    "code": "US-7.4",
+                    "titre": "Haute disponibilité et plan de reprise",
+                    "role": "directeur des systèmes d’information",
+                    "veux": "un second site capable de reprendre en moins de 4 h",
+                    "afin": "respecter le règlement DORA et la continuité d’activité",
+                    "exig": "BNF-04",
+                    "moscow": "Must",
+                    "pts": 8,
+                    "etat": "backlog",
+                    "sprint": 10,
+                    "ca": [
+                        "Réplication Kafka (MirrorMaker 2) et HDFS vers le site de secours",
+                        "Test de bascule documenté : RPO ≤ 15 min, RTO ≤ 4 h",
+                        "Exercice de reprise planifié deux fois par an"
+                    ]
+                },
+                {
+                    "code": "US-7.5",
+                    "titre": "Accessibilité RGAA du tableau de bord",
+                    "role": "utilisateur en situation de handicap",
+                    "veux": "consulter le tableau de bord au clavier, avec un lecteur d’écran et sur mobile",
+                    "afin": "accéder aux mêmes informations que les autres utilisateurs",
+                    "exig": "BNF-12",
+                    "moscow": "Should",
+                    "pts": 3,
+                    "etat": "fait",
+                    "ca": [
+                        "Contrastes ≥ 4,5:1 sur tous les textes (test automatisé)",
+                        "Lien d’évitement, nom accessible sur chaque graphique et bouton",
+                        "Aucun défilement horizontal à 375 px",
+                        "Alternative tabulaire pour chaque graphique"
+                    ],
+                    "sprint": 4
+                }
+            ]
+        }
+    ],
+    "velocite": [
+        21,
+        21,
+        21,
+        22,
+        25
+    ],
+    "engagement_sprint_6": 24,
+    "trello": "https:\/\/trello.com\/b\/N4SHAra8\/exam2-studi"
+}

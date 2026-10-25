@@ -1,0 +1,69 @@
+<section class="dossier" id="d1q3-s">
+  <div class="question" id="d1q3">
+    <p><b>Question 3.</b> Ajoutez au Trello un ticket DoR et un ticket DoD.</p>
+    <p class="crit">Critère : les outils logiciels et les processus mis en œuvre sont identifiés et cohérents avec l’approche méthodologique.</p>
+  </div>
+
+  <p class="lead">La <b>Definition of Ready</b> (DoR) et la <b>Definition of Done</b> (DoD) sont deux contrats passés entre le Product Owner et l’équipe. La DoR filtre ce qui <b>entre</b> dans un sprint, la DoD définit ce qui en <b>sort</b>. Les deux tickets sont épinglés dans la première colonne du Trello, « Lire d’abord », sous forme de checklists. Il suffit de les consulter pour vérifier une US avant le Sprint Planning ou avant la revue.</p>
+
+  <div class="grid2">
+    <figure><div class="shot"><img src="captures/trello/dor.jpg" alt="Ticket DoR dans Trello"></div><figcaption>Figure 5 — Ticket DoR (10 critères).</figcaption></figure>
+    <figure><div class="shot"><img src="captures/trello/dod.jpg" alt="Ticket DoD dans Trello"></div><figcaption>Figure 6 — Ticket DoD (12 critères).</figcaption></figure>
+  </div>
+
+  <div>
+    <div>
+      <h3>3.1 Definition of Ready — une US est « prête » si…</h3>
+      <!--GEN:dor-->
+      <p class="small"><b>Quand et par qui</b> : vérifiée par le PO et l’équipe lors de l’affinage (J6) pour les US des deux sprints suivants, puis contrôlée une dernière fois au Sprint Planning. Une US non conforme reste dans le backlog.</p>
+    </div>
+    <div>
+      <h3>3.2 Definition of Done — une US est « terminée » si…</h3>
+      <!--GEN:dod-->
+      <p class="small"><b>Quand et par qui</b> : vérifiée par l’équipe avant de déplacer la carte vers « Terminé », puis par le PO en Sprint Review. Une US non conforme n’est pas comptée dans la vélocité et retourne au backlog.</p>
+    </div>
+  </div>
+
+  <h3>3.3 Pourquoi ces critères</h3>
+  <table class="compact">
+    <thead><tr><th style="width:26%">Critère</th><th>Justification</th></tr></thead>
+    <tbody>
+      <tr><td>DoR — rattachement à une exigence du Bloc 1</td><td>Garantit que chaque développement sert un objectif validé (traçabilité objectif → exigence → US → test) et évite le « gold plating ».</td></tr>
+      <tr><td>DoR — critères d’acceptation vérifiables par un test</td><td>Un critère qui ne peut pas être testé ne peut pas être accepté objectivement en revue ; c’est le « T » d’INVEST.</td></tr>
+      <tr><td>DoR — ≤ 8 points, sinon découpage</td><td>Au-delà, le risque de ne pas terminer dans le sprint augmente fortement ; les US de 13 points du backlog (CDC, scoring de fraude) seront découpées.</td></tr>
+      <tr><td>DoR — données personnelles validées par le DPO</td><td>Contrainte RGPD propre au contexte (données de santé) : on ne découvre pas un problème de conformité en cours de sprint.</td></tr>
+      <tr><td>DoD — tests unitaires, d’intégration, CI verte</td><td>La qualité est construite dans le sprint, pas ajoutée après : c’est ce qui a permis de trouver 12 anomalies avant la recette métier (Dossier 2).</td></tr>
+      <tr><td>DoD — performances et sécurité vérifiées</td><td>Les exigences non fonctionnelles BNF-05 à BNF-09 sont vérifiées à chaque US, pas en fin de projet.</td></tr>
+      <tr><td>DoD — acceptée par le PO en revue</td><td>Seul le représentant du métier peut dire qu’une US apporte la valeur attendue.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.4 Des outils cohérents avec la méthode</h3>
+  <p>Chaque outil a un rôle précis dans le processus Scrum, et une partie de la DoD est vérifiée automatiquement, ce qui la rend objective :</p>
+  <figure>
+    <svg viewBox="0 0 1000 170" width="100%" role="img" aria-label="Chaîne d’outils du projet">
+      <g font-family="system-ui" font-size="12">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6a65"/></marker></defs>
+        <rect x="10" y="30" width="170" height="86" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="95" y="56" text-anchor="middle" font-weight="700" fill="#1c5cab">Trello</text><text x="95" y="76" text-anchor="middle" fill="#3d3c39">backlog, sprint,</text><text x="95" y="92" text-anchor="middle" fill="#3d3c39">DoR / DoD, anomalies</text>
+        <rect x="215" y="30" width="170" height="86" rx="8" fill="#f3f2ee" stroke="#6b6a65"/><text x="300" y="56" text-anchor="middle" font-weight="700">Git (branche par US)</text><text x="300" y="76" text-anchor="middle" fill="#3d3c39">code + tests</text><text x="300" y="92" text-anchor="middle" fill="#3d3c39">versionnés ensemble</text>
+        <rect x="420" y="30" width="170" height="86" rx="8" fill="#f3f2ee" stroke="#6b6a65"/><text x="505" y="56" text-anchor="middle" font-weight="700">Pull request</text><text x="505" y="76" text-anchor="middle" fill="#3d3c39">relecture par un pair</text><text x="505" y="92" text-anchor="middle" fill="#3d3c39">(DoD n°2)</text>
+        <rect x="625" y="30" width="170" height="86" rx="8" fill="#e9f7ef" stroke="#1f845a"/><text x="710" y="56" text-anchor="middle" font-weight="700" fill="#1f845a">GitHub Actions</text><text x="710" y="76" text-anchor="middle" fill="#3d3c39">59 tests + image Docker</text><text x="710" y="92" text-anchor="middle" fill="#3d3c39">(DoD n°3 à 9)</text>
+        <rect x="830" y="30" width="160" height="86" rx="8" fill="#fff4e5" stroke="#b65c02"/><text x="910" y="56" text-anchor="middle" font-weight="700" fill="#b65c02">Recette + Review</text><text x="910" y="76" text-anchor="middle" fill="#3d3c39">démonstration,</text><text x="910" y="92" text-anchor="middle" fill="#3d3c39">acceptation PO</text>
+        <g stroke="#6b6a65" stroke-width="2" marker-end="url(#ar)"><line x1="182" y1="73" x2="212" y2="73"/><line x1="387" y1="73" x2="417" y2="73"/><line x1="592" y1="73" x2="622" y2="73"/><line x1="797" y1="73" x2="827" y2="73"/></g>
+        <path d="M710 120 C 700 160, 120 160, 95 120" fill="none" stroke="#b42318" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#ar)"/>
+        <text x="400" y="162" text-anchor="middle" fill="#b42318">échec d’un test → carte « Anomalie » dans Trello, la US reste « En revue »</text>
+      </g>
+    </svg>
+    <figcaption>Figure 7 — Chaîne d’outils : de la carte Trello à l’acceptation, en passant par la vérification automatique de la DoD.</figcaption>
+  </figure>
+  <table class="compact">
+    <thead><tr><th style="width:18%">Outil</th><th style="width:28%">Processus Scrum servi</th><th>Pourquoi ce choix</th></tr></thead>
+    <tbody>
+      <tr><td><b>Trello</b></td><td>Product Backlog, Sprint Backlog, visualisation du flux, DoR / DoD</td><td>Kanban visuel, accessible aux métiers sans formation, consultable en lecture sans compte. Limite : peu de rapports natifs (burndown) → Power-Up ou passage à Jira si l’équipe grandit.</td></tr>
+      <tr><td><b>Git + GitHub</b></td><td>Incrément versionné, relecture (pull request)</td><td>Branche par US, historique traçable, relecture obligatoire avant fusion (règle de protection de branche).</td></tr>
+      <tr><td><b>GitHub Actions</b></td><td>Vérification automatique de la DoD</td><td>Rejoue les 59 tests à chaque modification, construit l’image Docker de production et la teste ; une CI rouge bloque la fusion.</td></tr>
+      <tr><td><b>Docker</b></td><td>Environnement de recette identique à la production</td><td>Supprime le « ça marche sur mon poste » : la recette se fait sur l’image qui sera déployée.</td></tr>
+      <tr><td><b>Visioconférence + Trello</b></td><td>Daily, revues, rétrospectives</td><td>Équipes réparties entre les sites AbAssurance et AssurePlus.</td></tr>
+    </tbody>
+  </table>
+</section>

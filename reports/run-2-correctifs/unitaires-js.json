@@ -1,0 +1,55 @@
+{
+  "suite": "unitaires-js",
+  "total": 6,
+  "echecs": 0,
+  "tests": [
+    {
+      "groupe": "Formatage (navigateur)",
+      "nom": "séparateur de milliers par espace",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "groupe": "Formatage (navigateur)",
+      "nom": "montants et pourcentages au format français",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "groupe": "Formatage (navigateur)",
+      "nom": "valeur selon le périmètre",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 1,
+      "message": ""
+    },
+    {
+      "groupe": "Formatage (navigateur)",
+      "nom": "ratio recalculé depuis numérateur et dénominateur, pas moyenne de ratios",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "groupe": "Formatage (navigateur)",
+      "nom": "libellés unifiés",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "groupe": "Formatage (navigateur)",
+      "nom": "vue consolidée fournie par la zone gold prioritaire sur la somme AB + AP (R1-05)",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    }
+  ]
+}

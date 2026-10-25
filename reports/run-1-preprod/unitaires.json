@@ -1,0 +1,175 @@
+{
+    "suite": "unitaires",
+    "total": 21,
+    "echecs": 3,
+    "tests": [
+        {
+            "groupe": "Normalisation",
+            "nom": "dates texte hétérogènes AP_BIRTH_DATE",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Normalisation",
+            "nom": "téléphone vers E.164",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Normalisation",
+            "nom": "e-mail en minuscules, invalide rejeté",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Normalisation",
+            "nom": "pays et région déduits du code postal",
+            "exigence": "BF-12",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Normalisation",
+            "nom": "clé nom indépendante de l’ordre et des accents",
+            "exigence": "BF-09",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Harmonisation",
+            "nom": "découpage AP_FULL_NAME",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Harmonisation",
+            "nom": "abréviations d’adresse développées",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Harmonisation",
+            "nom": "référentiels de statuts couvrant les deux sources",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Dédoublonnage",
+            "nom": "identité complète = certain",
+            "exigence": "BF-09",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Dédoublonnage",
+            "nom": "e-mail différent, reste identique = certain",
+            "exigence": "BF-09",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Dédoublonnage",
+            "nom": "déménagement + nouvel e-mail = probable (validation humaine)",
+            "exigence": "BF-11",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Dédoublonnage",
+            "nom": "homonyme dans la même ville = écarté",
+            "exigence": "BF-09",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Dédoublonnage",
+            "nom": "évaluation précision \/ rappel par clusters",
+            "exigence": "CA-03",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Bus de messages",
+            "nom": "partitionnement par clé et offsets par groupe",
+            "exigence": "BF-02",
+            "statut": "reussi",
+            "duree_ms": 11,
+            "message": ""
+        },
+        {
+            "groupe": "Valeurs limites (campagne de recette)",
+            "nom": "date impossible (31\/02) rejetée, pas convertie",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Valeurs limites (campagne de recette)",
+            "nom": "date au format américain (mois > 12) rejetée",
+            "exigence": "BF-07",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Valeurs limites (campagne de recette)",
+            "nom": "téléphone local belge converti avec l’indicatif +32",
+            "exigence": "BF-07",
+            "statut": "echec",
+            "duree_ms": 0,
+            "message": "attendu '+32470123456', obtenu '+33470123456'"
+        },
+        {
+            "groupe": "Valeurs limites (campagne de recette)",
+            "nom": "nom AP en un seul mot = nom de famille, prénom vide",
+            "exigence": "BF-07",
+            "statut": "echec",
+            "duree_ms": 0,
+            "message": "attendu array (\n  0 => 'MADONNA',\n  1 => '',\n  2 => true,\n), obtenu array (\n  0 => '',\n  1 => 'Madonna',\n  2 => true,\n)"
+        },
+        {
+            "groupe": "Valeurs limites (campagne de recette)",
+            "nom": "e-mail absent des deux côtés : jamais concordant",
+            "exigence": "BF-09",
+            "statut": "reussi",
+            "duree_ms": 0,
+            "message": ""
+        },
+        {
+            "groupe": "Valeurs limites (campagne de recette)",
+            "nom": "masquage des e-mails dans les exemples de doublons",
+            "exigence": "BNF-07",
+            "statut": "reussi",
+            "duree_ms": 1,
+            "message": ""
+        },
+        {
+            "groupe": "Configuration",
+            "nom": "date de référence pilotée par l’environnement (APP_REF_DATE)",
+            "exigence": "BNF-10",
+            "statut": "echec",
+            "duree_ms": 117,
+            "message": "avec APP_REF_DATE : attendu '2025-01-31', obtenu '2026-10-25'"
+        }
+    ]
+}

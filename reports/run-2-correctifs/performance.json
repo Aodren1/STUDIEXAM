@@ -1,0 +1,44 @@
+{
+  "suite": "performance",
+  "total": 3,
+  "echecs": 0,
+  "mesures": {
+    "utilisateurs": 20,
+    "duree_s": 20,
+    "requetes": 15462,
+    "erreurs": 0,
+    "debit_req_s": 773,
+    "api_p50_ms": 113,
+    "api_p95_ms": 192,
+    "api_p99_ms": 199,
+    "parcours_p50_ms": 235,
+    "parcours_p95_ms": 238,
+    "parcours": 1718
+  },
+  "tests": [
+    {
+      "groupe": "",
+      "nom": "taux d’erreur nul sous 20 utilisateurs simultanés",
+      "exigence": "BNF-04",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "ouverture complète du tableau de bord p95 < 3 s",
+      "exigence": "BNF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "API gold p95 < 500 ms",
+      "exigence": "BNF-09",
+      "statut": "reussi",
+      "duree_ms": 0,
+      "message": ""
+    }
+  ]
+}

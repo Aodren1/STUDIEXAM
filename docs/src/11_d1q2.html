@@ -1,0 +1,187 @@
+<section class="dossier" id="d1q2-s">
+  <div class="question" id="d1q2">
+    <p><b>Question 2.</b> En utilisant Trello, rédigez les User Stories pour chaque EPIC définie dans le Bloc 1. Obligatoire : l’User Story doit être complète (titre, description, critère d’acceptation).</p>
+    <p class="crit">Critère : le document explique de façon claire et pédagogique aux parties prenantes (chef de projet, développeurs, fonction commerciale, équipes côté client…) le mode de fonctionnement et les conséquences de l’approche choisie : étapes de production et ressources mobilisées, règles et contraintes, déroulé et planification d’un cycle d’itération, rôles des membres de l’équipe.</p>
+  </div>
+
+  <p class="lead">Cette partie s’adresse à toutes les parties prenantes. Elle explique <b>comment le projet va fonctionner au quotidien</b> et ce que cela change pour chacun, puis présente le backlog : 7 EPICs et 35 User Stories, consultables et à jour dans le tableau Trello <a href="{{TRELLO_URL}}">{{TRELLO_URL}}</a>.</p>
+
+  <h2>2.1 Des modules du Bloc 1 aux EPICs</h2>
+  <p>Un <b>EPIC</b> est un grand ensemble fonctionnel, trop gros pour tenir dans un sprint, qui se découpe en <b>User Stories</b> (US) : des besoins exprimés du point de vue d’un utilisateur, livrables en un sprint. Les cinq modules fonctionnels spécifiés au Bloc 1 (M1 à M5) deviennent les EPICs 1 à 5. Les exigences non fonctionnelles du Bloc 1, essentielles dans un contexte d’assurance, sont regroupées dans deux EPICs transverses (EP6 sécurité et conformité, EP7 industrialisation). Chaque US cite les exigences du Bloc 1 qu’elle satisfait (BF-xx, BNF-xx) : la traçabilité est complète, de l’objectif métier jusqu’au test.</p>
+  <!--GEN:synthese_backlog-->
+
+  <h2>2.2 Comment lire le tableau Trello</h2>
+  <figure>
+    <div class="shot"><img src="captures/trello/tableau.jpg" alt="Vue d’ensemble du tableau Trello EXAM2 STUDI"></div>
+    <figcaption>Figure 1 — Le tableau Trello du projet (état au sprint 6). Chaque colonne correspond à une étape du flux ; la couleur de l’étiquette indique l’EPIC.</figcaption>
+  </figure>
+  <table class="compact">
+    <thead><tr><th style="width:26%">Colonne</th><th>Contenu et règle d’entrée</th><th style="width:20%">Qui la gère</th></tr></thead>
+    <tbody>
+      <tr><td>📌 Lire d’abord — méthode &amp; règles</td><td>Mode d’emploi, rôles, déroulé d’un sprint, <b>DoR</b>, <b>DoD</b>, règles de priorisation, objectif du sprint en cours.</td><td>Scrum Master</td></tr>
+      <tr><td>🗂 EPICs</td><td>Une carte par EPIC : module du Bloc 1, exigences, valeur pour le client, liste des US et avancement en points.</td><td>Product Owner</td></tr>
+      <tr><td>📋 Product Backlog</td><td>US non engagées, <b>ordonnées par priorité</b> : la carte du haut est la prochaine à réaliser. Les US de V2 / V3 sont en bas.</td><td>Product Owner (seul à pouvoir réordonner)</td></tr>
+      <tr><td>🎯 Sprint 6 — À faire</td><td>US et tâches engagées au Sprint Planning. Entrée uniquement si la <b>DoR</b> est respectée.</td><td>Équipe</td></tr>
+      <tr><td>⚙️ En cours</td><td>Ce qui est en réalisation. Limite de travail en cours : 2 cartes par développeur.</td><td>Équipe</td></tr>
+      <tr><td>🔍 En revue / recette</td><td>Code en relecture (pull request), tests automatisés et vérification des critères d’acceptation.</td><td>Équipe + référent qualité</td></tr>
+      <tr><td>✅ Terminé — sprint 6</td><td>US qui respectent la <b>DoD</b>, démontrées et acceptées par le PO.</td><td>Product Owner</td></tr>
+      <tr><td>🗄 Terminé — sprints 1 à 5</td><td>Incrément déjà livré ; les critères d’acceptation sont cochés.</td><td>—</td></tr>
+      <tr><td>🐞 Anomalies de recette</td><td>Défauts trouvés par les tests (campagnes 1 et 2) : cause racine, correctif, cycle de vie.</td><td>Référent qualité</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.3 Les rôles des membres de l’équipe</h2>
+  <p>Le Bloc 1 dimensionnait l’équipe à 7,5 ETP (PO, architecte, 3 data engineers, BI, DevOps, ½ sécurité). Scrum impose un <b>Scrum Master</b>, absent de ce dimensionnement : nous l’ajoutons à mi-temps (+0,5 ETP, soit ≈ 99 000 € sur 18 mois au taux du Bloc 1). C’est le principal ajustement budgétaire de l’approche.</p>
+  <table class="compact">
+    <thead><tr><th style="width:17%">Rôle</th><th style="width:7%">ETP</th><th>Responsabilités</th><th style="width:27%">Ce qu’il ne fait pas</th></tr></thead>
+    <tbody>
+      <tr><td><b>Product Owner</b><br><span class="small muted">direction des opérations</span></td><td class="num">1</td><td>Porte la vision et l’objectif de produit, rédige et <b>ordonne</b> le backlog, précise les critères d’acceptation, accepte ou refuse les US en revue, arbitre le périmètre quand le délai est contraint.</td><td>Ne dit pas à l’équipe <i>comment</i> réaliser ; ne modifie pas le sprint en cours.</td></tr>
+      <tr><td><b>Scrum Master</b><br><span class="small muted">coach agile de la DSI</span></td><td class="num">0,5</td><td>Garant de la méthode, anime les événements, lève les obstacles (accès aux bases, environnements, arbitrages), protège l’équipe des sollicitations hors sprint, suit la vélocité et le burndown.</td><td>N’est pas chef de projet : il n’assigne pas les tâches.</td></tr>
+      <tr><td><b>Architecte data</b></td><td class="num">1</td><td>Cohérence de l’architecture (Kafka, Talend, Hadoop, Spark), revues de conception, performance, choix techniques.</td><td rowspan="5" class="small">Les développeurs s’organisent eux-mêmes : ils se répartissent les tâches au Sprint Planning et au Daily, et partagent la responsabilité de l’incrément.</td></tr>
+      <tr><td><b>Data engineers</b></td><td class="num">3</td><td>Jobs Talend, topics Kafka, traitements Spark, règles de qualité. L’un d’eux est <b>référent qualité / tests</b> : stratégie de tests, CI, campagnes de recette.</td></tr>
+      <tr><td><b>Développeur BI</b></td><td class="num">1</td><td>Tableau de bord, indicateurs, accessibilité, restitution Superset.</td></tr>
+      <tr><td><b>DevOps</b></td><td class="num">1</td><td>CI/CD, conteneurs, environnements, supervision, plan de reprise.</td></tr>
+      <tr><td><b>Expert sécurité</b><br><span class="small muted">partagé avec le RSSI</span></td><td class="num">0,5</td><td>Exigences BNF-05 à 07, revue de sécurité de chaque incrément, accompagnement de l’AIPD.</td></tr>
+      <tr><td colspan="2"><b>Total</b> : 8 ETP</td><td colspan="2" class="small">Parties prenantes hors équipe, invitées à la revue de sprint : direction générale (sponsor), DSI, directions métiers, direction financière, DPO, RSSI, équipes IT AssurePlus.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.4 Les étapes de production et les ressources mobilisées</h2>
+  <p>Le MVP est produit en <b>13 sprints de deux semaines</b> (sprint 0 de préparation puis sprints 1 à 12), soit 6 mois, conformément à la feuille de route du Bloc 1. La V2 (M7 – M12) et la V3 (M13 – M18) suivent par incréments trimestriels.</p>
+  <figure>
+    <svg viewBox="0 0 1000 300" width="100%" role="img" aria-label="Feuille de route des sprints du MVP">
+      <style>.lb{font-size:13px;fill:#3d3c39}.hd{font-size:12px;font-weight:700;fill:#fff}.bx{rx:5}.sm{font-size:11px;fill:#3d3c39}</style>
+      <g font-size="11">
+        <!-- en-tête des sprints -->
+        <g>
+          <rect x="150" y="10" width="830" height="24" fill="#26313f" rx="4"/>
+          <text class="hd" x="182" y="27" text-anchor="middle">S0</text>
+          <text class="hd" x="246" y="27" text-anchor="middle">S1</text><text class="hd" x="310" y="27" text-anchor="middle">S2</text><text class="hd" x="374" y="27" text-anchor="middle">S3</text>
+          <text class="hd" x="438" y="27" text-anchor="middle">S4</text><text class="hd" x="502" y="27" text-anchor="middle">S5</text><text class="hd" x="566" y="27" text-anchor="middle">S6</text>
+          <text class="hd" x="630" y="27" text-anchor="middle">S7</text><text class="hd" x="694" y="27" text-anchor="middle">S8</text><text class="hd" x="758" y="27" text-anchor="middle">S9</text>
+          <text class="hd" x="822" y="27" text-anchor="middle">S10</text><text class="hd" x="886" y="27" text-anchor="middle">S11</text><text class="hd" x="950" y="27" text-anchor="middle">S12</text>
+        </g>
+        <text class="lb" x="10" y="58">Préparation</text><rect x="152" y="44" width="60" height="22" fill="#44546f" rx="4"/><text x="182" y="59" fill="#fff" text-anchor="middle">cadrage</text>
+        <text class="lb" x="10" y="88">EP1 Ingestion</text><rect x="216" y="74" width="124" height="22" fill="#1f845a" rx="4"/>
+        <text class="lb" x="10" y="118">EP2 Harmonisation</text><rect x="280" y="104" width="124" height="22" fill="#946f00" rx="4"/>
+        <text class="lb" x="10" y="148">EP3 Rapprochement</text><rect x="408" y="134" width="60" height="22" fill="#b65c02" rx="4"/>
+        <text class="lb" x="10" y="178">EP4 Tableau de bord</text><rect x="408" y="164" width="252" height="22" fill="#c9372c" rx="4"/>
+        <text class="lb" x="10" y="208">EP5 Préparation IA</text><rect x="664" y="194" width="124" height="22" fill="#6e5dc6" rx="4"/>
+        <text class="lb" x="10" y="238">EP6 Sécurité &amp; RGPD</text><rect x="344" y="224" width="60" height="22" fill="#0c66e4" rx="4"/><rect x="536" y="224" width="124" height="22" fill="#0c66e4" rx="4"/>
+        <text class="lb" x="10" y="268">EP7 Industrialisation</text><rect x="152" y="254" width="60" height="22" fill="#227d9b" rx="4"/><rect x="536" y="254" width="124" height="22" fill="#227d9b" rx="4"/><rect x="792" y="254" width="188" height="22" fill="#227d9b" rx="4"/>
+        <!-- jalons -->
+        <line x1="470" y1="38" x2="470" y2="290" stroke="#b42318" stroke-dasharray="4 3"/><text x="474" y="292" fill="#b42318" font-weight="700">AIPD initiale</text>
+        <line x1="598" y1="38" x2="598" y2="290" stroke="#1c5cab" stroke-dasharray="4 3"/><text x="540" y="292" fill="#1c5cab" font-weight="700" text-anchor="end">aujourd’hui</text>
+        <line x1="980" y1="38" x2="980" y2="290" stroke="#b42318" stroke-dasharray="4 3"/><text x="976" y="292" fill="#b42318" font-weight="700" text-anchor="end">go / no-go MVP</text>
+        <text x="822" y="243" fill="#3d3c39" text-anchor="middle">recette métier, PRA, charge</text>
+      </g>
+    </svg>
+    <figcaption>Figure 2 — Feuille de route du MVP : placement des EPICs par sprint et jalons réglementaires (AIPD initiale avant données réelles, comité go / no-go).</figcaption>
+  </figure>
+  <table class="compact">
+    <thead><tr><th style="width:14%">Étape</th><th>Production attendue</th><th style="width:33%">Ressources principalement mobilisées</th></tr></thead>
+    <tbody>
+      <tr><td><b>Sprint 0</b><br>(2 semaines)</td><td>Backlog initial priorisé, DoR / DoD validées, environnements de développement et de recette, accès en lecture aux bases (DBA), chaîne CI, jeu de données de test.</td><td>PO, Scrum Master, architecte, DevOps ; DBA Oracle et SQL Server ; DPO (cadrage AIPD)</td></tr>
+      <tr><td><b>S1 – S3</b><br>socle de données</td><td>Ingestion des 8 tables dans Kafka, zone bronze, modèle unifié silver, règles de normalisation, chiffrement (EP1, EP2, US-6.1).</td><td>3 data engineers, architecte, DevOps ; expert sécurité pour Kerberos / TLS</td></tr>
+      <tr><td><b>S4 – S5</b><br>valeur visible</td><td>Rapprochement des clients et golden record (EP3), statistiques et tableau de bord (EP4). Jalon : AIPD initiale avant les premières données réelles pseudonymisées.</td><td>Data engineers, développeur BI ; PO et métiers pour valider les règles de calcul ; DPO</td></tr>
+      <tr><td><b>S6 – S7</b><br>durcissement</td><td>Campagnes de tests, correction des anomalies, sécurité HTTP, pseudonymisation, CI, contrôle d’accès Ranger, supervision.</td><td>Référent qualité, DevOps, expert sécurité ; toute l’équipe sur les correctifs</td></tr>
+      <tr><td><b>S8 – S10</b><br>ouverture</td><td>Accès des data scientists, catalogue et lignage (EP5), haute disponibilité et plan de reprise (US-7.4).</td><td>Architecte, DevOps, data engineers ; data scientists comme utilisateurs pilotes</td></tr>
+      <tr><td><b>S11 – S12</b><br>mise en production</td><td>Recette métier sur données réelles (UAT), tests de charge au volume cible, recette sécurité, AIPD finale signée, comité go / no-go puis mise en production.</td><td>Toute l’équipe ; utilisateurs clés métiers, RSSI, DPO, exploitation</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="d1q2-cycle" style="break-before: page">
+  <h2>2.5 Le déroulé et la planification d’un cycle d’itération (sprint)</h2>
+  <p>Un sprint dure <b>deux semaines</b> (10 jours ouvrés), toujours la même durée : c’est le rythme du projet. Son contenu est figé au lancement ; seul le Product Owner peut l’annuler si son objectif devient caduc.</p>
+  <figure>
+    <svg viewBox="0 0 1000 200" width="100%" role="img" aria-label="Calendrier d’un sprint de deux semaines">
+      <g font-size="12" font-family="system-ui">
+        <g fill="#26313f"><rect x="40" y="10" width="920" height="26" rx="4"/></g>
+        <g fill="#fff" font-weight="700" text-anchor="middle">
+          <text x="86" y="28">J1 lun.</text><text x="178" y="28">J2</text><text x="270" y="28">J3</text><text x="362" y="28">J4</text><text x="454" y="28">J5</text>
+          <text x="546" y="28">J6 mer.</text><text x="638" y="28">J7</text><text x="730" y="28">J8</text><text x="822" y="28">J9</text><text x="914" y="28">J10 ven.</text>
+        </g>
+        <rect x="44" y="46" width="84" height="40" rx="5" fill="#1c5cab"/><text x="86" y="63" fill="#fff" text-anchor="middle" font-weight="700">Planning</text><text x="86" y="79" fill="#fff" text-anchor="middle">4 h max</text>
+        <g fill="#e8f1fc" stroke="#1c5cab">
+          <rect x="44" y="96" width="912" height="22" rx="4"/>
+        </g>
+        <text x="500" y="112" text-anchor="middle" fill="#1c5cab">Daily Scrum — 15 min chaque matin à 9 h 30 (fait hier, prévu aujourd’hui, obstacles)</text>
+        <rect x="504" y="46" width="84" height="40" rx="5" fill="#946f00"/><text x="546" y="63" fill="#fff" text-anchor="middle" font-weight="700">Affinage</text><text x="546" y="79" fill="#fff" text-anchor="middle">2 h</text>
+        <rect x="872" y="46" width="84" height="40" rx="5" fill="#1f845a"/><text x="914" y="63" fill="#fff" text-anchor="middle" font-weight="700">Review 2 h</text><text x="914" y="79" fill="#fff" text-anchor="middle">+ Rétro 1 h 30</text>
+        <rect x="132" y="130" width="736" height="26" rx="4" fill="#f3f2ee" stroke="#dcdbd3"/>
+        <text x="500" y="148" text-anchor="middle" fill="#3d3c39">Développement → relecture (pull request) → CI verte → vérification des critères d’acceptation → « Terminé » (DoD)</text>
+        <text x="86" y="186" text-anchor="middle" fill="#6b6a65">objectif de sprint</text>
+        <text x="546" y="186" text-anchor="middle" fill="#6b6a65">US des 2 sprints suivants « prêtes » (DoR)</text>
+        <text x="914" y="186" text-anchor="middle" fill="#6b6a65">incrément démontré</text>
+      </g>
+    </svg>
+    <figcaption>Figure 3 — Calendrier type d’un sprint de deux semaines.</figcaption>
+  </figure>
+  <table class="compact">
+    <thead><tr><th style="width:16%">Événement</th><th style="width:13%">Quand / durée</th><th style="width:15%">Participants</th><th>Déroulé</th><th style="width:18%">Sortie</th></tr></thead>
+    <tbody>
+      <tr><td><b>Sprint Planning</b></td><td>J1, 9 h 30 – 13 h 30 (4 h max)</td><td>PO, SM, équipe</td><td>1) Le PO présente l’objectif proposé et les US du haut du backlog. 2) L’équipe sélectionne les US « prêtes » (DoR) dans la limite de sa capacité. 3) Elle les découpe en tâches.</td><td>Objectif de sprint, Sprint Backlog</td></tr>
+      <tr><td><b>Daily Scrum</b></td><td>Chaque jour, 9 h 30, 15 min</td><td>Équipe (SM facilite)</td><td>Point sur l’avancement vers l’objectif et sur les obstacles. Les sujets longs sont traités juste après, en petit comité.</td><td>Plan des 24 h, obstacles confiés au SM</td></tr>
+      <tr><td><b>Affinage du backlog</b></td><td>J6, 2 h (≤ 10 % du temps)</td><td>PO, équipe</td><td>Clarification, découpage et estimation (planning poker) des US des deux sprints suivants ; vérification de la DoR.</td><td>US « prêtes »</td></tr>
+      <tr><td><b>Sprint Review</b></td><td>J10, 10 h – 12 h</td><td>Équipe, PO, parties prenantes</td><td>Démonstration de l’incrément sur l’environnement de recette (jamais de diapositives), retours des métiers, ajustement du backlog.</td><td>Backlog réordonné</td></tr>
+      <tr><td><b>Rétrospective</b></td><td>J10, 14 h – 15 h 30</td><td>Équipe, SM, PO</td><td>Ce qui a bien marché, ce qui est à améliorer (méthode, outils, qualité) ; choix de 1 à 3 actions.</td><td>Actions inscrites au sprint suivant</td></tr>
+    </tbody>
+  </table>
+  <div class="box">
+    <h4>Planification de la capacité : exemple du sprint 6</h4>
+    <p>Capacité brute : 6 développeurs × 10 jours = 60 jours-personne ; disponibilité réelle ≈ 70 % (cérémonies, support, congés), soit ≈ 42 jours-personne. La capacité ne s’exprime pas en jours mais en <b>points</b>, à partir de la vélocité constatée : 21, 21, 21, 22 puis 25 points aux sprints 1 à 5. L’engagement du sprint 6 se fonde sur la moyenne des trois derniers sprints (21 + 22 + 25) / 3 ≈ 23 points ; l’équipe s’engage sur <b>24 points</b>, avec l’objectif « rendre le logiciel de validation prêt pour la recette métier ». Le reste à faire du MVP s’élève à <b>42 points</b> (34 points au backlog hors V2 / V3 et 8 points encore en cours au sprint 6), soit moins de deux sprints de vélocité. Les sprints 7 à 12 disposent donc d’une marge importante, réservée à la recette métier sur données réelles, aux tests au volume cible, au découpage des US de 13 points et aux nouvelles US qui émergeront des revues : le backlog n’est jamais figé.</p>
+  </div>
+
+  <h2>2.6 Règles et contraintes à respecter</h2>
+  <div class="two-col">
+    <div class="box"><h4>Règles de méthode</h4><ul>
+      <li><b>Durées bornées</b> (timebox) : un sprint ne s’allonge jamais ; ce qui n’est pas terminé retourne au backlog.</li>
+      <li><b>Sprint protégé</b> : aucune nouvelle demande ne s’ajoute en cours de sprint ; elle passe par le PO et le backlog.</li>
+      <li><b>DoR en entrée, DoD en sortie</b> (question 3) : pas d’exception.</li>
+      <li><b>Un seul backlog, un seul ordre</b>, tenu par le PO.</li>
+      <li><b>Limite de travail en cours</b> : 2 cartes par personne, pour finir avant de commencer.</li>
+    </ul></div>
+    <div class="box"><h4>Règles de qualité</h4><ul>
+      <li>Toute modification passe par une <b>pull request relue</b> par un pair.</li>
+      <li>La <b>CI</b> doit être verte pour fusionner (analyse, tests, recette Docker).</li>
+      <li>Chaque règle de transformation a son <b>test unitaire</b> ; chaque anomalie corrigée, son <b>test de non-régression</b>.</li>
+      <li>Les estimations sont faites par ceux qui réalisent (planning poker).</li>
+    </ul></div>
+    <div class="box"><h4>Contraintes du contexte</h4><ul>
+      <li><b>Bases sources en lecture seule</b>, extractions de masse la nuit (BNF-01).</li>
+      <li><b>Données de santé</b> : aucune donnée réelle hors environnements habilités ; jeux de test synthétiques ou pseudonymisés.</li>
+      <li><b>Jalons réglementaires fixes</b> : AIPD initiale (S4), AIPD finale et recette sécurité (S12).</li>
+      <li><b>Chaîne technique imposée</b> par la DSI : Kafka, Talend, Hadoop, Spark.</li>
+    </ul></div>
+    <div class="box"><h4>Conditions de réussite</h4><ul>
+      <li>PO réellement disponible (au moins 4 jours sur 5).</li>
+      <li>Métiers présents à chaque revue de sprint.</li>
+      <li>Équipe stable pendant tout le MVP.</li>
+      <li>Obstacles (accès, arbitrages) levés en moins de 48 h par le SM et la DSI.</li>
+    </ul></div>
+  </div>
+
+  <h2>2.7 Ce que l’approche change pour chaque partie prenante</h2>
+  <table class="compact">
+    <thead><tr><th style="width:20%">Partie prenante</th><th>Mode de fonctionnement</th><th style="width:36%">Conséquences à accepter</th></tr></thead>
+    <tbody>
+      <tr><td><b>Chef de projet / DSI</b></td><td>Le pilotage se fait par la valeur livrée (points terminés, burndown) et non par un planning détaillé. Le rôle de chef de projet se répartit entre le PO (quoi) et le SM (comment travailler).</td><td>Coût et délai fixés, <b>périmètre variable</b> : on arbitre le contenu, pas l’enveloppe. Le reporting est un tableau de bord de sprint, pas un diagramme de Gantt.</td></tr>
+      <tr><td><b>Développeurs</b></td><td>Équipe auto-organisée, engagée collectivement sur un objectif de sprint ; qualité intégrée (tests, CI, relecture).</td><td>Ce qui n’est pas « Done » ne compte pas ; les tests font partie de l’estimation.</td></tr>
+      <tr><td><b>Fonction commerciale</b></td><td>Exprime ses besoins au PO ; voit le produit toutes les deux semaines en revue de sprint (ex. multi-équipement par client unique).</td><td>Une demande n’est pas livrée immédiatement : elle est priorisée. En échange, une demande prioritaire peut être livrée en deux à quatre semaines.</td></tr>
+      <tr><td><b>Équipes côté client</b><br><span class="small">(métiers, DPO, RSSI, IT AssurePlus)</span></td><td>Participent aux revues, valident les règles de calcul et de qualité, testent les incréments (recette continue).</td><td>Disponibilité régulière demandée (≈ 2 h par sprint pour les utilisateurs clés) ; la recette n’est plus une phase finale mais une activité continue.</td></tr>
+      <tr><td><b>Direction (sponsor)</b></td><td>Jalons go / no-go fondés sur des démonstrations et des critères mesurables.</td><td>Décisions plus fréquentes, mieux informées ; droit d’arrêter tôt si la valeur n’est pas au rendez-vous.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="d1q2-us">
+  <h2>2.8 Les User Stories par EPIC</h2>
+  <p>Chaque carte Trello d’US contient les trois éléments exigés : un <b>titre</b> (référence, intitulé, priorité MoSCoW et estimation), une <b>description</b> au format « En tant que… je veux… afin de… » complétée de l’EPIC, des exigences du Bloc 1 couvertes et de la planification, et une <b>checklist de critères d’acceptation</b> vérifiables (cochés pour les US livrées). Les critères d’acceptation des 35 US sont reproduits en annexe A.1.</p>
+  <figure>
+    <div class="shot"><img src="captures/trello/us-2-3.jpg" alt="Carte Trello de l’US-2.3"></div>
+    <figcaption>Figure 4 — Exemple de carte : US-2.3 « Règles de normalisation communes » (titre, description, exigence BF-07, critères d’acceptation cochés à la livraison).</figcaption>
+  </figure>
+  <!--GEN:backlog-->
+  <p class="small muted">MoSCoW : Must = indispensable au MVP ; Should = important mais contournable ; Could = souhaitable ; Won’t = hors de cette version. Les US de 13 points (US-1.5, US-5.3) sont volontairement trop grosses : elles devront être découpées avant d’entrer en sprint (règle de la DoR).</p>
+</section>

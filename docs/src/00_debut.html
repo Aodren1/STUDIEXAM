@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BCDBigData — Examen Bloc 2 — FLORIDE Aodren</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+
+<section class="cover">
+  <div class="band"></div>
+  <div class="inner">
+    <p class="kicker">Bachelor Concepteur Développeur Big Data · Bloc 2</p>
+    <h1>Gérer itérativement le cycle de vie d’une solution digitale</h1>
+    <p class="subtitle">Plateforme Data AbAssurance × AssurePlus — pilotage agile, stratégie de tests et gestion des risques du logiciel de validation</p>
+    <div class="logos"><span>Scrum · Trello</span><span>Tests automatisés · CI GitHub Actions</span><span>Gestion des risques</span></div>
+    <div class="meta">
+      <div><b>Candidat</b>FLORIDE Aodren</div>
+      <div><b>Épreuve</b>Bloc 2 — Gestion, pilotage et testing d’une solution digitale</div>
+      <div><b>Suite du</b>Bloc 1 — spécification de la plateforme (exigences BF / BNF, MVP, architecture)</div>
+      <div><b>Tableau Trello</b><a href="{{TRELLO_URL}}">{{TRELLO_URL}}</a></div>
+      <div><b>Dépôt du code et des tests</b><a href="{{GITHUB_URL}}">{{GITHUB_URL}}</a></div>
+      <div><b>Date</b>25 octobre 2026</div>
+    </div>
+  </div>
+</section>
+
+<section class="toc" style="break-before: page">
+  <h1>Sommaire</h1>
+  <ol>
+    <li><b>0</b>Synthèse et liens vers les outils</li>
+    <li><b>D1</b>Dossier 1 — Les outils</li>
+    <li class="sub"><b>Q1</b>Approche agile contre approches traditionnelles</li>
+    <li class="sub"><b>Q2</b>Le pilotage dans Trello : organisation, rôles, cycle de sprint, User Stories par EPIC</li>
+    <li class="sub"><b>Q3</b>Les tickets DoR et DoD</li>
+    <li><b>D2</b>Dossier 2 — Méthodologie de tests</li>
+    <li class="sub"><b>Q1</b>Stratégie de tests et résultats des deux campagnes de recette</li>
+    <li class="sub"><b>Q2</b>Critères de mise en production</li>
+    <li class="sub"><b>Q3</b>Que faire si un critère n’est pas respecté ?</li>
+    <li><b>D3</b>Dossier 3 — Gestion des risques</li>
+    <li class="sub"><b>Q1</b>Trois approches, choix argumenté et application à une situation critique</li>
+    <li><b>A</b>Annexes — critères d’acceptation des 35 User Stories, matrice de traçabilité, captures</li>
+  </ol>
+
+  <h2>Liens vers les logiciels utilisés</h2>
+  <!--GEN:liens-->
+
+  <h2>Synthèse</h2>
+  <p class="lead">Le Bloc 1 a spécifié la plateforme Big Data qui unifie les données d’AbAssurance (Oracle) et d’AssurePlus (SQL Server) et a livré un prototype du <b>logiciel de validation</b> (statistiques des deux bases). Ce Bloc 2 répond à la question suivante : <b>comment piloter, tester et sécuriser ce projet jusqu’à sa mise en production ?</b></p>
+  <div class="kpis">
+    <div><b>Scrum</b><span>sprints de 2 semaines, 8 ETP, démarche hybride (jalons réglementaires)</span></div>
+    <div><b>7 EPICs · 35 US</b><span>210 points, rattachés aux exigences BF / BNF du Bloc 1</span></div>
+    <div><b>59 tests</b><span>6 suites automatisées, chacune rattachée à une exigence</span></div>
+    <div><b>12 anomalies</b><span>trouvées par les tests, analysées et corrigées</span></div>
+  </div>
+  <div class="grid2">
+    <div class="box key">
+      <h4>Ce que nous avons réellement fait</h4>
+      <ul>
+        <li>Un tableau <b>Trello</b> qui sert de backlog vivant : 7 EPICs, 35 User Stories complètes, DoR, DoD, rôles, cérémonies et état du sprint 6.</li>
+        <li>Une <b>campagne de tests réelle</b> sur le logiciel de validation livré au sprint 5 : 41 tests réussis sur 52. Les 11 échecs étaient de vrais défauts (dont un bloquant RGPD) ou un test mal conçu.</li>
+        <li>Les correctifs, puis une <b>campagne 2</b> à 59 / 59, après une régression trouvée et corrigée en cours de route.</li>
+        <li>Une <b>intégration continue</b> qui rejoue toute la campagne à chaque modification, y compris sur l’image Docker de production.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>Les messages clés</h4>
+      <ul>
+        <li>L’agilité est retenue pour réduire l’<b>effet tunnel</b> : les défauts sont trouvés au sprint 6 et non lors d’une recette finale au mois 6.</li>
+        <li>La <b>DoR</b> protège l’entrée du sprint, la <b>DoD</b> protège sa sortie ; la CI vérifie automatiquement une partie de la DoD.</li>
+        <li>Mise en production sur une <b>grille go / no-go</b> à 14 critères ; trois d’entre eux sont non négociables (AIPD, données personnelles, réconciliation des volumes).</li>
+        <li>Gestion des risques <b>agile (ROAM)</b>, complétée par une <b>AMDEC</b> sur la chaîne de données.</li>
+      </ul>
+    </div>
+  </div>
+</section>

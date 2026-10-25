@@ -1,0 +1,211 @@
+<section class="dossier" id="d2">
+  <h1>Dossier 2 — Méthodologie de tests</h1>
+
+  <div class="question" id="d2q1">
+    <p><b>Question 1.</b> Proposez votre stratégie des tests qui permet de rendre l’application au niveau de la qualité souhaitée. La stratégie devra détailler la méthodologie, les outils et les types de tests à réaliser.</p>
+    <p class="crit">Critère : la présentation doit permettre d’identifier clairement les points de friction rencontrés, que les éventuelles erreurs issues de la phase de pré-production ont été identifiées, que des ajustements ont été effectués pour adresser les points de friction, et les ajustements à effectuer pour les prochaines itérations.</p>
+  </div>
+
+  <p class="lead">Cette stratégie n’est pas théorique : elle a été <b>appliquée</b> au logiciel de validation livré au sprint 5. Une première campagne a révélé 11 échecs (41 tests réussis sur 52). Les anomalies ont été analysées et corrigées, puis une seconde campagne a atteint 59 / 59. Cette partie présente la stratégie (1.1 à 1.5), ses résultats et les points de friction rencontrés (1.6 à 1.8), puis les ajustements prévus pour les prochaines itérations (1.9).</p>
+
+  <h2>1.1 Objectifs de qualité</h2>
+  <p>Le niveau de qualité souhaité est défini par les exigences du Bloc 1, rattachées aux caractéristiques de la norme <b>ISO/IEC 25010</b>. Chaque caractéristique a un seuil mesurable et au moins un type de test qui la vérifie :</p>
+  <table class="compact">
+    <thead><tr><th style="width:20%">Caractéristique ISO 25010</th><th style="width:32%">Exigence et seuil (Bloc 1)</th><th>Comment on la vérifie</th></tr></thead>
+    <tbody>
+      <tr><td><b>Adéquation fonctionnelle</b></td><td>CA-01 volumétrie source = silver ; CA-02 5 familles de statistiques ; CA-05 ratios recalculables</td><td>Tests d’intégration de réconciliation et contre-calcul indépendant de chaque indicateur</td></tr>
+      <tr><td><b>Exactitude des données</b></td><td>BF-07, BF-08 : règles de normalisation, 100 % des anomalies tracées ; CA-03 précision ≥ 98 %</td><td>Tests unitaires des règles (valeurs limites), jeux d’essai, vérité terrain</td></tr>
+      <tr><td><b>Performance</b></td><td>BNF-09 : tableau de bord &lt; 3 s (p95), agrégats &lt; 1 h</td><td>Test de charge (20 utilisateurs), mesure navigateur, test de volumétrie × 5</td></tr>
+      <tr><td><b>Sécurité</b></td><td>BNF-05 à 07 : chiffrement, contrôle d’accès, pseudonymisation</td><td>Tests de sécurité boîte noire (en-têtes, méthodes, exposition de fichiers), test de pseudonymisation, scan d’image</td></tr>
+      <tr><td><b>Utilisabilité / accessibilité</b></td><td>BNF-12 : RGAA, alternative tabulaire, mobile</td><td>Tests E2E : contrastes AA, noms accessibles, 375 px, bascule tableau</td></tr>
+      <tr><td><b>Fiabilité</b></td><td>BNF-04, BNF-08 : rejouabilité, lignage, lag Kafka nul</td><td>Tests d’intégration (lag, lignage), rejeu du pipeline</td></tr>
+      <tr><td><b>Maintenabilité</b></td><td>BNF-10 : tests automatisés, nomenclature, configuration externalisée</td><td>CI, analyse statique, tests de configuration</td></tr>
+      <tr><td><b>Portabilité</b></td><td>Déploiement par conteneurs</td><td>Recette sur l’image Docker de production dans la CI</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.2 Méthodologie</h2>
+  <div class="grid2">
+    <div>
+      <h3>Cinq principes</h3>
+      <ol>
+        <li><b>Tester tôt (« shift left »)</b> : les tests sont écrits dans le sprint, avec le code ; ils font partie de la DoD et de l’estimation.</li>
+        <li><b>Pyramide des tests</b> : beaucoup de tests unitaires rapides et ciblés, moins de tests d’intégration, quelques tests de bout en bout, plus lents et plus fragiles.</li>
+        <li><b>Tests fondés sur les risques</b> : l’effort va en priorité là où une erreur coûte le plus (données de santé, chiffres financiers, double comptage des clients).</li>
+        <li><b>Oracle indépendant</b> : un indicateur n’est jamais vérifié avec le code qui l’a produit, mais par une requête de contre-calcul écrite séparément.</li>
+        <li><b>Traçabilité</b> : chaque test porte la référence de l’exigence vérifiée ; le rapport produit la matrice exigence → tests (annexe A.2).</li>
+      </ol>
+    </div>
+    <figure style="margin-top:0">
+      <svg viewBox="0 0 420 300" width="100%" role="img" aria-label="Pyramide des tests du projet">
+        <g font-family="system-ui" font-size="12" text-anchor="middle">
+          <polygon points="210,10 260,80 160,80" fill="#c9372c"/><text x="210" y="62" fill="#fff" font-weight="700">E2E</text>
+          <polygon points="160,84 260,84 300,140 120,140" fill="#b65c02"/><text x="210" y="117" fill="#fff" font-weight="700">API · sécurité · charge</text>
+          <polygon points="120,144 300,144 345,205 75,205" fill="#946f00"/><text x="210" y="179" fill="#fff" font-weight="700">Intégration / réconciliation</text>
+          <polygon points="75,209 345,209 395,280 25,280" fill="#1f845a"/><text x="210" y="249" fill="#fff" font-weight="700">Unitaires (PHP + JS)</text>
+          <g font-size="11" fill="#3d3c39" text-anchor="start">
+            <text x="268" y="40">8 tests · ~4 s</text>
+            <text x="306" y="112">11 tests · ~20 s</text>
+            <text x="350" y="175">13 tests · ~1 s</text>
+          </g>
+          <text x="210" y="297" font-size="11" fill="#3d3c39">27 tests unitaires · &lt; 0,5 s</text>
+        </g>
+      </svg>
+      <figcaption>Figure 8 — Pyramide des 59 tests automatisés (campagne 2).</figcaption>
+    </figure>
+  </div>
+
+  <h3>Cycle de test dans un sprint</h3>
+  <p>À l’affinage (J6), le référent qualité vérifie que chaque critère d’acceptation est testable (DoR). Pendant le sprint, le développeur écrit les tests unitaires avec le code. À chaque <i>push</i>, la CI exécute la campagne complète. En fin de sprint, une <b>campagne de recette</b> rejoue tout sur l’image de production et produit un rapport daté. Les échecs deviennent des cartes « Anomalie » dans Trello, avec une gravité :</p>
+  <table class="compact">
+    <thead><tr><th style="width:14%">Gravité</th><th>Définition</th><th style="width:30%">Règle de traitement</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ko">Bloquante</span></td><td>Empêche la mise en production : non-conformité légale, perte ou fuite de données, chiffre faux sans contournement.</td><td>Correction immédiate, avant toute autre US ; no-go automatique.</td></tr>
+      <tr><td><span class="mid">Majeure</span></td><td>Résultat faux ou faille avec contournement possible.</td><td>Corrigée dans le sprint ; no-go sauf dérogation signée.</td></tr>
+      <tr><td>Mineure</td><td>Cas limite, gêne sans impact sur la décision.</td><td>Priorisée par le PO dans le backlog.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.3 Types de tests et outils</h2>
+  <table class="compact">
+    <thead><tr><th style="width:15%">Type</th><th style="width:30%">Ce qui est vérifié</th><th style="width:27%">Outil utilisé (logiciel de validation)</th><th>Outil à l’échelle cible (plateforme)</th></tr></thead>
+    <tbody>
+      <tr><td><b>Unitaires</b></td><td>Chaque règle de normalisation, de score et de formatage, y compris les valeurs limites (31/02, numéro belge, nom en un mot).</td><td>Mini-framework PHP sans dépendance (<code>tests/run.php</code>), <code>node:test</code> pour le JavaScript</td><td>PHPUnit / pytest, tests Spark (spark-testing-base) ; mutation testing (Infection) pour mesurer l’efficacité des tests</td></tr>
+      <tr><td><b>Intégration / réconciliation</b></td><td>Chaîne complète source → topic → bronze → silver → gold : volumes, lignage, lag, contre-calcul des indicateurs, jeux d’essai.</td><td><code>tests/integration.php</code> sur la chaîne exécutée de bout en bout</td><td>Great Expectations ou Deequ sur Spark ; tests de compatibilité de schéma (Schema Registry)</td></tr>
+      <tr><td><b>Qualité des données</b></td><td>Règles DQ01 à DQ15, complétude, orphelins, doublons.</td><td>Règles intégrées au pipeline + tableau « Qualité » + tests</td><td>Great Expectations, Talend Data Quality</td></tr>
+      <tr><td><b>Contrat d’API</b></td><td>Codes HTTP, format JSON, liste blanche des jeux, méthodes autorisées.</td><td><code>tests/api.php</code> (HTTP natif)</td><td>Tests de contrat (OpenAPI), Postman / Newman</td></tr>
+      <tr><td><b>Sécurité</b></td><td>En-têtes, CSP, cache des données personnelles, exposition de fichiers, chemins forgés, secrets dans le dépôt, vulnérabilités de l’image.</td><td><code>tests/api.php</code>, recherche de secrets et scan Trivy dans la CI</td><td>OWASP ZAP (DAST) dans la CI, test d’intrusion externe avant production, revue des politiques Ranger</td></tr>
+      <tr><td><b>Bout en bout (E2E)</b></td><td>Parcours réels dans Chrome : 7 rubriques, filtre de périmètre comparé à l’API, alternative tabulaire, thème, absence d’erreur JavaScript et de violation CSP.</td><td><code>tests/e2e.mjs</code> : Chrome headless piloté par le protocole DevTools, sans dépendance</td><td>Playwright (multi-navigateurs, vidéos des échecs)</td></tr>
+      <tr><td><b>Accessibilité</b></td><td>Contrastes AA, langue, lien d’évitement, noms accessibles, 375 px sans défilement horizontal.</td><td>Contrôles automatisés dans <code>e2e.mjs</code></td><td>axe-core, audit RGAA manuel avec lecteur d’écran (NVDA)</td></tr>
+      <tr><td><b>Charge et performance</b></td><td>20 utilisateurs simultanés, p50 / p95 / p99, taux d’erreur ; temps d’affichage navigateur.</td><td><code>tests/perf.mjs</code> (Node, sans dépendance)</td><td>Gatling ou k6 ; tests d’endurance (8 h) au volume cible</td></tr>
+      <tr><td><b>Volumétrie</b></td><td>Évolution de la durée du pipeline quand le volume est multiplié par 5.</td><td><code>SEED_SCALE=5 php bin/seed.php</code></td><td>Cluster de préproduction alimenté par un extrait pseudonymisé</td></tr>
+      <tr><td><b>Non-régression</b></td><td>Rejeu intégral de la campagne à chaque modification.</td><td>GitHub Actions</td><td>Idem + tests nocturnes au volume réel</td></tr>
+      <tr><td><b>Recette métier (UAT)</b></td><td>Scénarios des utilisateurs clés sur données réelles pseudonymisées.</td><td>Revues de sprint</td><td>Campagne formelle aux sprints 11 – 12, PV signé</td></tr>
+      <tr><td><b>Exploratoires</b></td><td>Requêtes libres sur la zone silver pour chercher l’inattendu.</td><td>SQL sur la zone silver</td><td>Notebooks Spark</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.4 Environnements et données de test</h2>
+  <div class="grid2">
+    <table class="compact">
+      <thead><tr><th>Environnement</th><th>Usage</th><th>Données</th></tr></thead>
+      <tbody>
+        <tr><td><b>Poste</b></td><td>Développement, tests unitaires</td><td>Synthétiques</td></tr>
+        <tr><td><b>CI</b></td><td>Campagne complète à chaque <i>push</i></td><td>Synthétiques, régénérées</td></tr>
+        <tr><td><b>Recette</b></td><td>Image Docker de production, revues de sprint</td><td>Synthétiques</td></tr>
+        <tr><td><b>Préproduction</b></td><td>UAT, charge au volume cible, PRA</td><td>Extrait réel pseudonymisé (après AIPD)</td></tr>
+        <tr><td><b>Production</b></td><td>Exploitation</td><td>Réelles</td></tr>
+      </tbody>
+    </table>
+    <div>
+      <p><b>Données de test.</b> Aucune donnée réelle d’assuré n’est utilisée hors des environnements habilités. Le générateur (<code>bin/seed.php</code>) produit deux bases fidèles aux schémas de l’annexe (249 226 lignes) et y <b>injecte des défauts réalistes</b> : dates en texte, noms inversés, doublons intra et inter-bases, orphelins, statuts hétérogènes. Il fournit aussi une <b>vérité terrain</b> (409 paires de doublons réelles) qui permet de mesurer la précision du rapprochement. Le tirage est déterministe (graine fixe et <code>APP_REF_DATE</code>) : deux exécutions donnent les mêmes chiffres. Des <b>jeux d’essai</b> ciblés complètent ce jeu de données : une ligne réelle rejouée avec une date impossible, un paiement 90 jours après la résiliation, etc.</p>
+    </div>
+  </div>
+
+  <h2>1.5 Intégration continue</h2>
+  <figure>
+    <svg viewBox="0 0 1000 120" width="100%" role="img" aria-label="Pipeline d’intégration continue">
+      <g font-family="system-ui" font-size="12">
+        <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6a65"/></marker></defs>
+        <rect x="10" y="20" width="140" height="70" rx="8" fill="#f3f2ee" stroke="#6b6a65"/><text x="80" y="48" text-anchor="middle" font-weight="700">push / PR</text><text x="80" y="68" text-anchor="middle" fill="#3d3c39">branche d’une US</text>
+        <rect x="190" y="20" width="210" height="70" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="295" y="44" text-anchor="middle" font-weight="700" fill="#1c5cab">1. Analyse statique</text><text x="295" y="62" text-anchor="middle" fill="#3d3c39">syntaxe PHP / JS</text><text x="295" y="78" text-anchor="middle" fill="#3d3c39">recherche de secrets</text>
+        <rect x="440" y="20" width="250" height="70" rx="8" fill="#e9f7ef" stroke="#1f845a"/><text x="565" y="44" text-anchor="middle" font-weight="700" fill="#1f845a">2. Campagne complète</text><text x="565" y="62" text-anchor="middle" fill="#3d3c39">seed + pipeline + 59 tests</text><text x="565" y="78" text-anchor="middle" fill="#3d3c39">(php -S + Chrome headless)</text>
+        <rect x="730" y="20" width="260" height="70" rx="8" fill="#fff4e5" stroke="#b65c02"/><text x="860" y="44" text-anchor="middle" font-weight="700" fill="#b65c02">3. Recette image de production</text><text x="860" y="62" text-anchor="middle" fill="#3d3c39">build Docker (tests inclus), API,</text><text x="860" y="78" text-anchor="middle" fill="#3d3c39">sécurité, E2E, charge, scan Trivy</text>
+        <g stroke="#6b6a65" stroke-width="2" marker-end="url(#ar2)"><line x1="152" y1="55" x2="187" y2="55"/><line x1="402" y1="55" x2="437" y2="55"/><line x1="692" y1="55" x2="727" y2="55"/></g>
+        <text x="500" y="112" text-anchor="middle" fill="#3d3c39">Chaque étape ne démarre que si la précédente est verte ; les rapports JSON et les captures sont publiés en artefacts.</text>
+      </g>
+    </svg>
+    <figcaption>Figure 9 — Pipeline GitHub Actions (<code>.github/workflows/ci.yml</code>).</figcaption>
+  </figure>
+  <p>L’orchestrateur <code>tests/run-all.mjs</code> exécute la même campagne en local et dans la CI, et produit un rapport consolidé (<code>reports/&lt;campagne&gt;/rapport.json</code>) : statut et durée de chaque test, exigence vérifiée, mesures de performance, captures d’écran.</p>
+</section>
+
+<section id="d2q1-res" style="break-before: page">
+  <h2>1.6 Résultats : de la pré-production à la recette</h2>
+  <div class="kpis">
+    <div><b class="ko">41 / 52</b><span>campagne 1 — code livré au sprint 5 (pré-production)</span></div>
+    <div><b>12</b><span>anomalies analysées (11 en campagne 1, 1 régression en campagne 2)</span></div>
+    <div><b class="ok">59 / 59</b><span>campagne 2 — après correctifs et nouveaux tests</span></div>
+    <div><b>238 ms</b><span>ouverture complète du tableau de bord au p95, sous 20 utilisateurs (seuil 3 s)</span></div>
+  </div>
+  <!--GEN:campagnes-->
+  <p class="small">Le nombre de tests passe de 52 à 59 : 6 tests JavaScript existaient déjà mais n’apparaissaient pas dans le rapport de la campagne 1 (friction F6) ; un jeu d’essai a été ajouté pour la règle DQ15.</p>
+
+  <h3>Les erreurs identifiées en pré-production</h3>
+  <p>La campagne 1 a été exécutée sur le code tel que livré au sprint 5. Ses 11 échecs :</p>
+  <!--GEN:echecs_run1-->
+  <div class="code"><span class="m">■ integration</span>
+Contre-calcul des indicateurs
+  <span class="r">✗ multi-équipement consolidé compté par client unique (golden record) — clients équipés en vue consolidée : attendu 4950, obtenu 5153</span>
+Protection des données (zone gold)
+  <span class="r">✗ exemples de doublons pseudonymisés (ni nom complet ni date de naissance) — nom de famille en clair pour AB-100127</span>
+<span class="m">■ api-securite</span>
+  <span class="r">✗ données personnelles non mises en cache partagé — Cache-Control : public, max-age=300</span>
+<span class="m">══ run-1-preprod : 41/52 tests réussis, 11 en échec → reports/run-1-preprod/rapport.json</span>
+<span class="m">══ run-2-correctifs :</span> <span class="g">59/59 tests réussis, 0 en échec</span></div>
+
+  <h3>Analyse et ajustements effectués</h3>
+  <p>Chaque échec a été reproduit, sa <b>cause racine</b> établie, puis corrigé et couvert par un test de non-régression. Chaque anomalie a sa carte dans la colonne « Anomalies de recette » du Trello.</p>
+  <!--GEN:anomalies-->
+  <div class="grid2">
+    <div class="box warn">
+      <h4>R1-06, l’anomalie bloquante</h4>
+      <p>La matrice de doublons affichait les exemples avec prénom, nom, date de naissance complète et code postal. Le Bloc 1 exigeait des « exemples pseudonymisés » (BF-16) et seuls l’e-mail et le téléphone étaient masqués. Le nom, la date de naissance et le code postal suffisent à réidentifier une personne : c’est une non-conformité RGPD sur des données de santé. La réponse <code>Cache-Control: public</code> aggravait le risque (R1-07). Le test d’intégration l’a détectée automatiquement ; elle aurait sans doute échappé à une recette visuelle, car les exemples « avaient l’air » masqués.</p>
+    </div>
+    <div class="box">
+      <h4>R1-05, l’erreur métier invisible</h4>
+      <p>Le multi-équipement était calculé par fiche source. Un client présent chez les deux assureurs apparaissait donc deux fois comme « mono-équipé » alors qu’il détient deux contrats : le potentiel de multi-équipement croisé, l’objectif économique OE2 du Bloc 1, était faussé. Seul un <b>contre-calcul indépendant</b> par golden record pouvait le révéler. Après correction, la vue consolidée compte 4 950 clients équipés, contre 5 153 auparavant.</p>
+    </div>
+  </div>
+
+  <h2>1.7 Les points de friction rencontrés</h2>
+  <p>Au-delà des défauts du produit, la mise en œuvre de la stratégie a elle-même rencontré des difficultés. Les documenter fait partie de l’amélioration continue (rétrospective du sprint 6) :</p>
+  <table class="compact">
+    <thead><tr><th style="width:5%">#</th><th style="width:25%">Point de friction</th><th>Ce qui s’est passé</th><th style="width:28%">Ajustement effectué</th></tr></thead>
+    <tbody>
+      <tr><td><b>F1</b></td><td>Données de test trop « propres » côté AbAssurance</td><td>Le générateur n’injectait pas de dates invalides dans les tables AB : le défaut R1-03 restait invisible avec le jeu de données standard.</td><td>Jeux d’essai ciblés qui rejouent une vraie ligne AB avec une valeur invalide.</td></tr>
+      <tr><td><b>F2</b></td><td>Tests eux-mêmes erronés</td><td>Un test sommait tous les critères au lieu du seul critère e-mail (échec à tort). Un autre passait par coïncidence, car la date codée en dur était celle du jour.</td><td>Les tests sont relus en pull request comme le code ; le test de configuration utilise une date différente du jour.</td></tr>
+      <tr><td><b>F3</b></td><td>Faux positif sur une règle métier floue</td><td>85 paiements « après la fin du contrat » : tous entre 1 et 6 jours, c’est-à-dire le dernier prélèvement. Le test supposait une règle que personne n’avait formulée.</td><td>Règle validée avec le PO (tolérance de 31 jours, DQ15 au-delà) ; les tolérances chiffrées entrent dans la DoR.</td></tr>
+      <tr><td><b>F4</b></td><td>Parité des environnements</td><td>Les en-têtes de sécurité n’existaient que dans la configuration Apache de l’image Docker : les tests échouaient en local et auraient réussi en recette.</td><td>En-têtes envoyés par l’application, routeur de développement à parité, recette systématique sur l’image Docker dans la CI.</td></tr>
+      <tr><td><b>F5</b></td><td>Un correctif a introduit une régression</td><td>Le nouveau routeur chargeait deux fois le bootstrap : l’API renvoyait une erreur fatale (statut 200, chemin du serveur affiché). C’est la campagne 2 qui l’a détectée.</td><td><code>require_once</code> ; <code>display_errors=Off</code> en production. Leçon : toujours rejouer la campagne entière.</td></tr>
+      <tr><td><b>F6</b></td><td>Rapport incomplet</td><td>Les 6 tests JavaScript s’exécutaient mais n’apparaissaient pas dans le rapport consolidé de la campagne 1.</td><td>Rapport JUnit de <code>node:test</code> converti au format commun.</td></tr>
+      <tr><td><b>F7</b></td><td>Mesure de performance fausse</td><td>Le temps d’affichage mesuré valait 3 ms : la navigation vers la même adresse ne faisait que changer l’ancre, sans recharger la page.</td><td>URL unique à chaque chargement, cache désactivé : 78 ms mesurés. Toute mesure est vérifiée avant d’être crue.</td></tr>
+      <tr><td><b>F8</b></td><td>Baisse du débit en local après correctif</td><td>Débit passé de 1 151 à 773 req/s : le routeur de développement sert maintenant les fichiers statiques en PHP.</td><td>Sans effet en production (Apache sert les statiques) ; la mesure de référence est faite sur l’image Docker dans la CI.</td></tr>
+      <tr><td><b>F9</b></td><td>Outillage du poste Windows</td><td>Extension <code>pdo_sqlite</code> non chargée par défaut ; Docker Desktop indisponible sur le poste.</td><td>L’orchestrateur ajoute l’extension sous Windows ; la recette Docker est assurée par la CI Linux.</td></tr>
+      <tr><td><b>F10</b></td><td>Faux positif de l’outil de sécurité</td><td>La recherche de secrets détectait son propre motif dans le fichier de workflow et aurait bloqué toute la CI.</td><td>Dossier <code>.github</code> exclu de la recherche.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.8 Performance et volumétrie</h2>
+  <div>
+    <div><!--GEN:perf--></div>
+    <div class="avoid">
+      <table class="compact">
+        <thead><tr><th>Pipeline complet</th><th class="num">× 1</th><th class="num">× 5</th><th class="num">Ratio</th></tr></thead>
+        <tbody>
+          <tr><td>Lignes AP_PAYMENTS</td><td class="num">61 806</td><td class="num">305 182</td><td class="num">× 4,9</td></tr>
+          <tr><td>Extraction (E1)</td><td class="num">2,0 s</td><td class="num">9,7 s</td><td class="num">× 4,9</td></tr>
+          <tr><td>Harmonisation (E3)</td><td class="num">3,6 s</td><td class="num">23,2 s</td><td class="num">× 6,4</td></tr>
+          <tr><td>Agrégation (E5)</td><td class="num">3,2 s</td><td class="num">17,1 s</td><td class="num">× 5,3</td></tr>
+          <tr><td><b>Total</b></td><td class="num"><b>10,6 s</b></td><td class="num"><b>59,2 s</b></td><td class="num"><b>× 5,6</b></td></tr>
+        </tbody>
+      </table>
+      <p class="small">La durée croît presque linéairement : il n’y a pas d’explosion combinatoire. Le blocage du dédoublonnage évite 25 995 058 comparaisons sur 7 211 fiches. L’harmonisation est légèrement super-linéaire (× 6,4) : c’est le point à surveiller au passage à Spark. Le prototype PHP ne prédit pas les temps réels du cluster ; il valide la <b>complexité</b> des traitements.</p>
+    </div>
+  </div>
+
+  <h2>1.9 Ajustements à effectuer pour les prochaines itérations</h2>
+  <table class="compact">
+    <thead><tr><th style="width:8%">Sprint</th><th style="width:30%">Ajustement</th><th>Pourquoi</th></tr></thead>
+    <tbody>
+      <tr><td>S7</td><td>Scan de vulnérabilités bloquant (Trivy, CVE critiques) et DAST OWASP ZAP dans la CI</td><td>Le scan est aujourd’hui informatif ; l’image de base PHP / Apache embarque des paquets Debian à surveiller.</td></tr>
+      <tr><td>S7</td><td>Tests des politiques Ranger par rôle (US-6.2)</td><td>Le contrôle d’accès est aujourd’hui testé au niveau HTTP seulement.</td></tr>
+      <tr><td>S7</td><td>Mutation testing sur les règles de normalisation</td><td>Mesurer si les tests détectent vraiment un changement de règle (friction F2 : des tests peuvent passer à tort).</td></tr>
+      <tr><td>S8</td><td>Tests de qualité des données sur Spark (Great Expectations) et compatibilité de schéma Kafka</td><td>Passage du prototype à la chaîne cible : les mêmes règles doivent être vérifiées au volume réel.</td></tr>
+      <tr><td>S8</td><td>Générateur enrichi : défauts injectés symétriquement dans les deux sources</td><td>Friction F1 : le jeu de données ne doit plus masquer de défaut.</td></tr>
+      <tr><td>S10</td><td>Test de bascule du plan de reprise (RPO 15 min, RTO 4 h)</td><td>Exigence BNF-04 et règlement DORA.</td></tr>
+      <tr><td>S11</td><td>Charge au volume cible (× 2 400) et endurance 8 h en préproduction ; Playwright multi-navigateurs</td><td>Valider BNF-09 dans les conditions réelles, au-delà du prototype.</td></tr>
+      <tr><td>S11 – S12</td><td>Recette métier formelle (UAT) et test d’intrusion externe</td><td>Critères de mise en production (question 2).</td></tr>
+    </tbody>
+  </table>
+</section>

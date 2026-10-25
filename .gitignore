@@ -1,0 +1,13 @@
+# données générées (seed + pipeline)
+app/data/
+# énoncé Studi : reproduction interdite
+*.pdf
+!docs/**/*.pdf
+reports/*/unitaires-js.xml
+node_modules/
+# préparation personnelle de la soutenance (non publiée)
+docs/soutenance/
+.claude/
+docs/dossier.html
+# archive du Bloc 1 copiée depuis EXAM3 (hors périmètre de ce dépôt)
+app/public/telechargements/

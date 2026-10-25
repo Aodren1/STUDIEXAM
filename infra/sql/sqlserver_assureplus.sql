@@ -1,0 +1,52 @@
+-- Schéma source AssurePlus (SQL Server) — conforme à l'annexe de l'énoncé.
+CREATE DATABASE ASSUREPLUS;
+GO
+USE ASSUREPLUS;
+GO
+CREATE TABLE AP_USERS (
+  AP_USER_ID          INT PRIMARY KEY,
+  AP_FULL_NAME        NVARCHAR(200),
+  AP_BIRTH_DATE       VARCHAR(10),          -- format YYYY-MM-DD (non contraint : source d'anomalies)
+  AP_MAIL_ADDRESS     NVARCHAR(150),
+  AP_PHONE_NUMBER     NVARCHAR(25),
+  AP_STREET_ADDRESS   NVARCHAR(255),
+  AP_ZIP_CODE         NVARCHAR(10),
+  AP_CREATED_AT       DATETIME,
+  AP_CUSTOMER_STATUS  NVARCHAR(20),
+  AP_LOYALTY_SCORE    INT
+);
+CREATE TABLE AP_CONTRACTS (
+  AP_CONTRACT_REF     NVARCHAR(30) PRIMARY KEY,
+  AP_USER_ID          INT REFERENCES AP_USERS (AP_USER_ID),
+  AP_PRODUCT_CODE     NVARCHAR(50),
+  AP_START_DATE       DATETIME,
+  AP_END_DATE         DATETIME,
+  AP_MONTHLY_PREMIUM  DECIMAL(10,2),
+  AP_CONTRACT_STATE   NVARCHAR(20),
+  AP_BROKER_CODE      NVARCHAR(30)
+);
+CREATE TABLE AP_CLAIMS (
+  AP_SINISTRE_NUM     INT PRIMARY KEY,
+  AP_CONTRACT_REF     NVARCHAR(30) REFERENCES AP_CONTRACTS (AP_CONTRACT_REF),
+  AP_INCIDENT_DATE    VARCHAR(19),
+  AP_ESTIMATED_AMOUNT DECIMAL(12,2),
+  AP_CLAIM_STATUS     NVARCHAR(30),
+  AP_CLAIM_COMMENT    NVARCHAR(MAX),
+  AP_FRAUD_SCORE      DECIMAL(5,2)
+);
+CREATE TABLE AP_PAYMENTS (
+  AP_PAYMENT_REF        UNIQUEIDENTIFIER PRIMARY KEY,
+  AP_CONTRACT_REF       NVARCHAR(30) REFERENCES AP_CONTRACTS (AP_CONTRACT_REF),
+  AP_PAYMENT_DATETIME   DATETIME,
+  AP_AMOUNT_PAID        DECIMAL(10,2),
+  AP_PAYMENT_CHANNEL    NVARCHAR(30),
+  AP_TRANSACTION_STATUS NVARCHAR(20)
+);
+GO
+-- Prérequis CDC (Debezium SQL Server)
+EXEC sys.sp_cdc_enable_db;
+EXEC sys.sp_cdc_enable_table @source_schema = 'dbo', @source_name = 'AP_USERS',     @role_name = NULL;
+EXEC sys.sp_cdc_enable_table @source_schema = 'dbo', @source_name = 'AP_CONTRACTS', @role_name = NULL;
+EXEC sys.sp_cdc_enable_table @source_schema = 'dbo', @source_name = 'AP_CLAIMS',    @role_name = NULL;
+EXEC sys.sp_cdc_enable_table @source_schema = 'dbo', @source_name = 'AP_PAYMENTS',  @role_name = NULL;
+GO

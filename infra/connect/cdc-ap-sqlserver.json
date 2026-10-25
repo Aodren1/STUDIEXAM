@@ -1,0 +1,29 @@
+{
+  "name": "cdc-ap-sqlserver",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "abf-source-sqlserver",
+    "database.port": "1433",
+    "database.user": "${file:/kafka/secrets/ap.properties:user}",
+    "database.password": "${file:/kafka/secrets/ap.properties:password}",
+    "database.names": "ASSUREPLUS",
+    "database.encrypt": "true",
+    "topic.prefix": "cdc.ap",
+    "table.include.list": "dbo.AP_USERS,dbo.AP_CONTRACTS,dbo.AP_CLAIMS,dbo.AP_PAYMENTS",
+    "transforms": "vers_client,vers_contrat,vers_sinistre,vers_paiement",
+    "transforms.vers_client.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_client.regex": "cdc.ap.ASSUREPLUS.dbo.AP_USERS",
+    "transforms.vers_client.replacement": "src.ap.client",
+    "transforms.vers_contrat.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_contrat.regex": "cdc.ap.ASSUREPLUS.dbo.AP_CONTRACTS",
+    "transforms.vers_contrat.replacement": "src.ap.contrat",
+    "transforms.vers_sinistre.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_sinistre.regex": "cdc.ap.ASSUREPLUS.dbo.AP_CLAIMS",
+    "transforms.vers_sinistre.replacement": "src.ap.sinistre",
+    "transforms.vers_paiement.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.vers_paiement.regex": "cdc.ap.ASSUREPLUS.dbo.AP_PAYMENTS",
+    "transforms.vers_paiement.replacement": "src.ap.paiement",
+    "schema.history.internal.kafka.bootstrap.servers": "abf-flux-kafka:9092",
+    "schema.history.internal.kafka.topic": "_abf_schema_history_ap"
+  }
+}

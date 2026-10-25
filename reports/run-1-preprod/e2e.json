@@ -1,0 +1,76 @@
+{
+  "suite": "e2e",
+  "total": 8,
+  "echecs": 0,
+  "mesures": {
+    "chargement_complet_ms": 135,
+    "affichage_ms_median": 3,
+    "affichage_ms_max": 4
+  },
+  "tests": [
+    {
+      "groupe": "",
+      "nom": "chargement du tableau de bord sans erreur JavaScript ni ressource manquante",
+      "exigence": "BF-12",
+      "statut": "reussi",
+      "duree_ms": 135,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "les 7 rubriques s’affichent et portent des graphiques ou tableaux",
+      "exigence": "CA-02",
+      "statut": "reussi",
+      "duree_ms": 2909,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "filtre de périmètre : KPI identiques à l’API pour AB, AP et consolidé",
+      "exigence": "BF-17",
+      "statut": "reussi",
+      "duree_ms": 42,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "chaque graphique dispose d’une alternative tabulaire",
+      "exigence": "CA-06",
+      "statut": "reussi",
+      "duree_ms": 96,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "accessibilité : langue, lien d’évitement, noms accessibles, contrastes AA",
+      "exigence": "BNF-12",
+      "statut": "reussi",
+      "duree_ms": 17,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "affichage mobile (375 px) sans défilement horizontal",
+      "exigence": "BNF-12",
+      "statut": "reussi",
+      "duree_ms": 118,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "thème sombre : bascule et persistance",
+      "exigence": "BNF-12",
+      "statut": "reussi",
+      "duree_ms": 102,
+      "message": ""
+    },
+    {
+      "groupe": "",
+      "nom": "temps d’affichage du tableau de bord < 3 s (5 chargements)",
+      "exigence": "BNF-09",
+      "statut": "reussi",
+      "duree_ms": 16,
+      "message": ""
+    }
+  ]
+}

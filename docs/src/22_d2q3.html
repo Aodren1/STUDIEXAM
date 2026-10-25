@@ -1,0 +1,55 @@
+<section class="dossier" id="d2q3-s">
+  <div class="question" id="d2q3">
+    <p><b>Question 3.</b> Quelle est votre solution si des critères ne sont pas respectés avant d’aller en production ou des points de blocage sont identifiés ? Expliquez avec des exemples par point et la solution associée.</p>
+    <p class="crit">Critère : les actions effectuées et proposées doivent démontrer des arbitrages pragmatiques respectant les contraintes du projet, réalisables techniquement et respectueux de l’approche choisie.</p>
+  </div>
+
+  <h2>3.1 Une démarche de décision en quatre questions</h2>
+  <p>Face à un critère non respecté, la tentation est soit de reporter toute la mise en production, soit de « passer en force ». La démarche proposée évite ces deux extrêmes. Elle reste dans l’esprit de Scrum : <b>la date et le budget sont tenus, le périmètre s’ajuste</b>, et c’est le Product Owner qui arbitre le contenu.</p>
+  <figure>
+    <svg viewBox="0 0 1000 205" width="100%" role="img" aria-label="Arbre de décision en cas de critère non respecté">
+      <g font-family="system-ui" font-size="12">
+        <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6a65"/></marker></defs>
+        <rect x="10" y="10" width="220" height="56" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="120" y="33" text-anchor="middle" font-weight="700">1. Critère non négociable (★) ?</text><text x="120" y="52" text-anchor="middle" fill="#3d3c39">AIPD, données exposées, volumes</text>
+        <rect x="262" y="10" width="220" height="56" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="372" y="33" text-anchor="middle" font-weight="700">2. Fonction isolable ?</text><text x="372" y="52" text-anchor="middle" fill="#3d3c39">désactivable sans casser le reste</text>
+        <rect x="514" y="10" width="220" height="56" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="624" y="33" text-anchor="middle" font-weight="700">3. Mesure compensatoire ?</text><text x="624" y="52" text-anchor="middle" fill="#3d3c39">risque ramené à un niveau acceptable</text>
+        <rect x="766" y="10" width="224" height="56" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="878" y="33" text-anchor="middle" font-weight="700">4. Correctif &lt; 1 sprint ?</text><text x="878" y="52" text-anchor="middle" fill="#3d3c39">estimé par l’équipe</text>
+        <g stroke="#6b6a65" stroke-width="2" marker-end="url(#ar3)"><line x1="232" y1="38" x2="259" y2="38"/><line x1="484" y1="38" x2="511" y2="38"/><line x1="736" y1="38" x2="763" y2="38"/></g>
+        <text x="245" y="30" fill="#1f845a" font-size="11">non</text><text x="497" y="30" fill="#b42318" font-size="11">non</text><text x="749" y="30" fill="#b42318" font-size="11">non</text>
+        <g stroke="#6b6a65" stroke-width="2" marker-end="url(#ar3)"><line x1="120" y1="68" x2="120" y2="118"/><line x1="372" y1="68" x2="372" y2="118"/><line x1="624" y1="68" x2="624" y2="118"/><line x1="878" y1="68" x2="878" y2="118"/></g>
+        <text x="128" y="96" fill="#b42318" font-size="11">oui</text><text x="380" y="96" fill="#1f845a" font-size="11">oui</text><text x="632" y="96" fill="#1f845a" font-size="11">oui</text><text x="886" y="96" fill="#1f845a" font-size="11">oui</text>
+        <rect x="10" y="120" width="220" height="74" rx="8" fill="#fdecea" stroke="#b42318"/><text x="120" y="142" text-anchor="middle" font-weight="700" fill="#b42318">NO-GO ciblé</text><text x="120" y="160" text-anchor="middle" fill="#3d3c39">la production attend ; on livre</text><text x="120" y="176" text-anchor="middle" fill="#3d3c39">en préproduction en attendant</text>
+        <rect x="262" y="120" width="220" height="74" rx="8" fill="#e9f7ef" stroke="#1f845a"/><text x="372" y="142" text-anchor="middle" font-weight="700" fill="#1f845a">GO partiel</text><text x="372" y="160" text-anchor="middle" fill="#3d3c39">fonction masquée (feature flag),</text><text x="372" y="176" text-anchor="middle" fill="#3d3c39">US replanifiée au sprint suivant</text>
+        <rect x="514" y="120" width="220" height="74" rx="8" fill="#fff4e5" stroke="#b65c02"/><text x="624" y="142" text-anchor="middle" font-weight="700" fill="#b65c02">GO sous conditions</text><text x="624" y="160" text-anchor="middle" fill="#3d3c39">dérogation signée, responsable,</text><text x="624" y="176" text-anchor="middle" fill="#3d3c39">échéance de levée</text>
+        <rect x="766" y="120" width="224" height="74" rx="8" fill="#f3f2ee" stroke="#6b6a65"/><text x="878" y="142" text-anchor="middle" font-weight="700">Report court</text><text x="878" y="160" text-anchor="middle" fill="#3d3c39">correctif priorisé par le PO ;</text><text x="878" y="176" text-anchor="middle" fill="#3d3c39">sinon escalade au sponsor</text>
+      </g>
+    </svg>
+    <figcaption>Figure 10 — Arbre de décision : on examine les questions dans l’ordre et la première réponse qui conclut l’emporte.</figcaption>
+  </figure>
+
+  <h2>3.2 Exemples par critère et solution associée</h2>
+  <table class="compact">
+    <thead><tr><th style="width:4%">#</th><th style="width:24%">Situation de blocage</th><th style="width:13%">Décision</th><th>Solution et arbitrage</th></tr></thead>
+    <tbody>
+      <tr><td>6 ★</td><td><b>AIPD finale non signée</b> à J-5 : le DPO demande une durée de conservation par table, non définie.</td><td><span class="ko">No-go ciblé</span></td><td>Aucune donnée réelle en production. La plateforme est livrée en <b>préproduction sur l’extrait pseudonymisé</b> déjà couvert par l’AIPD initiale : les métiers continuent la recette et la valeur n’est pas perdue. Une US « Durées de conservation » (3 points) est priorisée en tête du sprint suivant ; mise en production dès la signature, sans attendre un nouveau comité complet.</td></tr>
+      <tr><td>7 ★</td><td><b>Ranger pas prêt</b> : le masquage par colonne n’est pas testé pour le rôle analyste.</td><td><span class="mid">Go partiel</span></td><td>Le critère ★ porte sur l’exposition des données, pas sur l’outil. On ouvre la production aux seuls <b>rôles déjà testés</b> (direction, qui ne voit que la zone gold pseudonymisée). Le rôle analyste reste fermé jusqu’à la validation de US-6.2 : le risque est supprimé, pas accepté.</td></tr>
+      <tr><td>1 ★</td><td><b>Écart de volumétrie</b> : 0,2 % des sinistres AssurePlus manquent en silver.</td><td><span class="ko">No-go</span> puis report court</td><td>Investigation immédiate grâce au lignage et à la zone bronze (où se perdent les lignes ?). Si la cause est une règle de transformation, on la corrige et l’on <b>rejoue depuis le bronze</b>, sans réextraire les sources (BF-05) : quelques heures. Report de quelques jours plutôt que de publier des chiffres faux.</td></tr>
+      <tr><td>3</td><td><b>Indicateur faux</b> découvert en UAT (comme R1-05, multi-équipement compté deux fois).</td><td><span class="mid">Go partiel</span></td><td>L’indicateur est <b>masqué par un drapeau de fonctionnalité</b> (feature flag) avec la mention « en cours de fiabilisation ». Les autres statistiques, vérifiées, partent en production. L’US de correction passe en tête du backlog. Ce n’est possible que parce que chaque indicateur est testé séparément.</td></tr>
+      <tr><td>4</td><td><b>Recette métier incomplète</b> : la direction financière n’a pas pu tester les statistiques financières.</td><td><span class="mid">Go partiel</span></td><td>Mise en production des rubriques recettées. La rubrique Finances reste en préproduction, et une session de recette d’une demi-journée est planifiée avec la direction financière. Le Scrum Master lève l’obstacle (disponibilité des utilisateurs clés), le PO arbitre.</td></tr>
+      <tr><td>9</td><td><b>Performance</b> : tableau de bord à 4,2 s au p95 au volume réel (seuil 3 s).</td><td><span class="mid">Go sous conditions</span></td><td>Mesures compensatoires rapides et réalisables : pré-calcul des agrégats dans la zone gold (déjà le principe de l’architecture), cache côté serveur, compression. Si le seuil n’est toujours pas atteint, dérogation signée par le PO : utilisable mais lent n’est pas bloquant pour un outil de pilotage. Échéance de levée : 1 sprint.</td></tr>
+      <tr><td>8</td><td><b>Vulnérabilité critique</b> dans l’image de base (paquet Debian).</td><td>Report court</td><td>Reconstruction de l’image sur une base corrigée (quelques heures, la CI rejoue toute la campagne). Si aucun correctif n’existe : mesure compensatoire (composant vulnérable non exposé, règle de pare-feu) validée par le RSSI et dérogation datée.</td></tr>
+      <tr><td>10</td><td><b>Charge excessive sur Oracle</b> pendant la charge incrémentale (8 % CPU au lieu de 5 %).</td><td><span class="mid">Go sous conditions</span></td><td>Déplacer la charge dans la fenêtre de nuit, réduire le parallélisme du job Talend, accélérer le passage au CDC sur journaux (US-1.5). Le DBA valide. La continuité d’activité (EM1) prime sur la fraîcheur des données.</td></tr>
+      <tr><td>11</td><td><b>Supervision incomplète</b> : alerte de lag Kafka non branchée.</td><td><span class="mid">Go sous conditions</span></td><td>Contrôle manuel quotidien par l’exploitation (procédure écrite, 10 min) pendant 2 semaines au plus, puis US-7.3 livrée. Responsable et échéance inscrits au PV du comité.</td></tr>
+      <tr><td>12</td><td><b>PRA non testé</b> : le site de secours n’est pas encore raccordé.</td><td><span class="ko">No-go</span> si fonction importante</td><td>Pour DORA, un PRA non testé équivaut à une absence de PRA. Si le tableau de bord est classé « fonction importante », on attend le test. Sinon (outil de pilotage non critique au MVP), le sponsor peut accepter le risque par écrit, avec sauvegarde quotidienne restaurable testée en compensation.</td></tr>
+      <tr><td>13</td><td><b>Retour arrière non testé</b>.</td><td>Report court</td><td>Test du rollback (redéployer l’image N-1) : moins d’une journée. On ne va jamais en production sans chemin de retour.</td></tr>
+      <tr><td>14</td><td><b>Formation non faite</b>.</td><td><span class="mid">Go sous conditions</span></td><td>Ouverture progressive (utilisateurs formés d’abord), guide d’une page, session de 30 min à la revue de sprint suivante.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.3 Les principes qui guident ces arbitrages</h2>
+  <div class="grid3">
+    <div class="box"><h4>Réduire le périmètre plutôt que la qualité</h4><p>Dans l’esprit de Scrum, on livre moins de fonctions plutôt que des fonctions non « Done ». Les drapeaux de fonctionnalité et l’indépendance des US rendent cela possible.</p></div>
+    <div class="box"><h4>Chaque dérogation est tracée</h4><p>Toute dérogation précise le risque accepté, la mesure compensatoire, le responsable et l’échéance. Elle est signée par la personne légitime (PO, RSSI, DPO, sponsor) et suivie comme une US.</p></div>
+    <div class="box"><h4>Préserver le travail fait</h4><p>La zone bronze rejouable, l’image versionnée et la préproduction permettent de corriger sans recommencer, et aux métiers de continuer à utiliser ce qui fonctionne.</p></div>
+  </div>
+</section>

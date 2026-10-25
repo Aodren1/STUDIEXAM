@@ -1,0 +1,77 @@
+{
+  "regles": [
+    {
+      "titre": "📖 Mode d’emploi du tableau (à lire en premier)",
+      "desc": "**Projet** : plateforme Data AbAssurance × AssurePlus — logiciel de validation (statistiques des deux bases).\n**Méthode** : Scrum, sprints de **2 semaines**, MVP en 6 mois (sprints 0 à 12), puis V2 et V3 par incréments trimestriels.\n\n**Lecture du tableau, de gauche à droite**\n1. *Lire d’abord* : règles du jeu (rôles, cérémonies, DoR, DoD, priorisation).\n2. *EPICs* : les 7 grands blocs fonctionnels issus du Bloc 1 (modules M1 à M5 + 2 EPICs transverses).\n3. *Product Backlog* : User Stories priorisées par le Product Owner, pas encore engagées.\n4. *Sprint 6 — À faire* → *En cours* → *En revue / recette* → *Terminé (sprint 6)* : le flux du sprint en cours.\n5. *Terminé — sprints 1 à 5* : incrément déjà livré.\n6. *Anomalies de recette* : défauts trouvés par la campagne de tests n°1 et leur correction.\n\n**Convention des cartes** : `US-<EPIC>.<n> · titre [MoSCoW · points]`. L’étiquette de couleur indique l’EPIC. Chaque User Story contient : récit (En tant que… je veux… afin de…), exigences du Bloc 1 couvertes, et une checklist **Critères d’acceptation**.\n\n**Règle d’or** : une carte n’entre dans *Sprint — À faire* que si elle respecte la **DoR**, et n’arrive dans *Terminé* que si elle respecte la **DoD**.",
+      "checklist": null
+    },
+    {
+      "titre": "👥 Rôles de l’équipe Scrum (8 ETP)",
+      "desc": "**Product Owner** (1 ETP, direction des opérations — métier) : porte la vision, écrit et priorise le backlog, accepte ou refuse les User Stories à la revue. Seul à pouvoir modifier l’ordre du backlog.\n\n**Scrum Master** (0,5 ETP, coach agile de la DSI) : garant de la méthode, anime les cérémonies, lève les obstacles (accès DBA, environnements), protège l’équipe des sollicitations hors sprint. *Ajouté au dimensionnement du Bloc 1 (+0,5 ETP).*\n\n**Équipe de développement** (6 ETP, auto-organisée) :\n- Architecte data (1) : choix techniques, revue de conception, performance.\n- 3 data engineers : jobs Talend, topics Kafka, traitements Spark, règles de qualité. L’un d’eux est **référent qualité / tests** (stratégie de tests, CI).\n- Développeur BI (1) : tableau de bord, indicateurs, accessibilité.\n- DevOps (1) : CI/CD, conteneurs, supervision, environnements.\n\n**Expert sécurité** (0,5 ETP, partagé avec le RSSI) : exigences BNF-05 à BNF-07, revue de sécurité de chaque incrément.\n\n**Parties prenantes** (hors équipe) : direction générale (sponsor), DSI, directions métiers, DPO, RSSI, équipes IT AssurePlus. Invitées à la revue de sprint.",
+      "checklist": null
+    },
+    {
+      "titre": "🔁 Déroulé d’un sprint (2 semaines = 10 jours ouvrés)",
+      "desc": "| Jour | Cérémonie | Durée | Participants | Sortie |\n|---|---|---|---|---|\n| J1 lundi 9 h 30 | **Sprint Planning** | 4 h max | PO, SM, équipe | Objectif de sprint + User Stories engagées (capacité ≈ 24 points) |\n| J1 à J10, 9 h 30 | **Daily Scrum** | 15 min | Équipe (SM facilite) | Plan des 24 h, obstacles remontés au SM |\n| J6 mercredi | **Affinage du backlog** | 2 h (≤ 10 % du temps) | PO, équipe | User Stories des 2 prochains sprints conformes à la DoR et estimées |\n| J10 vendredi 10 h | **Sprint Review** | 2 h | Équipe, PO, parties prenantes | Démonstration de l’incrément, backlog réajusté |\n| J10 vendredi 14 h | **Rétrospective** | 1 h 30 | Équipe, SM, PO | 1 à 3 actions d’amélioration ajoutées au sprint suivant |\n\n**Artefacts** : Product Backlog (colonne dédiée), Sprint Backlog (colonnes du sprint), Incrément (déployé en recette en fin de sprint), burndown mis à jour au daily.\n\n**Jalons imposés par le contexte réglementaire** (démarche hybride) : AIPD initiale validée par le DPO avant toute donnée réelle en préproduction (sprint 4) ; AIPD finale (US-6.5), recette sécurité et comité go / no-go avant la mise en production du MVP (sprint 12).",
+      "checklist": null
+    },
+    {
+      "titre": "✅ DoR — Definition of Ready (prête pour le sprint)",
+      "desc": "Une User Story peut être engagée au **Sprint Planning** seulement si **tous** les points ci-dessous sont vrais. Le PO et l’équipe vérifient la DoR pendant l’affinage du backlog (J6). Une story qui ne la respecte pas reste dans le Product Backlog.\n\nCritères INVEST : Indépendante, Négociable, de Valeur, Estimable, Petite (Small), Testable.",
+      "checklist": {"nom": "Critères de la DoR", "items": [
+        "Rédigée au format « En tant que <rôle>, je veux <besoin>, afin de <bénéfice> »",
+        "Rattachée à un EPIC et à au moins une exigence du Bloc 1 (BF-xx / BNF-xx)",
+        "Critères d’acceptation rédigés (Étant donné / Quand / Alors) et vérifiables par un test",
+        "Valeur métier et priorité MoSCoW fixées par le Product Owner",
+        "Estimée en points par l’équipe (planning poker) et ≤ 8 points ; au-delà, découpée",
+        "Dépendances identifiées et levées (accès aux bases, environnement, autre story)",
+        "Jeu de données de test disponible ou décrit (cas nominaux et cas limites)",
+        "Données personnelles impliquées identifiées et validées par le DPO si besoin",
+        "Maquette ou exemple de restitution fourni pour toute story d’affichage",
+        "Comprise par toute l’équipe : aucune question ouverte à l’issue de l’affinage"
+      ]}
+    },
+    {
+      "titre": "🏁 DoD — Definition of Done (terminée)",
+      "desc": "Une User Story n’est **terminée** que si **tous** les points ci-dessous sont vrais. Le Product Owner la refuse à la revue sinon : elle retourne au backlog, elle n’est jamais « presque finie ». La DoD est commune à toutes les stories ; les critères d’acceptation propres à chaque story s’y ajoutent.",
+      "checklist": {"nom": "Critères de la DoD", "items": [
+        "Tous les critères d’acceptation de la story sont vérifiés",
+        "Code versionné sur une branche, relu et approuvé par un autre développeur (pull request)",
+        "Tests unitaires écrits pour chaque règle de transformation ajoutée ou modifiée",
+        "Tests d’intégration de la chaîne verts : volumétrie source = topic = bronze = silver",
+        "Pipeline CI vert : analyse statique, tests unitaires, intégration, API, sécurité, E2E, charge",
+        "Aucune anomalie bloquante ou majeure ouverte sur la story",
+        "Performances conformes : tableau de bord < 3 s au p95, API < 500 ms",
+        "Sécurité : en-têtes, droits Ranger et pseudonymisation vérifiés par les tests",
+        "Accessibilité : contrastes AA et alternative tabulaire pour tout nouveau graphique",
+        "Documentation à jour : dictionnaire de données, règles DQ, procédure d’exploitation",
+        "Déployée sur l’environnement de recette et démontrée au Product Owner",
+        "Acceptée par le Product Owner en Sprint Review"
+      ]}
+    },
+    {
+      "titre": "⚖️ Priorisation (MoSCoW) et estimation",
+      "desc": "**MoSCoW** (repris de la spécification du Bloc 1)\n- **Must** : indispensable au MVP, sans elle le MVP n’est pas viable.\n- **Should** : important, contournable à court terme.\n- **Could** : souhaitable si la capacité le permet.\n- **Won’t (cette version)** : écarté pour le MVP, planifié en V2 / V3.\n\n**Estimation** en points (suite de Fibonacci 1, 2, 3, 5, 8, 13) par planning poker. 13 points = trop gros, à découper avant d’entrer en sprint (cf. DoR).\n\n**Capacité** : 6 développeurs × 10 jours × 70 % de disponibilité ≈ 42 jours-personne, pour une vélocité observée de **21, 21, 21, 22 et 25 points** aux sprints 1 à 5 (moyenne 22, en hausse après la montée en compétence Kafka / Hadoop — risque R4 du Bloc 1). L’engagement de chaque sprint se fonde sur la moyenne des trois derniers sprints.\n\n**Ordre du backlog** : valeur métier ÷ effort, corrigé par le risque (on traite tôt ce qui est risqué : qualité des données, sécurité).",
+      "checklist": null
+    },
+    {
+      "titre": "🎯 Objectif du sprint 6 (26/10 → 06/11)",
+      "desc": "**Rendre le logiciel de validation prêt pour la recette métier** : campagne de tests complète, correction des anomalies trouvées, durcissement sécurité et intégration continue.\n\nEngagement : **24 points** (US-4.7, 6.3, 6.4, 6.5, 7.1, 7.2), conforme à la vélocité des trois derniers sprints (21, 22, 25 → 23).\n\nRésultat de la campagne de tests n°1 (code livré au sprint 5) : **41 / 52 tests réussis, 11 anomalies** → voir la colonne *Anomalies de recette*.\nCampagne n°2 après correctifs : **59 / 59 tests réussis**.",
+      "checklist": null
+    }
+  ],
+  "anomalies": [
+    {"code": "R1-01", "titre": "Téléphone belge converti en numéro français", "gravite": "Majeure", "test": "Unitaire — téléphone local belge converti avec l’indicatif +32", "exig": "BF-07", "cause": "norm_phone() ajoutait systématiquement +33 à tout numéro national commençant par 0.", "correctif": "Le pays du client (déduit du code postal) est passé à norm_phone() ; indicatifs FR / BE / NL / LU."},
+    {"code": "R1-02", "titre": "Nom AssurePlus en un seul mot rangé dans le prénom", "gravite": "Mineure", "test": "Unitaire — nom AP en un seul mot", "exig": "BF-07", "cause": "Cas limite non prévu : « MADONNA » donnait nom vide et prénom Madonna.", "correctif": "Un seul mot = nom de famille, prénom inconnu, anomalie DQ04 tracée."},
+    {"code": "R1-03", "titre": "Dates invalides AbAssurance non tracées", "gravite": "Majeure", "test": "Intégration — jeu d’essai AB avec date du 31/02", "exig": "BF-08", "cause": "Les règles DQ02 / DQ09 n’étaient appliquées qu’à AssurePlus : une date AB invalide devenait NULL sans trace.", "correctif": "Règles appliquées symétriquement aux deux sources."},
+    {"code": "R1-04", "titre": "85 paiements postérieurs à la fin du contrat", "gravite": "Faux positif du test", "test": "Intégration — paiements après fin de contrat", "exig": "BF-08", "cause": "Analyse : tous les cas sont des contrats résiliés payés 1 à 6 jours après la date de fin (dernier prélèvement, prorata). Le test était trop strict.", "correctif": "Règle métier validée par le PO : tolérance de 31 jours. Nouvelle règle DQ15 au-delà, test requalifié + jeu d’essai à 90 jours."},
+    {"code": "R1-05", "titre": "Multi-équipement consolidé surévalué", "gravite": "Majeure", "test": "Intégration — contre-calcul par golden record", "exig": "BF-12", "cause": "Le calcul se faisait par fiche source : les 260 clients communs AB ∩ AP étaient comptés deux fois (5 153 au lieu de 4 950).", "correctif": "Calcul par master_uid, colonne consolidée ALL dans la zone gold et affichage d’une série unique en vue consolidée."},
+    {"code": "R1-06", "titre": "Noms et dates de naissance en clair dans la zone gold", "gravite": "Bloquante", "test": "Intégration — pseudonymisation des exemples de doublons", "exig": "BNF-07", "cause": "Les exemples de la matrice de doublons exposaient prénom, nom, date de naissance et code postal complets.", "correctif": "Initiales, année de naissance seule, département ; e-mail et téléphone déjà masqués."},
+    {"code": "R1-07", "titre": "Données personnelles en cache public", "gravite": "Majeure", "test": "API — données personnelles non mises en cache partagé", "exig": "BNF-07", "cause": "Toutes les réponses de l’API étaient en Cache-Control: public, max-age=300.", "correctif": "private, no-store pour les jeux personnels ; private pour les autres."},
+    {"code": "R1-08", "titre": "Date de référence codée en dur", "gravite": "Majeure", "test": "Unitaire — date de référence pilotée par l’environnement", "exig": "BNF-10", "cause": "REF_DATE = '2026-10-25' : en production les indicateurs « 12 derniers mois » auraient été figés.", "correctif": "APP_REF_DATE en test ; date du jour par défaut en production."},
+    {"code": "R1-09", "titre": "API en lecture seule acceptant POST, PUT, DELETE", "gravite": "Mineure", "test": "API — méthodes d’écriture refusées", "exig": "BNF-06", "cause": "Aucun contrôle de la méthode HTTP.", "correctif": "405 + en-tête Allow: GET, HEAD."},
+    {"code": "R1-10", "titre": "En-têtes de sécurité absents hors Apache", "gravite": "Majeure", "test": "API — en-têtes de durcissement", "exig": "BNF-05", "cause": "Les en-têtes n’existaient que dans la configuration Apache de l’image : en local et sur tout autre serveur, aucun. Résultat de test dépendant de l’environnement.", "correctif": "security_headers() envoyée par l’application + routeur de développement à parité avec la production."},
+    {"code": "R1-11", "titre": "Pas de politique de sécurité du contenu (CSP)", "gravite": "Majeure", "test": "API — CSP sur le tableau de bord", "exig": "BNF-05", "cause": "Aucune CSP, y compris dans l’image Docker.", "correctif": "CSP default-src 'self' (aucun script inline ni CDN), vérifiée sans violation par les tests E2E."},
+    {"code": "R2-01", "titre": "Régression : l’API renvoyait une erreur fatale via le routeur", "gravite": "Bloquante (trouvée en campagne 2)", "test": "API — les 4 jeux répondent en JSON", "exig": "BF-19", "cause": "Le routeur et api.php chargeaient deux fois le bootstrap. Effet de bord révélé : une erreur fatale renvoyait un statut 200 avec le chemin du serveur en clair.", "correctif": "require_once ; display_errors=Off et log_errors=On dans l’image de production."}
+  ]
+}

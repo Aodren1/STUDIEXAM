@@ -1,0 +1,110 @@
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm 16mm;
+    @bottom-left { content: "AbAssurance × AssurePlus — Bloc 2 : pilotage, tests et risques"; font: 7.5pt system-ui, "Segoe UI", sans-serif; color: #6b6a65; }
+    @bottom-right { content: "Page " counter(page) " / " counter(pages); font: 7.5pt system-ui, "Segoe UI", sans-serif; color: #6b6a65; }
+  }
+  @page couverture { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+  @page paysage { size: A4 landscape; margin: 12mm 12mm 16mm 12mm; }
+  :root {
+    --ink: #0b0b0b; --ink-2: #3d3c39; --muted: #6b6a65; --line: #dcdbd3; --soft: #f3f2ee;
+    --ab: #2a78d6; --ap: #eb6834; --accent: #1c5cab; --accent-soft: #e8f1fc; --good: #006300; --warn: #9a5b00; --crit: #b42318;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font: 10pt/1.5 system-ui, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: #fff; }
+  h1, h2, h3, h4 { line-height: 1.25; margin: 0; break-after: avoid; }
+  h1 { font-size: 20pt; color: var(--accent); margin: 0 0 4mm; padding-bottom: 2mm; border-bottom: 2px solid var(--accent); }
+  h2 { font-size: 14pt; margin: 7mm 0 2.5mm; color: var(--ink); }
+  h3 { font-size: 11.5pt; margin: 5mm 0 2mm; color: var(--accent); }
+  h4 { font-size: 10pt; margin: 3.5mm 0 1.5mm; }
+  p { margin: 0 0 2.4mm; text-align: justify; hyphens: auto; }
+  ul, ol { margin: 0 0 2.5mm; padding-left: 5.5mm; }
+  li { margin: 0.6mm 0; }
+  a { color: var(--accent); text-decoration: none; }
+  code { font: 8.6pt/1.3 Consolas, "Cascadia Mono", monospace; background: var(--soft); padding: 0 3px; border-radius: 3px; }
+  .dossier { break-before: page; }
+  .avoid { break-inside: avoid; }
+  .page-break { break-before: page; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.6pt; }
+  .lead { font-size: 10.6pt; color: var(--ink-2); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* bandeau de question */
+  .question { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 3mm 4mm; margin: 2mm 0 4mm; break-inside: avoid; }
+  .question b { color: var(--accent); }
+  .question p { margin: 0; }
+  .crit { font-size: 8.6pt; color: var(--ink-2); margin-top: 1.5mm !important; }
+
+  /* tableaux */
+  table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 4mm; font-size: 8.7pt; break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { break-inside: avoid; }
+  th { background: #26313f; color: #fff; text-align: left; font-weight: 600; padding: 1.6mm 2mm; vertical-align: bottom; }
+  td { padding: 1.4mm 2mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:nth-child(even) td { background: #fafaf8; }
+  table.compact td, table.compact th { padding: 1mm 1.6mm; }
+  caption { caption-side: bottom; text-align: left; font-size: 8pt; color: var(--muted); padding-top: 1.2mm; }
+  .tag { display: inline-block; font-size: 7.6pt; font-weight: 700; padding: 0.2mm 1.6mm; border-radius: 2mm; white-space: nowrap; }
+  .t-must { background: #dcfce7; color: #14532d; } .t-should { background: #e0ecfb; color: #173c6d; }
+  .t-could { background: #fef3c7; color: #7a4a00; } .t-wont { background: #eeeeea; color: #4a4945; }
+  .t-ab { background: var(--ab); color: #fff; } .t-ap { background: var(--ap); color: #fff; }
+  .ok { color: var(--good); font-weight: 700; } .ko { color: var(--crit); font-weight: 700; } .mid { color: var(--warn); font-weight: 700; }
+
+  /* encadrés */
+  .box { border: 1px solid var(--line); border-radius: 2.5mm; padding: 3mm 4mm; margin: 2mm 0 4mm; break-inside: avoid; }
+  .box.key { border-color: var(--accent); background: #f7faff; }
+  .box.warn { border-color: #e9b86a; background: #fffaf0; }
+  .box h4 { margin-top: 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5mm; margin: 2mm 0 4mm; }
+  .kpis div { border: 1px solid var(--line); border-radius: 2mm; padding: 2.2mm 3mm; break-inside: avoid; }
+  .kpis b { display: block; font-size: 14pt; color: var(--accent); }
+  .kpis span { font-size: 8pt; color: var(--ink-2); }
+  figure { margin: 3mm 0 4mm; break-inside: avoid; }
+  figure img { width: 100%; border: 1px solid var(--line); border-radius: 2mm; }
+  .shot { overflow: hidden; border: 1px solid var(--line); border-radius: 2mm; }
+  .shot img { border: 0; border-radius: 0; display: block; }
+  figcaption { font-size: 8.3pt; color: var(--muted); margin-top: 1.5mm; text-align: center; }
+  svg text { font-family: system-ui, "Segoe UI", sans-serif; }
+  .rot-page { position: relative; height: 256mm; }
+  .rot { position: absolute; top: 0; left: 0; width: 254mm; transform: translate(0, 254mm) rotate(-90deg); transform-origin: top left; }
+
+  /* couverture */
+  .cover { page: couverture; height: 100vh; position: relative; color: #fff; background: #13233a; overflow: hidden; }
+  .cover .band { position: absolute; left: 0; top: 0; bottom: 0; width: 9mm; background: linear-gradient(180deg, #2a78d6 0 72%, #eb6834 72% 100%); }
+  .cover .inner { position: relative; padding: 30mm 22mm; height: 100%; display: flex; flex-direction: column; }
+  .cover .kicker { letter-spacing: .14em; text-transform: uppercase; font-size: 9pt; opacity: .85; }
+  .cover h1 { color: #fff; border: 0; font-size: 30pt; margin: 8mm 0 4mm; line-height: 1.12; }
+  .cover .subtitle { font-size: 13pt; opacity: .92; max-width: 150mm; }
+  .cover .meta { margin-top: auto; font-size: 10pt; line-height: 1.7; border-top: 1px solid rgba(255,255,255,.3); padding-top: 6mm; }
+  .cover .meta b { display: inline-block; min-width: 46mm; font-weight: 600; opacity: .8; }
+  .cover .meta a { color: #bcd7fa; }
+  .cover .logos { display: flex; gap: 6mm; margin-top: 14mm; }
+  .cover .logos span { border: 1px solid rgba(255,255,255,.35); border-radius: 2mm; padding: 2mm 4mm; font-size: 9pt; }
+  .toc ol { list-style: none; padding: 0; }
+  .toc ol li { display: flex; gap: 3mm; border-bottom: 1px dotted var(--line); padding: 1.2mm 0; margin: 0; }
+  .toc ol li.sub { padding-left: 7mm; font-size: 9pt; color: var(--ink-2); }
+  .toc ol li b { min-width: 14mm; color: var(--accent); }
+
+  /* compléments Bloc 2 */
+  .ep { display: inline-block; font-size: 7.6pt; font-weight: 700; padding: 0.2mm 1.6mm; border-radius: 1.2mm; color: #fff; white-space: nowrap; }
+  .ep-green { background: #1f845a; } .ep-yellow { background: #946f00; } .ep-orange { background: #b65c02; } .ep-red { background: #c9372c; }
+  .ep-purple { background: #6e5dc6; } .ep-blue { background: #0c66e4; } .ep-sky { background: #227d9b; } .ep-pink { background: #ae4787; } .ep-black { background: #44546f; }
+  .epic { margin-bottom: 3mm; } .epic h4 { margin: 3mm 0 1mm; }
+  table.us td { font-size: 8.3pt; }
+  ol.check { list-style: none; padding-left: 0; counter-reset: c; columns: 2; column-gap: 7mm; }
+  ol.check li { break-inside: avoid; counter-increment: c; padding: 1mm 0 1mm 8mm; position: relative; border-bottom: 1px dotted var(--line); }
+  ol.check li::before { content: counter(c); position: absolute; left: 0; top: 1mm; width: 5mm; height: 5mm; border-radius: 1mm; background: var(--accent-soft); color: var(--accent); font-size: 7.5pt; font-weight: 700; text-align: center; line-height: 5mm; }
+  .ca p { margin: 2mm 0 0.5mm; } .ca ul { margin: 0 0 1mm; font-size: 8.6pt; }
+  .pill { display: inline-block; border: 1px solid var(--line); border-radius: 3mm; padding: 0.2mm 2mm; font-size: 8pt; margin: 0.4mm 0.6mm 0.4mm 0; background: #fff; }
+  .two-col { columns: 2; column-gap: 6mm; } .two-col > * { break-inside: avoid; }
+  .code { font: 8pt/1.35 Consolas, "Cascadia Mono", monospace; background: #0f1720; color: #dbe7f3; padding: 3mm 4mm; border-radius: 2mm; white-space: pre-wrap; break-inside: avoid; margin: 2mm 0 4mm; }
+  .code .g { color: #7ee2a8; } .code .r { color: #ff8a80; } .code .m { color: #9fb3c8; }
+  .verdict { font-weight: 700; }
+  table.links td { font-size: 9pt; }
+  .heat td.c { text-align: center; font-weight: 700; color: #fff; }
+
+  .crop img { height: 95mm; object-fit: cover; object-position: top; }
