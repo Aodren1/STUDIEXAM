@@ -18,15 +18,15 @@
   <table class="compact">
     <thead><tr><th style="width:26%">Colonne</th><th>Contenu et règle d’entrée</th><th style="width:20%">Qui la gère</th></tr></thead>
     <tbody>
-      <tr><td>📌 Lire d’abord — méthode &amp; règles</td><td>Mode d’emploi, rôles, déroulé d’un sprint, <b>DoR</b>, <b>DoD</b>, règles de priorisation, objectif du sprint en cours.</td><td>Scrum Master</td></tr>
-      <tr><td>🗂 EPICs</td><td>Une carte par EPIC : module du Bloc 1, exigences, valeur pour le client, liste des US et avancement en points.</td><td>Product Owner</td></tr>
-      <tr><td>📋 Product Backlog</td><td>US non engagées, <b>ordonnées par priorité</b> : la carte du haut est la prochaine à réaliser. Les US de V2 / V3 sont en bas.</td><td>Product Owner (seul à pouvoir réordonner)</td></tr>
-      <tr><td>🎯 Sprint 6 — À faire</td><td>US et tâches engagées au Sprint Planning. Entrée uniquement si la <b>DoR</b> est respectée.</td><td>Équipe</td></tr>
-      <tr><td>⚙️ En cours</td><td>Ce qui est en réalisation. Limite de travail en cours : 2 cartes par développeur.</td><td>Équipe</td></tr>
-      <tr><td>🔍 En revue / recette</td><td>Code en relecture (pull request), tests automatisés et vérification des critères d’acceptation.</td><td>Équipe + référent qualité</td></tr>
-      <tr><td>✅ Terminé — sprint 6</td><td>US qui respectent la <b>DoD</b>, démontrées et acceptées par le PO.</td><td>Product Owner</td></tr>
-      <tr><td>🗄 Terminé — sprints 1 à 5</td><td>Incrément déjà livré ; les critères d’acceptation sont cochés.</td><td>—</td></tr>
-      <tr><td>🐞 Anomalies de recette</td><td>Défauts trouvés par les tests (campagnes 1 et 2) : cause racine, correctif, cycle de vie.</td><td>Référent qualité</td></tr>
+      <tr><td>Lire d’abord — méthode &amp; règles</td><td>Mode d’emploi, rôles, déroulé d’un sprint, <b>DoR</b>, <b>DoD</b>, règles de priorisation, objectif du sprint en cours.</td><td>Scrum Master</td></tr>
+      <tr><td>EPICs</td><td>Une carte par EPIC : module du Bloc 1, exigences, valeur pour le client, liste des US et avancement en points.</td><td>Product Owner</td></tr>
+      <tr><td>Product Backlog</td><td>US non engagées, <b>ordonnées par priorité</b> : la carte du haut est la prochaine à réaliser. Les US de V2 / V3 sont en bas.</td><td>Product Owner (seul à pouvoir réordonner)</td></tr>
+      <tr><td>Sprint 6 — À faire</td><td>US et tâches engagées au Sprint Planning. Entrée uniquement si la <b>DoR</b> est respectée.</td><td>Équipe</td></tr>
+      <tr><td>En cours</td><td>Ce qui est en réalisation. Limite de travail en cours : 2 cartes par développeur.</td><td>Équipe</td></tr>
+      <tr><td>En revue / recette</td><td>Code en relecture (pull request), tests automatisés et vérification des critères d’acceptation.</td><td>Équipe + référent qualité</td></tr>
+      <tr><td>Terminé — sprint 6</td><td>US qui respectent la <b>DoD</b>, démontrées et acceptées par le PO.</td><td>Product Owner</td></tr>
+      <tr><td>Terminé — sprints 1 à 5</td><td>Incrément déjà livré ; les critères d’acceptation sont cochés.</td><td>—</td></tr>
+      <tr><td>Anomalies de recette</td><td>Défauts trouvés par les tests (campagnes 1 et 2) : cause racine, correctif, cycle de vie.</td><td>Référent qualité</td></tr>
     </tbody>
   </table>
 
@@ -50,29 +50,29 @@
   <p>Le MVP est produit en <b>13 sprints de deux semaines</b> (sprint 0 de préparation puis sprints 1 à 12), soit 6 mois, conformément à la feuille de route du Bloc 1. La V2 (M7 – M12) et la V3 (M13 – M18) suivent par incréments trimestriels.</p>
   <figure>
     <svg viewBox="0 0 1000 300" width="100%" role="img" aria-label="Feuille de route des sprints du MVP">
-      <style>.lb{font-size:13px;fill:#3d3c39}.hd{font-size:12px;font-weight:700;fill:#fff}.bx{rx:5}.sm{font-size:11px;fill:#3d3c39}</style>
+      <style>.lb{font-size:14px;fill:#3d3c39}.hd{font-size:12px;font-weight:700;fill:#fff}.bx{rx:0}.sm{font-size:11px;fill:#3d3c39}</style>
       <g font-size="11">
         <!-- en-tête des sprints -->
         <g>
-          <rect x="150" y="10" width="830" height="24" fill="#26313f" rx="4"/>
+          <rect x="150" y="10" width="830" height="24" fill="#222222" rx="0"/>
           <text class="hd" x="182" y="27" text-anchor="middle">S0</text>
           <text class="hd" x="246" y="27" text-anchor="middle">S1</text><text class="hd" x="310" y="27" text-anchor="middle">S2</text><text class="hd" x="374" y="27" text-anchor="middle">S3</text>
           <text class="hd" x="438" y="27" text-anchor="middle">S4</text><text class="hd" x="502" y="27" text-anchor="middle">S5</text><text class="hd" x="566" y="27" text-anchor="middle">S6</text>
           <text class="hd" x="630" y="27" text-anchor="middle">S7</text><text class="hd" x="694" y="27" text-anchor="middle">S8</text><text class="hd" x="758" y="27" text-anchor="middle">S9</text>
           <text class="hd" x="822" y="27" text-anchor="middle">S10</text><text class="hd" x="886" y="27" text-anchor="middle">S11</text><text class="hd" x="950" y="27" text-anchor="middle">S12</text>
         </g>
-        <text class="lb" x="10" y="58">Préparation</text><rect x="152" y="44" width="60" height="22" fill="#44546f" rx="4"/><text x="182" y="59" fill="#fff" text-anchor="middle">cadrage</text>
-        <text class="lb" x="10" y="88">EP1 Ingestion</text><rect x="216" y="74" width="124" height="22" fill="#1f845a" rx="4"/>
-        <text class="lb" x="10" y="118">EP2 Harmonisation</text><rect x="280" y="104" width="124" height="22" fill="#946f00" rx="4"/>
-        <text class="lb" x="10" y="148">EP3 Rapprochement</text><rect x="408" y="134" width="60" height="22" fill="#b65c02" rx="4"/>
-        <text class="lb" x="10" y="178">EP4 Tableau de bord</text><rect x="408" y="164" width="252" height="22" fill="#c9372c" rx="4"/>
-        <text class="lb" x="10" y="208">EP5 Préparation IA</text><rect x="664" y="194" width="124" height="22" fill="#6e5dc6" rx="4"/>
-        <text class="lb" x="10" y="238">EP6 Sécurité &amp; RGPD</text><rect x="344" y="224" width="60" height="22" fill="#0c66e4" rx="4"/><rect x="536" y="224" width="124" height="22" fill="#0c66e4" rx="4"/>
-        <text class="lb" x="10" y="268">EP7 Industrialisation</text><rect x="152" y="254" width="60" height="22" fill="#227d9b" rx="4"/><rect x="536" y="254" width="124" height="22" fill="#227d9b" rx="4"/><rect x="792" y="254" width="188" height="22" fill="#227d9b" rx="4"/>
+        <text class="lb" x="10" y="58">Préparation</text><rect x="152" y="44" width="60" height="22" fill="#555555" rx="0"/><text x="182" y="59" fill="#fff" text-anchor="middle">cadrage</text>
+        <text class="lb" x="10" y="88">EP1 Ingestion</text><rect x="216" y="74" width="124" height="22" fill="#555555" rx="0"/>
+        <text class="lb" x="10" y="118">EP2 Harmonisation</text><rect x="280" y="104" width="124" height="22" fill="#6f6f6f" rx="0"/>
+        <text class="lb" x="10" y="148">EP3 Rapprochement</text><rect x="408" y="134" width="60" height="22" fill="#5f5f5f" rx="0"/>
+        <text class="lb" x="10" y="178">EP4 Tableau de bord</text><rect x="408" y="164" width="252" height="22" fill="#333333" rx="0"/>
+        <text class="lb" x="10" y="208">EP5 Préparation IA</text><rect x="664" y="194" width="124" height="22" fill="#7a7a7a" rx="0"/>
+        <text class="lb" x="10" y="238">EP6 Sécurité &amp; RGPD</text><rect x="344" y="224" width="60" height="22" fill="#444444" rx="0"/><rect x="536" y="224" width="124" height="22" fill="#444444" rx="0"/>
+        <text class="lb" x="10" y="268">EP7 Industrialisation</text><rect x="152" y="254" width="60" height="22" fill="#8a8a8a" rx="0"/><rect x="536" y="254" width="124" height="22" fill="#8a8a8a" rx="0"/><rect x="792" y="254" width="188" height="22" fill="#8a8a8a" rx="0"/>
         <!-- jalons -->
-        <line x1="470" y1="38" x2="470" y2="290" stroke="#b42318" stroke-dasharray="4 3"/><text x="474" y="292" fill="#b42318" font-weight="700">AIPD initiale</text>
-        <line x1="598" y1="38" x2="598" y2="290" stroke="#1c5cab" stroke-dasharray="4 3"/><text x="540" y="292" fill="#1c5cab" font-weight="700" text-anchor="end">aujourd’hui</text>
-        <line x1="980" y1="38" x2="980" y2="290" stroke="#b42318" stroke-dasharray="4 3"/><text x="976" y="292" fill="#b42318" font-weight="700" text-anchor="end">go / no-go MVP</text>
+        <line x1="470" y1="38" x2="470" y2="290" stroke="#111111" stroke-dasharray="4 3"/><text x="474" y="292" fill="#111111" font-weight="700">AIPD initiale</text>
+        <line x1="598" y1="38" x2="598" y2="290" stroke="#222222" stroke-dasharray="4 3"/><text x="602" y="292" fill="#222222" font-weight="700">aujourd’hui</text>
+        <line x1="980" y1="38" x2="980" y2="290" stroke="#111111" stroke-dasharray="4 3"/><text x="976" y="292" fill="#111111" font-weight="700" text-anchor="end">go / no-go MVP</text>
         <text x="822" y="243" fill="#3d3c39" text-anchor="middle">recette métier, PRA, charge</text>
       </g>
     </svg>
@@ -96,20 +96,20 @@
   <p>Un sprint dure <b>deux semaines</b> (10 jours ouvrés), toujours la même durée : c’est le rythme du projet. Son contenu est figé au lancement ; seul le Product Owner peut l’annuler si son objectif devient caduc.</p>
   <figure>
     <svg viewBox="0 0 1000 200" width="100%" role="img" aria-label="Calendrier d’un sprint de deux semaines">
-      <g font-size="12" font-family="system-ui">
-        <g fill="#26313f"><rect x="40" y="10" width="920" height="26" rx="4"/></g>
+      <g font-size="12" font-family="Cambria, Georgia, serif">
+        <g fill="#222222"><rect x="40" y="10" width="920" height="26" rx="0"/></g>
         <g fill="#fff" font-weight="700" text-anchor="middle">
           <text x="86" y="28">J1 lun.</text><text x="178" y="28">J2</text><text x="270" y="28">J3</text><text x="362" y="28">J4</text><text x="454" y="28">J5</text>
           <text x="546" y="28">J6 mer.</text><text x="638" y="28">J7</text><text x="730" y="28">J8</text><text x="822" y="28">J9</text><text x="914" y="28">J10 ven.</text>
         </g>
-        <rect x="44" y="46" width="84" height="40" rx="5" fill="#1c5cab"/><text x="86" y="63" fill="#fff" text-anchor="middle" font-weight="700">Planning</text><text x="86" y="79" fill="#fff" text-anchor="middle">4 h max</text>
-        <g fill="#e8f1fc" stroke="#1c5cab">
-          <rect x="44" y="96" width="912" height="22" rx="4"/>
+        <rect x="44" y="46" width="84" height="40" rx="0" fill="#222222"/><text x="86" y="63" fill="#fff" text-anchor="middle" font-weight="700">Planning</text><text x="86" y="79" fill="#fff" text-anchor="middle">4 h max</text>
+        <g fill="#f2f2f2" stroke="#222222">
+          <rect x="44" y="96" width="912" height="22" rx="0"/>
         </g>
-        <text x="500" y="112" text-anchor="middle" fill="#1c5cab">Daily Scrum — 15 min chaque matin à 9 h 30 (fait hier, prévu aujourd’hui, obstacles)</text>
-        <rect x="504" y="46" width="84" height="40" rx="5" fill="#946f00"/><text x="546" y="63" fill="#fff" text-anchor="middle" font-weight="700">Affinage</text><text x="546" y="79" fill="#fff" text-anchor="middle">2 h</text>
-        <rect x="872" y="46" width="84" height="40" rx="5" fill="#1f845a"/><text x="914" y="63" fill="#fff" text-anchor="middle" font-weight="700">Review 2 h</text><text x="914" y="79" fill="#fff" text-anchor="middle">+ Rétro 1 h 30</text>
-        <rect x="132" y="130" width="736" height="26" rx="4" fill="#f3f2ee" stroke="#dcdbd3"/>
+        <text x="500" y="112" text-anchor="middle" fill="#222222">Daily Scrum — 15 min chaque matin à 9 h 30 (fait hier, prévu aujourd’hui, obstacles)</text>
+        <rect x="504" y="46" width="84" height="40" rx="0" fill="#6f6f6f"/><text x="546" y="63" fill="#fff" text-anchor="middle" font-weight="700">Affinage</text><text x="546" y="79" fill="#fff" text-anchor="middle">2 h</text>
+        <rect x="872" y="46" width="84" height="40" rx="0" fill="#555555"/><text x="914" y="63" fill="#fff" text-anchor="middle" font-weight="700">Review 2 h</text><text x="914" y="79" fill="#fff" text-anchor="middle">+ Rétro 1 h 30</text>
+        <rect x="132" y="130" width="736" height="26" rx="0" fill="#f6f6f6" stroke="#bdbdbd"/>
         <text x="500" y="148" text-anchor="middle" fill="#3d3c39">Développement → relecture (pull request) → CI verte → vérification des critères d’acceptation → « Terminé » (DoD)</text>
         <text x="86" y="186" text-anchor="middle" fill="#6b6a65">objectif de sprint</text>
         <text x="546" y="186" text-anchor="middle" fill="#6b6a65">US des 2 sprints suivants « prêtes » (DoR)</text>

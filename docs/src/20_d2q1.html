@@ -38,11 +38,11 @@
     </div>
     <figure style="margin-top:0">
       <svg viewBox="0 0 420 300" width="100%" role="img" aria-label="Pyramide des tests du projet">
-        <g font-family="system-ui" font-size="12" text-anchor="middle">
-          <polygon points="210,10 260,80 160,80" fill="#c9372c"/><text x="210" y="62" fill="#fff" font-weight="700">E2E</text>
-          <polygon points="160,84 260,84 300,140 120,140" fill="#b65c02"/><text x="210" y="117" fill="#fff" font-weight="700">API · sécurité · charge</text>
-          <polygon points="120,144 300,144 345,205 75,205" fill="#946f00"/><text x="210" y="179" fill="#fff" font-weight="700">Intégration / réconciliation</text>
-          <polygon points="75,209 345,209 395,280 25,280" fill="#1f845a"/><text x="210" y="249" fill="#fff" font-weight="700">Unitaires (PHP + JS)</text>
+        <g font-family="Cambria, Georgia, serif" font-size="12" text-anchor="middle">
+          <polygon points="210,10 260,80 160,80" fill="#333333"/><text x="210" y="62" fill="#fff" font-weight="700">E2E</text>
+          <polygon points="160,84 260,84 300,140 120,140" fill="#5f5f5f"/><text x="210" y="117" fill="#fff" font-weight="700">API · sécurité · charge</text>
+          <polygon points="120,144 300,144 345,205 75,205" fill="#6f6f6f"/><text x="210" y="179" fill="#fff" font-weight="700">Intégration / réconciliation</text>
+          <polygon points="75,209 345,209 395,280 25,280" fill="#555555"/><text x="210" y="249" fill="#fff" font-weight="700">Unitaires (PHP + JS)</text>
           <g font-size="11" fill="#3d3c39" text-anchor="start">
             <text x="268" y="40">8 tests · ~4 s</text>
             <text x="306" y="112">11 tests · ~20 s</text>
@@ -105,12 +105,12 @@
   <h2>1.5 Intégration continue</h2>
   <figure>
     <svg viewBox="0 0 1000 120" width="100%" role="img" aria-label="Pipeline d’intégration continue">
-      <g font-family="system-ui" font-size="12">
+      <g font-family="Cambria, Georgia, serif" font-size="12">
         <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6a65"/></marker></defs>
-        <rect x="10" y="20" width="140" height="70" rx="8" fill="#f3f2ee" stroke="#6b6a65"/><text x="80" y="48" text-anchor="middle" font-weight="700">push / PR</text><text x="80" y="68" text-anchor="middle" fill="#3d3c39">branche d’une US</text>
-        <rect x="190" y="20" width="210" height="70" rx="8" fill="#e8f1fc" stroke="#1c5cab"/><text x="295" y="44" text-anchor="middle" font-weight="700" fill="#1c5cab">1. Analyse statique</text><text x="295" y="62" text-anchor="middle" fill="#3d3c39">syntaxe PHP / JS</text><text x="295" y="78" text-anchor="middle" fill="#3d3c39">recherche de secrets</text>
-        <rect x="440" y="20" width="250" height="70" rx="8" fill="#e9f7ef" stroke="#1f845a"/><text x="565" y="44" text-anchor="middle" font-weight="700" fill="#1f845a">2. Campagne complète</text><text x="565" y="62" text-anchor="middle" fill="#3d3c39">seed + pipeline + 59 tests</text><text x="565" y="78" text-anchor="middle" fill="#3d3c39">(php -S + Chrome headless)</text>
-        <rect x="730" y="20" width="260" height="70" rx="8" fill="#fff4e5" stroke="#b65c02"/><text x="860" y="44" text-anchor="middle" font-weight="700" fill="#b65c02">3. Recette image de production</text><text x="860" y="62" text-anchor="middle" fill="#3d3c39">build Docker (tests inclus), API,</text><text x="860" y="78" text-anchor="middle" fill="#3d3c39">sécurité, E2E, charge, scan Trivy</text>
+        <rect x="10" y="20" width="140" height="70" rx="0" fill="#f6f6f6" stroke="#6b6a65"/><text x="80" y="48" text-anchor="middle" font-weight="700">push / PR</text><text x="80" y="68" text-anchor="middle" fill="#3d3c39">branche d’une US</text>
+        <rect x="190" y="20" width="210" height="70" rx="0" fill="#f2f2f2" stroke="#222222"/><text x="295" y="44" text-anchor="middle" font-weight="700" fill="#222222">1. Analyse statique</text><text x="295" y="62" text-anchor="middle" fill="#3d3c39">syntaxe PHP / JS</text><text x="295" y="78" text-anchor="middle" fill="#3d3c39">recherche de secrets</text>
+        <rect x="440" y="20" width="250" height="70" rx="0" fill="#f2f2f2" stroke="#555555"/><text x="565" y="44" text-anchor="middle" font-weight="700" fill="#555555">2. Campagne complète</text><text x="565" y="62" text-anchor="middle" fill="#3d3c39">seed + pipeline + 59 tests</text><text x="565" y="78" text-anchor="middle" fill="#3d3c39">(php -S + Chrome headless)</text>
+        <rect x="730" y="20" width="260" height="70" rx="0" fill="#f2f2f2" stroke="#5f5f5f"/><text x="860" y="44" text-anchor="middle" font-weight="700" fill="#5f5f5f">3. Recette image de production</text><text x="860" y="62" text-anchor="middle" fill="#3d3c39">build Docker (tests inclus), API,</text><text x="860" y="78" text-anchor="middle" fill="#3d3c39">sécurité, E2E, charge, scan Trivy</text>
         <g stroke="#6b6a65" stroke-width="2" marker-end="url(#ar2)"><line x1="152" y1="55" x2="187" y2="55"/><line x1="402" y1="55" x2="437" y2="55"/><line x1="692" y1="55" x2="727" y2="55"/></g>
         <text x="500" y="112" text-anchor="middle" fill="#3d3c39">Chaque étape ne démarre que si la précédente est verte ; les rapports JSON et les captures sont publiés en artefacts.</text>
       </g>
@@ -122,12 +122,7 @@
 
 <section id="d2q1-res" style="break-before: page">
   <h2>1.6 Résultats : de la pré-production à la recette</h2>
-  <div class="kpis">
-    <div><b class="ko">41 / 52</b><span>campagne 1 — code livré au sprint 5 (pré-production)</span></div>
-    <div><b>12</b><span>anomalies analysées (11 en campagne 1, 1 régression en campagne 2)</span></div>
-    <div><b class="ok">59 / 59</b><span>campagne 2 — après correctifs et nouveaux tests</span></div>
-    <div><b>238 ms</b><span>ouverture complète du tableau de bord au p95, sous 20 utilisateurs (seuil 3 s)</span></div>
-  </div>
+  <p>La campagne 1, menée sur le code livré au sprint 5, donne 41 tests réussis sur 52. Douze anomalies ont été analysées : onze issues de cette campagne et une régression apparue en campagne 2. Après correctifs, la campagne 2 donne 59 tests réussis sur 59. Sous 20 utilisateurs simultanés, l’ouverture complète du tableau de bord prend 238 ms au 95<sup>e</sup> percentile, pour un seuil fixé à 3 s.</p>
   <!--GEN:campagnes-->
   <p class="small">Le nombre de tests passe de 52 à 59 : 6 tests JavaScript existaient déjà mais n’apparaissaient pas dans le rapport de la campagne 1 (friction F6) ; un jeu d’essai a été ajouté pour la règle DQ15.</p>
 
